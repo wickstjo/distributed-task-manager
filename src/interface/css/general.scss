@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/main.woff');
+}
+
+#root {
+    height: 100vh;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(56, 56, 56);
+    background-image: url('../images/bg.png');
+    font: 13px 'Open Sans', verdana;
+    color: #505050;
+}
+
+a:link, a:visited, a:hover {
+    color: inherit;
+    transition: color 0.3s;
+    text-decoration: none;
+}
+
+input {
+    font: 13px 'Open Sans', verdana;
+    outline: none;
+}
+
+// SPLIT TABLE
+.split {
+    display: table;
+    width: 100%;
+
+    div {
+        display: table-cell;
+        width: auto;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    div:nth-child(2) {
+        text-align: right;
+    }
+}
+
+// TABLE WRAPPER
+#wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
+}

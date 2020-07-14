@@ -1,0 +1,51 @@
+#container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    #messages {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: auto;
+
+        #scroller {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+
+            #message {
+                color: #CECECE;
+                padding: 7px 9px;
+                border-bottom: 1px solid #575757;
+            }
+            
+            #message:nth-child(odd) {
+                background: #f1f1f110;
+            }
+
+            #message:last-child {
+                border-bottom: 0px solid black;
+            }
+        }
+    }
+
+    #messages::-webkit-scrollbar { width: 12px; }
+    #messages::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.356); }
+    #messages::-webkit-scrollbar-thumb { background: rgba(69, 105, 224, 0.514); }
+
+    #input {
+        background: rgba(0, 0, 0, 0.185);
+        border: 0px solid black;
+        border-top: 1px solid rgba(2, 2, 2, 0.103);
+        padding: 8px 10px;
+        color: #CECECE;
+        text-shadow: 1px 1px #242424;
+    }
+
+    #input::placeholder {
+        color: #b6b6b6;
+        text-shadow: 1px 1px #242424;
+    }
+}
