@@ -11,8 +11,8 @@ function Pages() {
    // GLOBAL STATE
    const { state } = useContext(Context);
 
-   // IF ROUTE & SETTINGS DATA HAS LOADED, RENDER PAGES NORMALLY
-   if (state.preload) { return (
+   // IF WHISPER HAS BEEN SET, LOAD
+   if (state.shh !== null) { return (
       <Switch>
          <Route exact path={ '/' } component={ Home } />
          <Route path={ '/settings' } component={ Settings } />

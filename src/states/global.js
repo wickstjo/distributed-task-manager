@@ -1,7 +1,8 @@
 // DEFUALT VALUES
 const values = {
-    web3: null,
-    preload: false
+    shh: null,
+    keys: {},
+    topic: 'eyya'
 }
 
 // REDUCER
@@ -11,8 +12,13 @@ function reducer(state, action) {
         // ON THE INITIAL PAGE LOAD
         case 'init': { return {
             ...state,
-            web3: action.payload,
-            preload: true
+            ...action.payload
+        }}
+
+        // SET TOPIC
+        case 'topic': { return {
+            ...state,
+            topic: action.payload
         }}
 
         // FALLBACK
