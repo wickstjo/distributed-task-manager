@@ -4,7 +4,6 @@ import { Provider } from "./assets/context";
 import './interface/css/general.scss';
 
 import Init from './assets/init';
-import Menu from './assets/menu';
 import Pages from './assets/pages';
 
 function App() { return (

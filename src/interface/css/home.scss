@@ -25,10 +25,12 @@
                 background: #f1f1f110;
             }
 
-            #message:last-child {
-                border-bottom: 0px solid black;
+            #message:nth-child(even) {
+                background: #f1f1f109;
             }
         }
+
+        #scroller #message:nth-last-child() { border-bottom:solid 5px #999; }
     }
 
     #messages::-webkit-scrollbar { width: 12px; }

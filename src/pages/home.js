@@ -1,162 +1,50 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { Context } from '../assets/context';
 import EventListener from 'react-event-listener';
 import '../interface/css/home.scss';
 
 function Home() {
 
+    // GLOBAL STATE
+    const { state } = useContext(Context);
+
+    // LOCAL STATES
+    const [input, set_input] = useState('')
+    const [messages, add_message] = useState([])
+
     // REF TO LATEST MESSAGE
     const latest = useRef(null)
 
-    // LOCAL STATE
-    const [local, set_local] = useState('')
-    const [messages, add_message] = useState([
-        {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       },
-       {
-           user: 'foo',
-           msg: 'msg'
-       }
-    ])
-
     // ENTER KEY LISTENER
     const key_listener = (event) => {
-        if (event.key.toLowerCase() === 'enter' && local !== '') {
+        if (event.key.toLowerCase() === 'enter' && input !== '') {
             
             // ADD MESSAGE
             add_message([
                 ...messages,
                 {
                     user: 'wickstjo',
-                    msg: local
+                    msg: input
                 }
             ])
 
             // RESET INPUT
-            set_local('')
+            set_input('')
         }
     }
-    
-    useEffect(() => {
-        latest.current.scrollIntoView({ behavior: "smooth" })
-    })
 
+    // WHEN A MESSAGE IS ADDED, SCROLL DOWN
     useEffect(() => {
         latest.current.scrollIntoView({ behavior: "smooth" })
     }, [messages])
+
+    useEffect(() => {
+        state.web3.shh.newKeyPair().then(result => {
+            console.log(result)
+        });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div id={ 'container' }>
@@ -179,8 +67,8 @@ function Home() {
                 type={ 'text' }
                 id={ 'input' }
                 placeholder={ 'Type something cool here!' }
-                onChange={ event => set_local(event.target.value) }
-                value={ local }
+                onChange={ event => set_input(event.target.value) }
+                value={ input }
             />
         </div>
     )

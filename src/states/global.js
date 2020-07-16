@@ -1,6 +1,7 @@
 // DEFUALT VALUES
 const values = {
-   preload: false
+    web3: null,
+    preload: false
 }
 
 // REDUCER
@@ -10,6 +11,7 @@ function reducer(state, action) {
         // ON THE INITIAL PAGE LOAD
         case 'init': { return {
             ...state,
+            web3: action.payload,
             preload: true
         }}
 

@@ -1,0 +1,16 @@
+{
+    "gateways": {
+       "blockchain": {
+          "host": "192.168.88.128",
+          "port": 8080
+       },
+       "ipfs": {
+          "host": "172.18.33.1",
+          "port": 5001
+       }
+    },
+    "keys": {
+       "public": "0x1B864a35dc5351D1d715A8C3AAb7d5Ce07ba4836",
+       "private": "0xe6821ddf384698398f5b4001e9ca9bfde0b961f9612269d2e736fa635c1b62e0"
+    }
+ }
