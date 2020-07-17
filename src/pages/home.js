@@ -1,16 +1,17 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
+import React, { useRef, useEffect, useContext, useReducer } from 'react';
 import { Context } from '../assets/context';
+import { values, reducer } from '../states/message.js';
 import EventListener from 'react-event-listener';
-import '../interface/css/home.scss';
+import '../interface/css/chat.scss';
+import { shorten, to_date } from '../funcs/chat';
 
 function Home() {
 
     // GLOBAL STATE
-    const { state } = useContext(Context);
+    const { state, dispatch } = useContext(Context)
 
     // LOCAL STATES
-    const [input, set_input] = useState('')
-    const [messages, add_message] = useState([])
+    const [local, set_local] = useReducer(reducer, values)
 
     // REF TO LATEST MESSAGE
     const latest = useRef(null)
@@ -20,51 +21,84 @@ function Home() {
         latest.current.scrollIntoView({
             behavior: 'smooth'
         })
-    }, [messages])
+    }, [local.messages])
 
     // CREATE MESSAGE FEED
     useEffect(() => {
         state.shh.subscribe('messages', {
             symKeyID: state.keys.sym,
             topics: [state.utils.to_hex(state.topic)]
+
+        // ON MESSAGE, ADD IT
         }).on('data', response => {
-
-            console.log(response)
-
-            // ADD MESSAGE
-            add_message([
-                ...messages,
-                {
-                    user: 'wickstjo',
-                    msg: state.utils.to_string(response.payload)
+            set_local({
+                type: 'message',
+                payload: {
+                    user: shorten(response.sig, 4),
+                    msg: state.utils.to_string(response.payload),
+                    timestamp: to_date(response.timestamp)
                 }
-            ])
+            })
         })
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // ENTER KEY LISTENER
-    const key_listener = (event) => {
-        if (event.key.toLowerCase() === 'enter' && input !== '') {
-            state.shh.post({
-                symKeyID: state.keys.sym,
-                sig: state.keys.id,
-                ttl: 10,
-                topic: state.utils.to_hex(state.topic),
-                payload: state.utils.to_hex(input),
-                powTime: 3,
-                powTarget: 0.5
-            
-            // EVERYTHING OK, RESET INPUT
-            }).then(hash => {
-                console.log('Message sent!', hash)
-                set_input('')
-    
-            // OTHERWISE, SHOW ERROR
-            }).catch(error => {
-                console.log('Error: ', error)
-            })
+    const key_listener = event => {
+        if (event.key.toLowerCase() === 'enter' && local.input !== '') {
+
+            // CHAT COMMANDS & FUNCTIONS
+            const commands = {
+
+                // CLEAR MESSAGE
+                '/clear': () => {
+                    set_local({
+                        type: 'clear'
+                    })
+                },
+
+                // CHANGE TOPIC
+                '/topic': () => {
+                    dispatch({
+                        type: 'topic',
+                        payload: value
+                    })
+                }
+            }
+
+            // COMMAND INPUTS
+            const keyword = local.input.split(' ')[0].toLowerCase()
+            const value = local.input.split(' ')[1]
+
+            // IF KEYWORD IS FOUND
+            if (Object.keys(commands).includes(keyword)) {
+
+                // RUN FUNC & RESET INPUT
+                commands[keyword]()
+                set_local({ type: 'reset' })
+
+            // OTHERWISE, SEND MESSAGE PAYLOAD
+            } else {
+                state.shh.post({
+                    symKeyID: state.keys.sym,
+                    sig: state.keys.id,
+                    ttl: 10,
+                    topic: state.utils.to_hex(state.topic),
+                    payload: state.utils.to_hex(local.input),
+                    powTime: 3,
+                    powTarget: 0.5
+                
+                // EVERYTHING OK, RESET INPUT
+                }).then(hash => {
+                    console.log('Message sent!', hash)
+                    set_local({ type: 'reset' })
+        
+                // OTHERWISE, SHOW ERROR
+                }).catch(error => {
+                    console.log('Error: ', error)
+                })
+            }
         }
     }
 
@@ -72,7 +106,7 @@ function Home() {
         <div id={ 'container' }>
             <div id={ 'messages' }>
                 <div id={ 'scroller' }>
-                    { messages.map((data, index) =>
+                    { local.messages.map((data, index) =>
                         <Message
                             data={ data }
                             key={ index }
@@ -89,17 +123,22 @@ function Home() {
                 type={ 'text' }
                 id={ 'input' }
                 placeholder={ 'Type something cool here!' }
-                onChange={ event => set_input(event.target.value) }
-                value={ input }
+                value={ local.input }
+                onChange={ event => set_local({
+                    type: 'input',
+                    payload: event.target.value
+                })}
             />
         </div>
     )
 }
 
 function Message({ data }) { return (
-   <div id={ 'message' }>
-      { data.user }: { data.msg }
-   </div>
+    <div id={ 'message' }>
+        <li id={ 'timestamp' }>{ data.timestamp }</li>
+        <li id={ 'user' }>{ data.user }</li>
+        <li id={ 'msg' }>{ data.msg }</li>
+    </div>
 )}
 
 export default Home;

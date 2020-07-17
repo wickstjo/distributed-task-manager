@@ -17,14 +17,31 @@
 
             #message {
                 color: #CECECE;
-                padding: 7px 9px;
-                border-bottom: 1px solid #575757;
+                border-bottom: 1px solid #ffffff44;
+
+                li {
+                    display: inline-block;
+                    padding: 7px 9px;
+                    padding-right: 0px;
+                }
+
+                #timestamp {}
+
+                #user {
+                    color: white;
+                }
+
+                #message {}
             }
-            
+
+            #message:first-child {
+                border-top: 1px solid #ffffff44;
+            }
+
             #message:nth-child(odd) {
                 background: #f1f1f110;
             }
-
+            
             #message:nth-child(even) {
                 background: #f1f1f109;
             }
