@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Context } from "./context";
 import Web3 from 'web3';
-import { gateways } from '../settings.json';
+import { gateways, whisper } from '../settings.json';
 
 function Init() {
 
@@ -33,7 +33,7 @@ function Init() {
 
                // SET KEYS
                keys: {
-                  sym: results[0],
+                  sym: whisper.network,
                   id: results[1]
                },
 

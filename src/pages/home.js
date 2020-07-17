@@ -36,7 +36,8 @@ function Home() {
                 payload: {
                     user: shorten(response.sig, 4),
                     msg: state.utils.to_string(response.payload),
-                    timestamp: to_date(response.timestamp)
+                    timestamp: to_date(response.timestamp),
+                    type: 'message'
                 }
             })
         })
@@ -63,6 +64,9 @@ function Home() {
                     dispatch({
                         type: 'topic',
                         payload: value
+                    })
+                    set_local({
+                        type: 'topic'
                     })
                 }
             }
@@ -91,7 +95,7 @@ function Home() {
                 
                 // EVERYTHING OK, RESET INPUT
                 }).then(hash => {
-                    console.log('Message sent!', hash)
+                    console.log('Message sent!')
                     set_local({ type: 'reset' })
         
                 // OTHERWISE, SHOW ERROR
@@ -107,7 +111,7 @@ function Home() {
             <div id={ 'messages' }>
                 <div id={ 'scroller' }>
                     { local.messages.map((data, index) =>
-                        <Message
+                        <Column
                             data={ data }
                             key={ index }
                         />
@@ -133,12 +137,29 @@ function Home() {
     )
 }
 
-function Message({ data }) { return (
-    <div id={ 'message' }>
-        <li id={ 'timestamp' }>{ data.timestamp }</li>
-        <li id={ 'user' }>{ data.user }</li>
-        <li id={ 'msg' }>{ data.msg }</li>
-    </div>
-)}
+function Column({ data }) {
+    switch(data.type) {
+
+        // MESSAGE
+        case 'message': { return (
+            <div id={ 'message' }>
+                <li id={ 'timestamp' }>{ data.timestamp }</li>
+                <li id={ 'user' }>{ data.user }</li>
+                <li id={ 'msg' }>{ data.msg }</li>
+            </div>
+        )}
+
+        // ACTION
+        case 'action': { return (
+            <div id={ 'action' }>
+                <li id={ 'timestamp' }>{ data.timestamp }</li>
+                <li id={ 'msg' }>{ data.msg }</li>
+            </div>
+        )}
+
+        // FALLBACK
+        default: { console.log('Column switch error!') }
+    }
+}
 
 export default Home;

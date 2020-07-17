@@ -9,13 +9,14 @@
         flex-direction: column;
         position: relative;
         overflow: auto;
+        text-shadow: 1px 1px #242424;
 
         #scroller {
             position: absolute;
             height: 100%;
             width: 100%;
 
-            #message {
+            #message, #action {
                 color: #CECECE;
                 border-bottom: 1px solid #ffffff44;
 
@@ -25,26 +26,33 @@
                     padding-right: 0px;
                 }
 
-                #timestamp {}
+                #timestamp {
+                    color: #F1F1F1;
+                }
 
                 #user {
-                    color: white;
+                    color: rgb(129, 188, 255);
                 }
 
                 #message {}
             }
 
-            #message:first-child {
-                border-top: 1px solid #ffffff44;
-            }
-
             #message:nth-child(odd) {
-                background: #f1f1f110;
+                background: #ffffff1c;
             }
             
             #message:nth-child(even) {
-                background: #f1f1f109;
+                background: #ffffff0c;
             }
+
+            #action {
+                background: rgba(78, 255, 131, 0.185);
+                color: white;
+            }
+        }
+
+        #scroller:first-child {
+            border-top: 1px solid #ffffff44;
         }
 
         #scroller #message:nth-last-child() { border-bottom:solid 5px #999; }

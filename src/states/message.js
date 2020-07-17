@@ -1,3 +1,5 @@
+import { to_date } from '../funcs/chat';
+
 // DEFAULT VALUES
 const values = {
     messages: [],
@@ -29,10 +31,26 @@ const values = {
             ]
         }}
 
+        // CHANGE TOPIC
+        case 'topic': { return {
+            ...state,
+            messages: [
+                ...state.messages, {
+                msg: 'The topic has been changed!',
+                timestamp: to_date(Date.now() / 1000),
+                type: 'action'
+            }]
+        }} 
+    
+
         // CLEAR MESSAGES
         case 'clear': { return {
             ...state,
-            messages: []
+            messages: [{
+                msg: 'The chat has been cleared!',
+                timestamp: to_date(Date.now() / 1000),
+                type: 'action'
+            }]
         }} 
     
         // FALLBACK
