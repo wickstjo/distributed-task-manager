@@ -7,6 +7,7 @@ function Header() {
    // GLOBAL STATE
    const { state } = useContext(Context);
 
+   // LOCAL STATE
    const [local, set_local] = useState('')
 
    // CHECK WHAT TEXT TO RENDER
@@ -22,7 +23,7 @@ function Header() {
       <div id="header"><div className="inner">
          <div className={ 'split' }>
             <div><li>Currency Viewed Topic:</li></div>
-            <div><li>{ local }</li></div>
+            <div><li id={ 'topic' }>{ local }</li></div>
          </div>
       </div></div>
    )

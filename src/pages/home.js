@@ -170,25 +170,25 @@ function Column({ data }) {
         // MESSAGE
         case 'message': { return (
             <div id={ 'message' }>
-                <li id={ 'timestamp' }>{ data.timestamp }</li>
-                <li id={ 'user' }>{ data.user }</li>
-                <li id={ 'msg' }>{ data.msg }</li>
+                <div id={ 'timestamp' }>{ data.timestamp }</div>
+                <div id={ 'user' }>{ data.user }</div>
+                <div id={ 'msg' }>{ data.msg }</div>
             </div>
         )}
 
         // ACTION
         case 'action': { return (
             <div id={ 'action' }>
-                <li id={ 'timestamp' }>{ data.timestamp }</li>
-                <li id={ 'msg' }>{ data.msg }</li>
+                <div id={ 'timestamp' }>{ data.timestamp }</div>
+                <div id={ 'msg' }>{ data.msg }</div>
             </div>
         )}
 
         // ACTION
         case 'error': { return (
             <div id={ 'error' }>
-                <li id={ 'timestamp' }>{ data.timestamp }</li>
-                <li id={ 'msg' }>{ data.msg }</li>
+                <div id={ 'timestamp' }>{ data.timestamp }</div>
+                <div id={ 'msg' }>{ data.msg }</div>
             </div>
         )}
 
