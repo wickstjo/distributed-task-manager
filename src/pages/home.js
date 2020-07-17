@@ -25,7 +25,12 @@ function Home() {
 
     // CREATE MESSAGE FEED
     useEffect(() => {
-        state.shh.subscribe('messages', {
+
+        // UNSUBSCRIBE FROM OLD FEED
+        if (local.feed !== null) { local.feed.unsubscribe() }
+
+        // CREATE A NEW ONE
+        const temp = state.shh.subscribe('messages', {
             symKeyID: state.keys.sym,
             topics: [state.utils.to_hex(state.topic)]
 
@@ -42,12 +47,22 @@ function Home() {
             })
         })
 
+        // SET FEED IN STATE
+        set_local({
+            type: 'feed',
+            payload: temp
+        })
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [state.topic])
 
     // ENTER KEY LISTENER
     const key_listener = event => {
         if (event.key.toLowerCase() === 'enter' && local.input !== '') {
+
+            // COMMAND INPUTS
+            const keyword = local.input.split(' ')[0].toLowerCase()
+            const value = local.input.split(' ')[1]
 
             // CHAT COMMANDS & FUNCTIONS
             const commands = {
@@ -61,19 +76,26 @@ function Home() {
 
                 // CHANGE TOPIC
                 '/topic': () => {
-                    dispatch({
-                        type: 'topic',
-                        payload: value
-                    })
-                    set_local({
-                        type: 'topic'
-                    })
+
+                    // IF LENGTH IS OK
+                    if (value.length === 4) {
+                        dispatch({
+                            type: 'topic',
+                            payload: value
+                        })
+                        set_local({
+                            type: 'topic'
+                        })
+                    
+                    // OTHERWISE, SHOW ERROR
+                    } else {
+                        set_local({
+                            type: 'error',
+                            payload: 'The topic must be of length 4!'
+                        })
+                    }
                 }
             }
-
-            // COMMAND INPUTS
-            const keyword = local.input.split(' ')[0].toLowerCase()
-            const value = local.input.split(' ')[1]
 
             // IF KEYWORD IS FOUND
             if (Object.keys(commands).includes(keyword)) {
@@ -100,6 +122,10 @@ function Home() {
         
                 // OTHERWISE, SHOW ERROR
                 }).catch(error => {
+                    set_local({
+                        type: 'error',
+                        payload: 'Could not send message!'
+                    })
                     console.log('Error: ', error)
                 })
             }
@@ -137,6 +163,7 @@ function Home() {
     )
 }
 
+// ADD NEW MESSAGE COLUMN
 function Column({ data }) {
     switch(data.type) {
 
@@ -152,6 +179,14 @@ function Column({ data }) {
         // ACTION
         case 'action': { return (
             <div id={ 'action' }>
+                <li id={ 'timestamp' }>{ data.timestamp }</li>
+                <li id={ 'msg' }>{ data.msg }</li>
+            </div>
+        )}
+
+        // ACTION
+        case 'error': { return (
+            <div id={ 'error' }>
                 <li id={ 'timestamp' }>{ data.timestamp }</li>
                 <li id={ 'msg' }>{ data.msg }</li>
             </div>

@@ -3,7 +3,8 @@ import { to_date } from '../funcs/chat';
 // DEFAULT VALUES
 const values = {
     messages: [],
-    input: ''
+    input: '',
+    feed: null
 }
  
  // REDUCER
@@ -40,6 +41,17 @@ const values = {
                 timestamp: to_date(Date.now() / 1000),
                 type: 'action'
             }]
+        }}
+
+        // SHOW ERROR
+        case 'error': { return {
+            ...state,
+            messages: [
+                ...state.messages, {
+                msg: action.payload,
+                timestamp: to_date(Date.now() / 1000),
+                type: 'error'
+            }]
         }} 
     
 
@@ -51,6 +63,12 @@ const values = {
                 timestamp: to_date(Date.now() / 1000),
                 type: 'action'
             }]
+        }}
+
+        // SET MESSAGE FEED
+        case 'feed': { return {
+            ...state,
+            feed: action.payload
         }} 
     
         // FALLBACK
