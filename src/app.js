@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from "./assets/context";
 import './interface/css/general.scss';
 
@@ -8,7 +8,7 @@ import Header from './assets/header';
 import Pages from './assets/pages';
 
 function App() { return (
-   <BrowserRouter>
+   <HashRouter>
       <Provider>
          <Init />
          <div id={ 'wrapper' }>
@@ -16,7 +16,7 @@ function App() { return (
             <Pages />
          </div>
       </Provider>
-   </BrowserRouter>
+   </HashRouter>
 )}
 
 export default App;

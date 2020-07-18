@@ -1,6 +1,9 @@
 {
   "name": "myapp",
   "version": "0.1.0",
+  "author": "wickstjo",
+  "description": "foobar",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -8,8 +11,6 @@
     "@testing-library/user-event": "^7.1.2",
     "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
-    "electron": "^9.1.0",
-    "electron-builder": "^22.7.0",
     "electron-is-dev": "^1.2.0",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
@@ -20,6 +21,10 @@
     "react-scripts": "3.4.1",
     "wait-on": "^5.1.0",
     "web3": "^1.2.9"
+  },
+  "devDependencies": {
+    "electron": "^9.1.0",
+    "electron-builder": "^22.7.0"
   },
   "scripts": {
     "react-start": "react-scripts start",
@@ -46,5 +51,5 @@
       "last 1 safari version"
     ]
   },
-  "main": "public/main.js"
+  "main": "public/electron.js"
 }
