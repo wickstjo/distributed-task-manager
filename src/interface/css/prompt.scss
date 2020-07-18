@@ -1,0 +1,59 @@
+#prompt {
+   background: rgba(0, 0, 0, 0.219);
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   height: 100%;
+   width: 100%;
+   z-index: 99;
+   transition: opacity 0.1s;
+   opacity: 1;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   #inner {
+
+      // LOADING SCREEN -- https://loading.io/css/
+      .lds-dual-ring {
+         display: block;
+         width: 80px;
+         height: 80px;
+         margin: auto;
+      }
+
+      .lds-dual-ring:after {
+         content: " ";
+         display: block;
+         width: 80px;
+         height: 80px;
+         margin: 1px;
+         border-radius: 50%;
+         border: 6px solid #fff;
+         border-color: #fff transparent #fff transparent;
+         animation: lds-dual-ring 1.2s linear infinite;
+      }
+
+      @keyframes lds-dual-ring {
+         0% { transform: rotate(0deg); }
+         100% { transform: rotate(360deg); }
+      }
+   }
+
+   // CLOSE PROMPT CROSS
+   #close {
+      background: url('../images/close.png') center center no-repeat;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      height: 80px;
+      width: 80px;
+      opacity: 0.6;
+      transition: 0.3s;
+   }
+
+   #close:hover {
+      cursor: pointer;
+      opacity: 1;
+   }
+}

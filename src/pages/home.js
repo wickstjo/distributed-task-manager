@@ -4,6 +4,7 @@ import { values, reducer } from '../states/message.js';
 import EventListener from 'react-event-listener';
 import '../interface/css/chat.scss';
 import { shorten, to_date } from '../funcs/chat';
+import Column from '../components/column';
 
 function Home() {
 
@@ -53,7 +54,7 @@ function Home() {
             payload: temp
         })
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.topic])
 
     // ENTER KEY LISTENER
@@ -145,56 +146,32 @@ function Home() {
                     <div ref={ latest } />
                 </div>
             </div>
-            <EventListener
-                target={ 'window' }
-                onKeyDown={ key_listener }
-            />
-            <input
-                type={ 'text' }
-                id={ 'input' }
-                placeholder={ 'Type something cool here!' }
-                value={ local.input }
-                onChange={ event => set_local({
-                    type: 'input',
-                    payload: event.target.value
-                })}
-            />
+            <div id={ 'footer' }>
+                <div id={ 'input' }>
+                    <EventListener
+                        target={ 'window' }
+                        onKeyDown={ key_listener }
+                    />
+                    <input
+                        autoFocus
+                        type={ 'text' }
+                        placeholder={ 'Type something cool here!' }
+                        value={ local.input }
+                        onChange={ event => set_local({
+                            type: 'input',
+                            payload: event.target.value
+                        })}
+                    />
+                </div>
+                <div id={ 'settings' } onClick={() => {
+                    dispatch({
+                        type: 'show-prompt',
+                        payload: 'settings'
+                    })
+                }}>Settings</div>
+            </div>
         </div>
     )
-}
-
-// ADD NEW MESSAGE COLUMN
-function Column({ data }) {
-    switch(data.type) {
-
-        // MESSAGE
-        case 'message': { return (
-            <div id={ 'message' }>
-                <div id={ 'timestamp' }>{ data.timestamp }</div>
-                <div id={ 'user' }>{ data.user }</div>
-                <div id={ 'msg' }>{ data.msg }</div>
-            </div>
-        )}
-
-        // ACTION
-        case 'action': { return (
-            <div id={ 'action' }>
-                <div id={ 'timestamp' }>{ data.timestamp }</div>
-                <div id={ 'msg' }>{ data.msg }</div>
-            </div>
-        )}
-
-        // ACTION
-        case 'error': { return (
-            <div id={ 'error' }>
-                <div id={ 'timestamp' }>{ data.timestamp }</div>
-                <div id={ 'msg' }>{ data.msg }</div>
-            </div>
-        )}
-
-        // FALLBACK
-        default: { console.log('Column switch error!') }
-    }
 }
 
 export default Home;

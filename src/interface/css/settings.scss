@@ -1,0 +1,27 @@
+#settings {
+
+    #top {
+        text-align: center;
+        color: white;
+        font-size: 18px;
+        text-transform: uppercase;
+        padding: 5px;
+    }
+
+    textarea {
+        background: rgba(0, 0, 0, 0.295);
+        border: 1px solid rgba(255, 255, 255, 0.329);
+        min-height: 100px;
+        min-width: 50vh;
+        padding: 7px 9px;
+        color: #F1F1F1;
+        resize: vertical;
+        margin-bottom: 15px;
+        transition: 0.2s;
+    }
+
+    textarea:focus {
+        background: rgba(122, 255, 133, 0.096);
+        border: 1px solid #CECECE;
+    }
+}

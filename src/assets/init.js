@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { Context } from "./context";
 import Web3 from 'web3';
 import { gateways, whisper } from '../settings.json';
+import { sleep } from '../funcs/misc';
 
 function Init() {
 
@@ -43,6 +44,12 @@ function Init() {
                   to_hex: web3.utils.stringToHex
                }
             }
+         })
+
+         sleep(2000).then(() => {
+            dispatch({
+               type: 'hide-prompt'
+            })
          })
 
          // TURN OFF METAMASK WARNING

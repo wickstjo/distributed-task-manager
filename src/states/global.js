@@ -2,7 +2,11 @@
 const values = {
     shh: null,
     keys: {},
-    topic: 'eyya'
+    topic: 'eyya',
+    prompt: {
+        visible: true,
+        type: 'loading'
+    }
 }
 
 // REDUCER
@@ -19,6 +23,24 @@ function reducer(state, action) {
         case 'topic': { return {
             ...state,
             topic: action.payload
+        }}
+
+        // SHOW SPECIFIC PROMPT
+        case 'show-prompt': { return {
+            ...state,
+            prompt: {
+                visible: true,
+                type: action.payload
+            }
+        }}
+
+        // HIDE PROMPT
+        case 'hide-prompt': { return {
+            ...state,
+            prompt: {
+                ...state.prompt,
+                visible: false
+            }
         }}
 
         // FALLBACK

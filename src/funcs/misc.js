@@ -5,6 +5,12 @@ async function generate_keys(shh) {
     }
 }
 
+// WAIT FOR GIVEN MILLISECONDS
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+ }
+
 export {
-    generate_keys
+    generate_keys,
+    sleep
 }

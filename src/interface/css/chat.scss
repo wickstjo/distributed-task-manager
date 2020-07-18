@@ -10,6 +10,10 @@
         position: relative;
         overflow: auto;
         text-shadow: 1px 1px #242424;
+        border-top: 1px solid #ffffff44;
+        border-bottom: 1px solid #ffffff44;
+        
+        // TODO: FIX EXTRA BOTTOM BORDER ON OVERFLOW
 
         #scroller {
             position: absolute;
@@ -18,27 +22,17 @@
 
             #message, #action, #error {
                 color: #CECECE;
-                border-bottom: 1px solid #ffffff44;
                 display: flex;
+                border-bottom: 1px solid #ffffff44;
 
                 div {
                     padding: 7px 9px;
                     padding-right: 0px;
                 }
 
-                #msg {
-                    flex: 1;
-                }
-
-                #timestamp {
-                    color: #F1F1F1;
-                }
-
-                #user {
-                    color: rgb(129, 188, 255);
-                }
-
-                #message {}
+                #msg { flex: 1; }
+                #timestamp { color: #F1F1F1; }
+                #user { color: rgb(129, 188, 255); }
             }
 
             #message:nth-child(odd) {
@@ -50,17 +44,13 @@
             }
 
             #action, #error {
-                background: rgba(78, 255, 131, 0.205);
+                background: rgba(97, 255, 150, 0.192);
                 color: white;
             }
 
             #error {
                 background: rgba(245, 111, 111, 0.349);
             }
-        }
-
-        #scroller:first-child {
-            border-top: 1px solid #ffffff44;
         }
 
         #scroller #message:nth-last-child() { border-bottom:solid 5px #999; }
@@ -70,17 +60,46 @@
     #messages::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.356); }
     #messages::-webkit-scrollbar-thumb { background: rgba(69, 105, 224, 0.514); }
 
-    #input {
-        background: rgba(0, 0, 0, 0.185);
-        border: 0px solid black;
-        border-top: 1px solid rgba(2, 2, 2, 0.103);
-        padding: 8px 10px;
-        color: #CECECE;
-        text-shadow: 1px 1px #242424;
-    }
+    #footer {
+        display: flex;
 
-    #input::placeholder {
-        color: #b6b6b6;
-        text-shadow: 1px 1px #242424;
+        #input {
+            flex: 1;
+
+            input {
+                background: rgba(0, 0, 0, 0.185);
+                border: 0px solid black;
+                padding: 12px;
+                padding-bottom: 9px;
+                padding-top: 7px;
+                color: #CECECE;
+                text-shadow: 1px 1px #242424;
+                width: 100%;
+                border-right: 1px solid #ffffff44;
+                border-top: 1px solid rgba(2, 2, 2, 0.103);
+            }
+        
+            input::placeholder {
+                color: #b6b6b6;
+                text-shadow: 1px 1px #242424;
+            }
+        }
+
+        #settings {
+            padding: 12px;
+            padding-bottom: 9px;
+            padding-top: 7px;
+            background: rgba(233, 123, 255, 0.185);
+            cursor: pointer;
+            color: #F1F1F1;
+            transition: 0.2s;
+            border-top: 1px solid rgba(2, 2, 2, 0.329);
+            border-left: 1px solid rgba(2, 2, 2, 0.329);
+        }
+
+        #settings:hover {
+            background: rgba(233, 123, 255, 0.308);
+            color: white;
+        }
     }
 }

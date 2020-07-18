@@ -6,6 +6,7 @@ import './interface/css/general.scss';
 import Init from './assets/init';
 import Header from './assets/header';
 import Pages from './assets/pages';
+import Prompt from './assets/prompt';
 
 function App() { return (
    <HashRouter>
@@ -15,6 +16,7 @@ function App() { return (
             <Header />
             <Pages />
          </div>
+         <Prompt />
       </Provider>
    </HashRouter>
 )}
