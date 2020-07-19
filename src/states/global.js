@@ -1,7 +1,10 @@
 // DEFUALT VALUES
 const values = {
     shh: null,
-    keys: {},
+    keys: {
+        sym: '',
+        id: ''
+    },
     topic: 'eyya',
     prompt: {
         visible: true,
@@ -40,6 +43,24 @@ function reducer(state, action) {
             prompt: {
                 ...state.prompt,
                 visible: false
+            }
+        }}
+
+        // UPDATE SYMMETRIC TOPIC KEY
+        case 'update-sym': { return {
+            ...state,
+            keys: {
+                ...state.keys,
+                sym: action.payload
+            }
+        }}
+
+        // UPDATE USER ID
+        case 'update-id': { return {
+            ...state,
+            keys: {
+                ...state.keys,
+                id: action.payload
             }
         }}
 

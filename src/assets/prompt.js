@@ -20,7 +20,7 @@ function Prompt() {
          });
       } else {
          document.getElementById('prompt').style.opacity = 0;
-         document.getElementById('wrapper').style.filter = null;
+         document.getElementById('wrapper').style.filter = 'none';
          sleep(100).then(() => {
             document.getElementById('prompt').style.display = 'none';
          });
