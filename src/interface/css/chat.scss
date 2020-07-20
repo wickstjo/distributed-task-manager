@@ -20,7 +20,7 @@
             height: 100%;
             width: 100%;
 
-            #message, #action, #error {
+            #message, #action, #error, #request {
                 color: #CECECE;
                 display: flex;
                 border-bottom: 1px solid #ffffff44;
@@ -50,6 +50,11 @@
 
             #error {
                 background: rgba(245, 111, 111, 0.349);
+            }
+
+            #request {
+                background: rgba(111, 147, 245, 0.274);
+                color: #F1F1F1;
             }
         }
 
@@ -85,7 +90,7 @@
             }
         }
 
-        #settings {
+        #settings-button {
             padding: 12px;
             padding-bottom: 9px;
             padding-top: 7px;
@@ -97,7 +102,7 @@
             border-left: 1px solid rgba(2, 2, 2, 0.329);
         }
 
-        #settings:hover {
+        #settings-button:hover {
             background: rgba(233, 123, 255, 0.308);
             color: white;
         }

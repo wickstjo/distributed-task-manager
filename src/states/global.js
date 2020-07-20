@@ -46,24 +46,6 @@ function reducer(state, action) {
             }
         }}
 
-        // UPDATE SYMMETRIC TOPIC KEY
-        case 'update-sym': { return {
-            ...state,
-            keys: {
-                ...state.keys,
-                sym: action.payload
-            }
-        }}
-
-        // UPDATE USER ID
-        case 'update-id': { return {
-            ...state,
-            keys: {
-                ...state.keys,
-                id: action.payload
-            }
-        }}
-
         // FALLBACK
         default: {
             console.log('Context reducer type not found');

@@ -20,6 +20,15 @@ function Column({ data }) {
             </div>
         )}
 
+        // FIND REQUEST
+        case 'request': { return (
+            <div id={ 'request' }>
+                <div id={ 'timestamp' }>{ data.timestamp }</div>
+                <div id={ 'user' }>{ data.user }</div>
+                <div id={ 'msg' }>{ data.msg }</div>
+            </div>
+        )}
+
         // ACTION
         case 'error': { return (
             <div id={ 'error' }>

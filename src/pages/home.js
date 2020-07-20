@@ -37,13 +37,19 @@ function Home() {
 
         // ON MESSAGE, ADD IT
         }).on('data', response => {
+
+            // PARSE MESSAGE PARAM & DERIVATE FIRST WORK
+            const message = state.utils.to_string(response.payload)
+            const first = message.split(' ')[0].toLowerCase();
+
+            // SET MESSAGE TYPE BASED ON FIRST WORD
             set_local({
                 type: 'message',
                 payload: {
                     user: shorten(response.sig, 4),
-                    msg: state.utils.to_string(response.payload),
+                    msg: message,
                     timestamp: to_date(response.timestamp),
-                    type: 'message'
+                    type: first === '!request' ? 'request' : 'message'
                 }
             })
         })
@@ -65,7 +71,7 @@ function Home() {
             const keyword = local.input.split(' ')[0].toLowerCase()
             const value = local.input.split(' ')[1]
 
-            // CHAT COMMANDS & FUNCTIONS
+            // LOCAL CHAT COMMANDS & FUNCTIONS
             const commands = {
 
                 // CLEAR MESSAGE
@@ -163,7 +169,7 @@ function Home() {
                         })}
                     />
                 </div>
-                <div id={ 'settings' } onClick={() => {
+                <div id={ 'settings-button' } onClick={() => {
                     dispatch({
                         type: 'show-prompt',
                         payload: 'settings'
