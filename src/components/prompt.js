@@ -2,9 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from "../assets/context";
 import { sleep } from "../funcs/misc";
 import '../interface/css/prompt.scss';
+import EventListener from 'react-event-listener';
+
 import Device from './prompt/device';
 import Task from './prompt/task';
-import EventListener from 'react-event-listener';
+import User from './prompt/user';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -19,13 +21,13 @@ function Prompt() {
          sleep(100).then(() => {
             document.getElementById('wrapper').style.filter = 'blur(6px)';
             document.getElementById('prompt').style.opacity = 1;
-         });
+         })
       } else {
          document.getElementById('prompt').style.opacity = 0;
          document.getElementById('wrapper').style.filter = 'none';
          sleep(100).then(() => {
             document.getElementById('prompt').style.display = 'none';
-         });
+         })
       }
    }, [state.prompt.visible]);
 
@@ -72,6 +74,11 @@ function Content({ type }) {
       // REGISTER DEVICE
       case 'device': {
          return <Device />
+      }
+
+      // REGISTER USER WALLET
+      case 'user': {
+         return <User />
       }
 
       // FALLBACK

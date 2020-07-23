@@ -59,6 +59,11 @@ input, textarea {
     filter: blur(6px);
 }
 
-#tasks, #devices, #whisper, #settings {
+#tasks, #devices, #users, #tokens, #whisper, #settings, #errorframe {
     border-top: 2px solid #ffffff2a;
+}
+
+#errorframe {
+    color: white;
+    padding: 12px;
 }

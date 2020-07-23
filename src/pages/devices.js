@@ -12,7 +12,7 @@ function Devices() {
       // RESET PAGE HEADER
       dispatch({
          type: 'header',
-         payload: 'Devices'
+         payload: 'devices'
       })
 
    // eslint-disable-next-line react-hooks/exhaustive-deps

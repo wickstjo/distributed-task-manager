@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Item({ name, to, current }) {
-   switch(current) {
+   switch(current.toLowerCase()) {
 
       // THIS IS THE CURRENT HEADER
-      case name: { return (
+      case name.toLowerCase(): { return (
          <li id={ 'item' } className={ 'inactive' }>
             { name }
          </li>

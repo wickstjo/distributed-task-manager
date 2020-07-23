@@ -21,7 +21,7 @@ function Whisper() {
         // RESET PAGE HEADER
         dispatch({
             type: 'header',
-            payload: 'Whisper'
+            payload: 'whisper'
         })
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,8 +71,8 @@ function Whisper() {
                     symKeyID: state.whisper.topic.id,
                     sig: state.whisper.id,
                     ttl: 10,
-                    topic: state.utils.to_hex(state.whisper.topic.name),
-                    payload: state.utils.to_hex(input),
+                    topic: state.whisper.utils.to_hex(state.whisper.topic.name),
+                    payload: state.whisper.utils.to_hex(input),
                     powTime: 3,
                     powTarget: 0.5
                 

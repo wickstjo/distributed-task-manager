@@ -1,10 +1,10 @@
 import React from 'react';
 
 function Extra({ current, dispatch }) {
-   switch(current) {
+   switch(current.toLowerCase()) {
 
       // CREATE TASK MENU
-      case 'Tasks': { return (
+      case 'tasks': { return (
          <li id={ 'item' } className={ 'extra' } onClick={() => {
             dispatch({
                type: 'show-prompt',
@@ -14,13 +14,23 @@ function Extra({ current, dispatch }) {
       )}
 
       // REGISTER DEVICE MENU
-      case 'Devices': { return (
+      case 'devices': { return (
          <li id={ 'item' } className={ 'extra' } onClick={() => {
             dispatch({
                type: 'show-prompt',
                payload: 'device'
             })
          }}>Register Device</li>
+      )}
+
+      // REGISTER DEVICE MENU
+      case 'users': { return (
+         <li id={ 'item' } className={ 'extra' } onClick={() => {
+            dispatch({
+               type: 'show-prompt',
+               payload: 'user'
+            })
+         }}>Register Wallet</li>
       )}
 
       // FALLBACK

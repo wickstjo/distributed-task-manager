@@ -4,15 +4,17 @@ import { Context } from '../assets/context';
 function Tasks() {
    
    // state STATE
-   const { dispatch } = useContext(Context)
+   const { state, dispatch } = useContext(Context)
 
    // ON LOAD
    useEffect(() => {
 
+      console.log(state)
+
       // RESET PAGE HEADER
       dispatch({
          type: 'header',
-         payload: 'Tasks'
+         payload: 'tasks'
       })
 
    // eslint-disable-next-line react-hooks/exhaustive-deps

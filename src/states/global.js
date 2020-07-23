@@ -6,6 +6,9 @@ const values = {
     // PAGE HEADER
     header: 'Tasks',
 
+    // WEB3 INSTANCE
+    web3: null,
+
     // WHISPER PARAMS
     shh: null,
     whisper: {
@@ -15,7 +18,8 @@ const values = {
         },
         id: '',
         feed: null,
-        messages: []
+        messages: [],
+        utils: null
     },
 
     // PROMPT PARAMS
