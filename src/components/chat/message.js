@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Column({ data }) {
+function Message({ data }) {
     switch(data.type) {
 
         // MESSAGE
@@ -42,4 +42,4 @@ function Column({ data }) {
     }
 }
 
-export default Column;
+export default Message;

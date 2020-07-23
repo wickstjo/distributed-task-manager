@@ -4,16 +4,16 @@ import { Provider } from "./assets/context";
 import './interface/css/general.scss';
 
 import Init from './assets/init';
-import Header from './assets/header';
 import Pages from './assets/pages';
-import Prompt from './assets/prompt';
+import Menu from './components/menu';
+import Prompt from './components/prompt';
 
 function App() { return (
    <HashRouter>
       <Provider>
          <Init />
          <div id={ 'wrapper' }>
-            <Header />
+            <Menu />
             <Pages />
          </div>
          <Prompt />

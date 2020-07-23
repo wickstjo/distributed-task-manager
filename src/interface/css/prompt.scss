@@ -14,6 +14,29 @@
 
    #inner {
 
+      #device, #task {
+         width: 70vw;
+
+         #top {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            text-transform: uppercase;
+            padding: 5px;
+         }
+
+         #content {
+            background: rgba(0, 0, 0, 0.295);
+            border: 1px solid rgba(255, 255, 255, 0.329);
+            padding: 7px 9px;
+            color: #F1F1F1;
+            resize: vertical;
+            margin-bottom: 15px;
+            transition: 0.2s;
+            word-wrap: break-word;
+         }
+      }
+
       // LOADING SCREEN -- https://loading.io/css/
       .lds-dual-ring {
          display: block;

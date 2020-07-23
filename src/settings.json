@@ -14,7 +14,10 @@
       "private": "0xe6821ddf384698398f5b4001e9ca9bfde0b961f9612269d2e736fa635c1b62e0"
    },
    "whisper": {
-      "network": "cb484a765a4a7c66f565084d083d3a01c6e5941c1fd8ff42559d97ea02e835f5",
+      "topic": {
+         "id": "cb484a765a4a7c66f565084d083d3a01c6e5941c1fd8ff42559d97ea02e835f5",
+         "name": "eyya"
+      },
       "id": ""
    }
  }

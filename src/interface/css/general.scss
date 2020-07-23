@@ -58,3 +58,7 @@ input, textarea {
     transition: filter 0.1s;
     filter: blur(6px);
 }
+
+#tasks, #devices, #whisper, #settings {
+    border-top: 2px solid #ffffff2a;
+}

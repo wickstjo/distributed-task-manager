@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../assets/context';
 
-function Settings() {
-   
+function Devices() {
+
    // state STATE
    const { dispatch } = useContext(Context)
 
@@ -12,17 +12,17 @@ function Settings() {
       // RESET PAGE HEADER
       dispatch({
          type: 'header',
-         payload: 'Settings'
+         payload: 'Devices'
       })
 
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
-   
+
    return (
-      <div id={ 'settings' }>
-         <div id={ 'inner' }>Settings</div>
+      <div id={ 'devices' }>
+         <div id={ 'inner' }>Devices</div>
       </div>
    )
 }
 
-export default Settings;
+export default Devices;

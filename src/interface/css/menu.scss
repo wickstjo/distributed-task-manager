@@ -10,22 +10,35 @@
    li {
       background-color: rgba(0, 0, 0, 0);
       display: inline-block;
-      padding: 10px;
+      padding: 11px;
+      padding-bottom: 9px;
+      padding-top: 9px;
       color: #CECECE;
-      cursor: pointer;
       text-shadow: 1px 1px #242424;
       transition-property: background-color, color;
       transition-duration: 0.3s, 0.3s;
+      transition: 0.2s;
    }
 
-   li:hover {
-      background-color: rgba(2, 2, 2, 0.151);
-      color: rgb(174, 248, 166);
+   #page {
+      color: rgba(253, 255, 115, 0.774);
    }
 
-   .more {
-      background-repeat: no-repeat;
-      background-position: right center;
-      padding-right: 30px;
+   .active:hover, .extra:hover {
+      background: rgba(132, 255, 107, 0.11);
+      color: white;
+      cursor: pointer;
+   }
+
+   .inactive {
+      color: rgba(253, 255, 115, 0.774);
+   }
+
+   .extra {
+      color: rgba(175, 210, 255, 0.938);
+   }
+
+   .extra:hover {
+      background: rgba(179, 225, 255, 0.199);
    }
 }

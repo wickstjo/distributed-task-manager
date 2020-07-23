@@ -1,11 +1,24 @@
+import { to_date } from '../funcs/chat';
+
 // DEFUALT VALUES
 const values = {
+
+    // PAGE HEADER
+    header: 'Tasks',
+
+    // WHISPER PARAMS
     shh: null,
-    keys: {
-        sym: '',
-        id: ''
+    whisper: {
+        topic: {
+            id: '',
+            name: ''
+        },
+        id: '',
+        feed: null,
+        messages: []
     },
-    topic: 'eyya',
+
+    // PROMPT PARAMS
     prompt: {
         visible: true,
         type: 'loading'
@@ -43,6 +56,46 @@ function reducer(state, action) {
             prompt: {
                 ...state.prompt,
                 visible: false
+            }
+        }}
+
+        // SET PAGE HEADER
+        case 'header': { return {
+            ...state,
+            header: action.payload
+        }}
+
+        // SET WHISPER FEED
+        case 'feed': { return {
+            ...state,
+            whisper: {
+                ...state.whisper,
+                feed: action.payload
+            }
+        }}
+
+        // ADD WHISPER MESSAGE
+        case 'message': { return {
+            ...state,
+            whisper: {
+                ...state.whisper,
+                messages: [
+                    ...state.whisper.messages,
+                    action.payload
+                ]
+            }
+        }}
+
+        // CLEAR ALL MESSAGES
+        case 'clear': { return {
+            ...state,
+            whisper: {
+                ...state.whisper,
+                messages: [{
+                    msg: 'The chat has been cleared!',
+                    timestamp: to_date(Date.now() / 1000),
+                    type: 'action'
+                }]
             }
         }}
 

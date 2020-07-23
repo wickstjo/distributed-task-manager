@@ -1,4 +1,4 @@
-#container {
+#whisper {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -10,7 +10,6 @@
         position: relative;
         overflow: auto;
         text-shadow: 1px 1px #242424;
-        border-top: 1px solid #ffffff44;
         border-bottom: 1px solid #ffffff44;
         
         // TODO: FIX EXTRA BOTTOM BORDER ON OVERFLOW
@@ -35,11 +34,11 @@
                 #user { color: rgb(129, 188, 255); }
             }
 
-            #message:nth-child(odd) {
+            #message:nth-child(even) {
                 background: #ffffff1c;
             }
             
-            #message:nth-child(even) {
+            #message:nth-child(odd) {
                 background: #ffffff0c;
             }
 
@@ -67,30 +66,30 @@
 
     #footer {
         display: flex;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
 
-        #input {
+        #chat-input {
             flex: 1;
-
-            input {
-                background: rgba(0, 0, 0, 0.185);
-                border: 0px solid black;
-                padding: 12px;
-                padding-bottom: 9px;
-                padding-top: 7px;
-                color: #CECECE;
-                text-shadow: 1px 1px #242424;
-                width: 100%;
-                border-right: 1px solid #ffffff44;
-                border-top: 1px solid rgba(2, 2, 2, 0.103);
-            }
-        
-            input::placeholder {
-                color: #b6b6b6;
-                text-shadow: 1px 1px #242424;
-            }
+            background: rgba(41, 93, 172, 0.322);
+            border: 0px solid black;
+            padding: 12px;
+            padding-bottom: 9px;
+            padding-top: 7px;
+            color: white;
+            text-shadow: 1px 1px #242424;
+            width: 100%;
+            border-right: 1px solid #ffffff44;
+            border-top: 1px solid rgba(2, 2, 2, 0.103);
         }
 
-        #settings-button {
+        #chat-input::placeholder {
+            color: #e9e9e9;
+            text-shadow: 1px 1px #242424;
+        }
+
+        #chat-button {
             padding: 12px;
             padding-bottom: 9px;
             padding-top: 7px;
@@ -98,11 +97,12 @@
             cursor: pointer;
             color: #F1F1F1;
             transition: 0.2s;
+            border: 0px solid black;
             border-top: 1px solid rgba(2, 2, 2, 0.329);
             border-left: 1px solid rgba(2, 2, 2, 0.329);
         }
 
-        #settings-button:hover {
+        #chat-button:hover {
             background: rgba(233, 123, 255, 0.308);
             color: white;
         }

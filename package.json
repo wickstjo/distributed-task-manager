@@ -20,10 +20,10 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "wait-on": "^5.1.0",
-    "web3": "^1.2.9"
+    "web3": "^1.2.11"
   },
   "devDependencies": {
-    "electron": "^9.1.0",
+    "electron": "^9.1.1",
     "electron-builder": "^22.7.0"
   },
   "scripts": {

@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { Context } from "./context";
+import { Context } from "../assets/context";
 import { sleep } from "../funcs/misc";
 import '../interface/css/prompt.scss';
-import Settings from './settings';
+import Device from './prompt/device';
+import Task from './prompt/task';
+import EventListener from 'react-event-listener';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -27,11 +29,22 @@ function Prompt() {
       }
    }, [state.prompt.visible]);
 
+   // CLOSE PROMPT ON ESC KEY
+   function key_event(event) {
+      if (state.prompt.visible && event.code === 'Escape') {
+         dispatch({ type: 'hide-prompt' })
+      }
+   }
+
    return (
       <div id={ 'prompt' }>
          <div id={ 'inner' }>
             <Content
                type={ state.prompt.type }
+            />
+            <EventListener
+               target={ document }
+               onKeyDown={ key_event }
             />
             <span
                id="close"
@@ -51,9 +64,14 @@ function Content({ type }) {
          return <div className="lds-dual-ring" />
       }
 
-      // LOADING
-      case 'settings': {
-         return <Settings />
+      // CREATE TASK
+      case 'task': {
+         return <Task />
+      }
+
+      // REGISTER DEVICE
+      case 'device': {
+         return <Device />
       }
 
       // FALLBACK
