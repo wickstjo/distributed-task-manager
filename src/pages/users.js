@@ -3,13 +3,11 @@ import { Context } from '../assets/context';
 
 function Users() {
 
-   // state STATE
+   // GLOBAL STATE
    const { dispatch } = useContext(Context)
 
    // ON LOAD
    useEffect(() => {
-
-      // RESET PAGE HEADER
       dispatch({
          type: 'header',
          payload: 'users'

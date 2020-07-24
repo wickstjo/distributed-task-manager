@@ -8,8 +8,6 @@ function Task({ match }) {
 
    // ON LOAD
    useEffect(() => {
-
-      // RESET PAGE HEADER
       dispatch({
          type: 'header',
          payload: 'tasks'

@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useContext, useState } from 'react';
 import { Context } from '../assets/context';
 import '../interface/css/whisper.scss';
-import { to_date } from '../funcs/chat';
 import Message from '../components/chat/message';
+import { add_message } from '../funcs/whisper';
 
 function Whisper() {
 
-    // state STATE
+    // GLOBAL STATE
     const { state, dispatch } = useContext(Context)
 
     // LOCAL STATES
@@ -15,10 +15,8 @@ function Whisper() {
     // REF TO LATEST MESSAGE
     const latest = useRef(null)
 
-    // ON LOAD
+    // ON LOAD, SET SITE HEADER
     useEffect(() => {
-
-        // RESET PAGE HEADER
         dispatch({
             type: 'header',
             payload: 'whisper'
@@ -34,67 +32,6 @@ function Whisper() {
         })
     }, [state.whisper.messages])
 
-    // ENTER KEY LISTENER
-    function add_message(event) {
-
-        // PREVENT PAGE RELOAD FROM FORM
-        event.preventDefault();
-
-        // IF THE INPUT FIELD ISNT EMPTY
-        if (input.trim() !== '') {
-
-            // COMMAND INPUTS
-            const keyword = input.trim().split(' ')[0].toLowerCase()
-            // const value = input.trim().split(' ')[1]
-
-            // LOCAL CHAT COMMANDS
-            const commands = {
-
-                // CLEAR MESSAGE
-                '/clear': () => {
-                    dispatch({
-                        type: 'clear'
-                    })
-                }
-            }
-
-            // IF KEYWORD IS FOUND
-            if (Object.keys(commands).includes(keyword)) {
-
-                // RUN FUNC & RESET INPUT
-                commands[keyword]()
-                set_input('')
-
-            // OTHERWISE, SEND MESSAGE PAYLOAD
-            } else {
-                state.shh.post({
-                    symKeyID: state.whisper.topic.id,
-                    sig: state.whisper.id,
-                    ttl: 10,
-                    topic: state.whisper.utils.to_hex(state.whisper.topic.name),
-                    payload: state.whisper.utils.to_hex(input),
-                    powTime: 3,
-                    powTarget: 0.5
-                
-                // EVERYTHING OK, RESET INPUT
-                }).then(hash => {
-                    set_input('')
-        
-                // OTHERWISE, SHOW ERROR
-                }).catch(error => {
-                    dispatch({
-                        type: 'message',
-                        payload: {
-                            msg: 'Could not send message!',
-                            timestamp: to_date(Date.now() / 1000),
-                            type: 'error'
-                        }
-                    })
-                })
-            }
-        }
-    }
-
     return (
         <div id={ 'whisper' }>
             <div id={ 'messages' }>
@@ -108,7 +45,7 @@ function Whisper() {
                     <div ref={ latest } />
                 </div>
             </div>
-            <form id={ 'footer' } onSubmit={ event => add_message(event) }>
+            <form id={ 'footer' } onSubmit={ event => add_message(input, set_input, state, dispatch, event) }>
                 <input
                     autoFocus
                     type={ 'text' }
@@ -121,7 +58,7 @@ function Whisper() {
                     type={ 'button' }
                     value={ 'Post' }
                     id={ 'chat-button' }
-                    onClick={ event => add_message(event) }
+                    onClick={ event => add_message(input, set_input, state, dispatch, event) }
                 />
             </form>
         </div>

@@ -6,8 +6,9 @@ const values = {
     // PAGE HEADER
     header: 'Tasks',
 
-    // WEB3 INSTANCE
+    // WEB3 INSTANCE & SMART CONTRACTS
     web3: null,
+    contracts: {},
 
     // WHISPER PARAMS
     shh: null,

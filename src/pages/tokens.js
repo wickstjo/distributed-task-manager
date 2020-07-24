@@ -8,8 +8,6 @@ function Tokens() {
 
    // ON LOAD
    useEffect(() => {
-
-      // RESET PAGE HEADER
       dispatch({
          type: 'header',
          payload: 'tokens'

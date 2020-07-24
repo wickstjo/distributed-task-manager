@@ -71,7 +71,69 @@ function create_feed(state, dispatch) {
     }
 }
 
+// ENTER KEY LISTENER
+function add_message(input, set_input, state, dispatch, event) {
+
+    // PREVENT PAGE RELOAD FROM FORM
+    event.preventDefault();
+
+    // IF THE INPUT FIELD ISNT EMPTY
+    if (input.trim() !== '') {
+
+        // COMMAND INPUTS
+        const keyword = input.trim().split(' ')[0].toLowerCase()
+        // const value = input.trim().split(' ')[1]
+
+        // LOCAL CHAT COMMANDS
+        const commands = {
+
+            // CLEAR MESSAGE
+            '/clear': () => {
+                dispatch({
+                    type: 'clear'
+                })
+            }
+        }
+
+        // IF KEYWORD IS FOUND
+        if (Object.keys(commands).includes(keyword)) {
+
+            // RUN FUNC & RESET INPUT
+            commands[keyword]()
+            set_input('')
+
+        // OTHERWISE, SEND MESSAGE PAYLOAD
+        } else {
+            state.shh.post({
+                symKeyID: state.whisper.topic.id,
+                sig: state.whisper.id,
+                ttl: 10,
+                topic: state.whisper.utils.to_hex(state.whisper.topic.name),
+                payload: state.whisper.utils.to_hex(input),
+                powTime: 3,
+                powTarget: 0.5
+            
+            // EVERYTHING OK, RESET INPUT
+            }).then(hash => {
+                set_input('')
+    
+            // OTHERWISE, SHOW ERROR
+            }).catch(error => {
+                dispatch({
+                    type: 'message',
+                    payload: {
+                        msg: 'Could not send message!',
+                        timestamp: to_date(Date.now() / 1000),
+                        type: 'error'
+                    }
+                })
+            })
+        }
+    }
+}
+
 export {
     init,
-    create_feed
+    create_feed,
+    add_message
 }

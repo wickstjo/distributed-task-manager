@@ -3,13 +3,11 @@ import { Context } from '../assets/context';
 
 function Devices() {
 
-   // state STATE
+   // GLOBAL STATE
    const { dispatch } = useContext(Context)
 
    // ON LOAD
    useEffect(() => {
-
-      // RESET PAGE HEADER
       dispatch({
          type: 'header',
          payload: 'devices'

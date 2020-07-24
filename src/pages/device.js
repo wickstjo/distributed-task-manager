@@ -8,8 +8,6 @@ function Device({ match }) {
 
    // ON LOAD
    useEffect(() => {
-
-      // RESET PAGE HEADER
       dispatch({
          type: 'header',
          payload: 'devices'
