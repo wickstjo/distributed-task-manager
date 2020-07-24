@@ -10,7 +10,7 @@ function Device({ match }) {
    useEffect(() => {
       dispatch({
          type: 'header',
-         payload: 'devices'
+         payload: 'device'
       })
 
    // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -18,7 +18,7 @@ function Device({ match }) {
 
    return (
       <div id={ 'devices' }>
-         <div id={ 'inner' }>{ match.params.address }</div>
+         <div id={ 'inner' }>Devices - { match.params.address }</div>
       </div>
    )
 }

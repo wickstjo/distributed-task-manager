@@ -5,11 +5,8 @@ import { Context } from './context';
 import Tasks from '../pages/tasks';
 import Task from '../pages/task';
 
-import Devices from '../pages/devices';
 import Device from '../pages/device';
-
-import Users from '../pages/users';
-import User from '../pages/user';
+import User from '../pages/profile';
 
 import Tokens from '../pages/tokens';
 import Whisper from '../pages/whisper';
@@ -29,10 +26,7 @@ function Pages() {
          <Route exact path={ '/tasks' } component={ Tasks } />
          <Route path={ '/tasks/:address' } component={ Task } />
 
-         <Route exact path={ '/devices' } component={ Devices } />
          <Route path={ '/devices/:address' } component={ Device } />
-
-         <Route exact path={ '/users' } component={ Users } />
          <Route path={ '/users/:address' } component={ User } />
 
          <Route exact path={ '/tokens' } component={ Tokens } />

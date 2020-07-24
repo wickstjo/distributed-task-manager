@@ -9,6 +9,10 @@ const values = {
     // WEB3 INSTANCE & SMART CONTRACTS
     web3: null,
     contracts: {},
+    keys: {
+        public: '',
+        private: ''
+    },
 
     // WHISPER PARAMS
     shh: null,

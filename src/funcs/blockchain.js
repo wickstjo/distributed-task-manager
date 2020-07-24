@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import { gateways } from '../settings.json';
+import { gateways, keys } from '../settings.json';
 import references from '../latest.json';
 
 // PARSE SC & WEB3
@@ -23,7 +23,8 @@ function init() {
             'device',
             'task'
          ])
-      }
+      },
+      keys: keys
    }
 }
 

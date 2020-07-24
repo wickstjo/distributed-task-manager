@@ -71,6 +71,36 @@ input, textarea {
 #tasks, #devices, #users, #tokens, #settings {
     overflow: auto;
     height: 100%;
+
+    #list {
+        a:nth-child(even) #row {
+            background: #ffffff1c;
+        }
+    
+        a:nth-child(odd) #row {
+            background: #ffffff0c;
+        }
+    
+        a {
+            #row {
+                padding: 10px;
+                color: #CECECE;
+                border-bottom: 1px solid #ffffff44;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+    
+            #row:hover {
+                background: rgba(103, 255, 171, 0.178);
+                color: white;
+            }
+        }
+    }
+
+    #fallback {
+        color: #CECECE;
+        padding: 12px;
+    }
 }
 
 #tasks::-webkit-scrollbar,

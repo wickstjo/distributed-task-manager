@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
 import { fetch_open } from '../funcs/contract/task';
-import List from '../components/tasks/list';
+import List from '../components/shared/list';
 import '../interface/css/tasks.scss';
 
 function Tasks() {
@@ -30,18 +30,10 @@ function Tasks() {
    return (
       <div id={ 'tasks' }>
          <div id={ 'inner' }>
-            <List tasks={ tasks } />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <List
+               data={ tasks }
+               fallback={ 'No open tasks found.' }
+            />
          </div>
       </div>
    )

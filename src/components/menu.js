@@ -19,18 +19,13 @@ function Menu() {
                   current={ state.header }
                />
                <Item
-                  name={ 'Devices' }
-                  to={ '/devices' }
-                  current={ state.header }
-               />
-               <Item
-                  name={ 'Users' }
-                  to={ '/users' }
-                  current={ state.header }
-               />
-               <Item
                   name={ 'Tokens' }
                   to={ '/tokens' }
+                  current={ state.header }
+               />
+               <Item
+                  name={ 'Profile' }
+                  to={ '/users/' + state.keys.public }
                   current={ state.header }
                />
                <Item
