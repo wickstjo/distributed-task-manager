@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext, useState } from 'react';
 import { Context } from '../assets/context';
 import '../interface/css/whisper.scss';
-import Message from '../components/chat/message';
+import Content from '../components/whisper/content';
 import { add_message } from '../funcs/whisper';
 
 function Whisper() {
@@ -36,12 +36,10 @@ function Whisper() {
         <div id={ 'whisper' }>
             <div id={ 'messages' }>
                 <div id={ 'scroller' }>
-                    { state.whisper.messages.map((data, index) =>
-                        <Message
-                            data={ data }
-                            key={ index }
-                        />
-                    )}
+                    <Content
+                        data={ state.whisper.messages }
+                        fallback={ 'The whisper feed has been created!' }
+                    />
                     <div ref={ latest } />
                 </div>
             </div>

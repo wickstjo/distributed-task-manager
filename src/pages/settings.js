@@ -18,7 +18,9 @@ function Settings() {
    
    return (
       <div id={ 'settings' }>
-         <div id={ 'inner' }>Settings</div>
+         <div id={ 'inner' }>
+            <div id={ 'fallback' }>Settings page</div>
+         </div>
       </div>
    )
 }

@@ -8,8 +8,6 @@ function Profile({ match }) {
 
    // ON LOAD
    useEffect(() => {
-
-      // RESET PAGE HEADER
       dispatch({
          type: 'header',
          payload: match.params.address === state.keys.public ? 'profile' : 'user'
@@ -20,7 +18,9 @@ function Profile({ match }) {
 
    return (
       <div id={ 'users' }>
-         <div id={ 'inner' }>Users - { match.params.address }</div>
+         <div id={ 'inner' }>
+            <div id={ 'fallback' }>Users - { match.params.address }</div>
+         </div>
       </div>
    )
 }

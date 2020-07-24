@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
 import { fetch_open } from '../funcs/contract/task';
-import List from '../components/shared/list';
+import List from '../components/tasks/list';
 import '../interface/css/tasks.scss';
 
 function Tasks() {

@@ -18,7 +18,9 @@ function Tokens() {
 
    return (
       <div id={ 'tokens' }>
-         <div id={ 'inner' }>Tokens</div>
+         <div id={ 'inner' }>
+            <div id={ 'fallback' }>Tokens page</div>
+         </div>
       </div>
    )
 }
