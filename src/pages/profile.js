@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../assets/context';
+import Actions from '../components/profile/actions';
 
 function Profile({ match }) {
 
@@ -20,6 +21,9 @@ function Profile({ match }) {
       <div id={ 'users' }>
          <div id={ 'inner' }>
             <div id={ 'fallback' }>Users - { match.params.address }</div>
+            {
+               match.params.address === state.keys.public ? <Actions dispatch={ dispatch } /> : null
+            }
          </div>
       </div>
    )

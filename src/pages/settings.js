@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../assets/context';
+import Actions from '../components/settings/actions';
 
 function Settings() {
    
@@ -20,6 +21,7 @@ function Settings() {
       <div id={ 'settings' }>
          <div id={ 'inner' }>
             <div id={ 'fallback' }>Settings page</div>
+            <Actions dispatch={ dispatch } />
          </div>
       </div>
    )

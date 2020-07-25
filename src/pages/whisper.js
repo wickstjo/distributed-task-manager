@@ -47,7 +47,7 @@ function Whisper() {
                 <input
                     autoFocus
                     type={ 'text' }
-                    placeholder={ 'Type something cool here!' }
+                    placeholder={ 'What do you have to say?' }
                     value={ input }
                     id={ 'chat-input' }
                     onChange={ event => set_input(event.target.value) }

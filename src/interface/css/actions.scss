@@ -1,0 +1,50 @@
+#actions {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    padding: 20px;
+    opacity: 0.4;
+    transition: 0.2s;
+
+    #action {
+        background-color: rgba(128, 255, 111, 0.185);
+        border: 1px solid rgba(255, 255, 255, 0.205);
+        display: inline-block;
+        padding: 8px;
+        padding-left: 35px;
+        color: #CECECE;
+        text-shadow: 1px 1px #242424;
+        margin-left: 5px;
+        background-image: url('../images/icons/plus.png');
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-position-x: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    #action:hover {
+        background-color: rgba(128, 255, 111, 0.274);
+        color: white;
+    }
+
+    #action.save {
+        background-image: url('../images/icons/checkmark.png');
+    }
+
+    #action.revert {
+        background-image: url('../images/icons/warning.png');
+    }
+
+    #action.keys {
+        background-image: url('../images/icons/key.png');
+    }
+
+    #action.user {
+        background-image: url('../images/icons/user-plus.png');
+    }
+}
+
+#actions:hover {
+    opacity: 1;
+}

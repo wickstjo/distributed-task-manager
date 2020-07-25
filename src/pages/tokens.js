@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../assets/context';
+import Actions from '../components/tokens/actions';
 
 function Tokens() {
 
@@ -20,6 +21,7 @@ function Tokens() {
       <div id={ 'tokens' }>
          <div id={ 'inner' }>
             <div id={ 'fallback' }>Tokens page</div>
+            <Actions dispatch={ dispatch } />
          </div>
       </div>
    )
