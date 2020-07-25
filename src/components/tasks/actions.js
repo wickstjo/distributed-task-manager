@@ -1,7 +1,9 @@
 import React from 'react';
 import '../../interface/css/actions.scss';
+import { fetch, register } from '../../funcs/contract/user';
+import { sleep } from '../../funcs/misc';
 
-function Actions({ dispatch }) {
+function Actions({ state, dispatch }) {
 
     // CREATE TASK PROMPT
     function create_task() {
@@ -11,17 +13,42 @@ function Actions({ dispatch }) {
         })
     }
 
-    // REGISTER USER PROMPT
+    // REGISTER USER
     function register_user() {
+
+        // SHOW LOADING SCREEN
         dispatch({
             type: 'show-prompt',
-            payload: 'user'
+            payload: 'loading'
+        })
+
+        // REGISTER THE WALLET ADDRESS
+        register(state).then(() => {
+            
+            // SLEEP FOR 2 SECONDS
+            sleep(2000).then(() => {
+
+                // FETCH THE USERS CONTRACT ADDRESS
+                fetch(state.keys.public).then(address => {
+
+                    // VERIFY IT
+                    dispatch({
+                        type: 'verify',
+                        payload: address
+                    })
+
+                    // FINALLY HIDE THE LOADING SCREEN
+                    dispatch({ type: 'hide-prompt' })
+                })
+            })
         })
     }
     
     return (
         <div id={ 'actions' }>
-            <li id={ 'action' } onClick={ create_task }>Create Task</li>
+            {
+                state.verified ? <li id={ 'action' } onClick={ create_task }>Create Task</li> : null
+            }
             <li id={ 'action' } onClick={ register_user } className={ 'user' }>Register User</li>
         </div>
     )

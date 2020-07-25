@@ -128,6 +128,15 @@ function call({ query, modify }) {
    })
 }
 
+// CHECK ADDRESS INDEXATION
+function exists(query) {
+   if (query === '0x0000000000000000000000000000000000000000') {
+      return false;
+   } else {
+      return true;
+   }
+}
+
 // PRUNE ERROR MESSAGE
 function prune(error) {
 
@@ -194,6 +203,7 @@ export {
    call,
    assemble,
    assess,
+   exists,
    prune,
    is_address
 }

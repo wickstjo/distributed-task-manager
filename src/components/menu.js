@@ -21,11 +21,13 @@ function Menu() {
                to={ '/tokens' }
                current={ state.header }
             />
-            <Item
-               name={ 'Profile' }
-               to={ '/users/' + state.keys.public }
-               current={ state.header }
-            />
+            {
+               state.verified ? <Item
+                  name={ 'Profile' }
+                  to={ '/users/' + state.keys.public }
+                  current={ state.header }
+               /> : null
+            }
             <Item
                name={ 'Whisper' }
                to={ '/whisper' }

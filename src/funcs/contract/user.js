@@ -3,24 +3,15 @@ import { transaction, assemble } from '../blockchain';
 // CONTRACT REFERENCES
 function refs(state) {
     return {
-        manager: state.managers.user.methods,
-        address: state.managers.user._address
+        manager: state.contracts.managers.user.methods,
+        address: state.contracts.managers.user._address
     }
 }
 
-// INITIALIZE
-function init(task_manager, state) {
-    const { manager, address } = refs(state);
-
-    return transaction({
-       query: manager.init(task_manager),
-       contract: address
-    }, state)
- }
-
-// FETCH ALL USERS
-function fetch_all(state) {
-    return refs(state).manager.fetch_everyone().call()
+// FETCH USER SMART CONTRACT
+function fetch(user, state) {
+    const { manager } = refs(state);
+    return manager.fetch(user).call();
 }
 
 // FETCH USER ADDRESS
@@ -68,7 +59,7 @@ async function fetch_result(task, user, state) {
 }
 
 // ADD USER
-function add_user(state) {
+function register(state) {
     const { manager, address } = refs(state);
 
     return transaction({
@@ -78,9 +69,8 @@ function add_user(state) {
 }
 
 export {
-    init,
-    fetch_all,
+    fetch,
     user_overview,
     fetch_result,
-    add_user
+    register
 }

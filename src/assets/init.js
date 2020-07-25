@@ -3,6 +3,7 @@ import { Context } from "./context";
 import { sleep } from '../funcs/misc';
 import { init as init_blockchain } from '../funcs/blockchain';
 import { init as init_whisper, create_feed } from '../funcs/whisper';
+import { fetch } from '../funcs/contract/user';
 
 function Init() {
 
@@ -47,8 +48,26 @@ function Init() {
    useEffect(() => {
       create_feed(state, dispatch)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.whisper.topic])
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [state.whisper.topic])
+
+   // CHECK IF USER WALLET IS REGISTERED
+   useEffect(() => {
+      if (state.web3 !== null) {
+
+         // FETCH USER SMART CONTRACT
+         fetch(state.keys.public, state).then(result => {
+
+            // VERYIFY LEGITIMICY IN STATE
+            dispatch({
+               type: 'verify',
+               payload: result
+            })
+         })
+      }
+
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [state.web3])
 
    return null;
 }

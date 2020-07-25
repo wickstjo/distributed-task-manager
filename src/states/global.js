@@ -1,4 +1,5 @@
 import { to_date } from '../funcs/chat';
+import { exists } from '../funcs/blockchain';
 
 // DEFUALT VALUES
 const values = {
@@ -13,6 +14,9 @@ const values = {
         public: '',
         private: ''
     },
+
+    // VERIFY USER REGISTRATION
+    verified: false,
 
     // WHISPER PARAMS
     shh: null,
@@ -106,6 +110,12 @@ function reducer(state, action) {
                     type: 'action'
                 }]
             }
+        }}
+
+        // VERIFY USER REGISTRATION
+        case 'verify': { return {
+            ...state,
+            verified: exists(action.payload)
         }}
 
         // FALLBACK

@@ -35,7 +35,10 @@ function Tasks() {
                data={ tasks }
                fallback={ 'No open tasks found.' }
             />
-            <Actions dispatch={ dispatch } />
+            <Actions
+               state={ state }
+               dispatch={ dispatch }
+            />
          </div>
       </div>
    )
