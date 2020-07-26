@@ -76,7 +76,6 @@ function transaction({ query, contract, payable }, state) {
 
    // ESTIMATE GAS PRICE
    return query.estimateGas(tx).then(price => {
-      console.log(price)
 
       // ADD GAS PROPERTY TO TRANSACTION
       tx.gas = price;

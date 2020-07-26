@@ -6,7 +6,6 @@ import EventListener from 'react-event-listener';
 
 import Device from './prompt/device';
 import Task from './prompt/task';
-import User from './prompt/user';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -74,11 +73,6 @@ function Content({ type }) {
       // REGISTER DEVICE
       case 'device': {
          return <Device />
-      }
-
-      // REGISTER USER WALLET
-      case 'user': {
-         return <User />
       }
 
       // FALLBACK

@@ -3,8 +3,8 @@ import { transaction, assemble } from '../blockchain';
 // CONTRACT REFERENCES
 function refs(state) {
     return {
-        manager: state.managers.device.methods,
-        address: state.managers.device._address
+        manager: state.contracts.managers.device.methods,
+        address: state.contracts.managers.device._address
     }
 }
 
@@ -58,11 +58,13 @@ async function fetch_backlog(hash, state) {
 }
 
 // ADD DEVICE
-function add_device(hash, name, state) {
+function register(hash, state) {
     const { manager, address } = refs(state);
 
+    console.log(state)
+
     return transaction({
-        query: manager.add(hash, name),
+        query: manager.add(hash),
         contract: address
     }, state)
 }
@@ -72,5 +74,5 @@ export {
     collection,
     device_overview,
     fetch_backlog,
-    add_device
+    register
 }

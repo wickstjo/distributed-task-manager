@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../interface/css/actions.scss';
-import { fetch, register } from '../../funcs/contract/user';
-import { sleep } from '../../funcs/misc';
+import { login } from '../../funcs/tasks';
 
 function Actions({ state, dispatch }) {
 
@@ -13,45 +12,26 @@ function Actions({ state, dispatch }) {
         })
     }
 
-    // REGISTER USER
-    function register_user() {
+    // SWITCH BUTTONS BASED ON VERIFICATION STATUS
+    switch(state.verified) {
 
-        // SHOW LOADING SCREEN
-        dispatch({
-            type: 'show-prompt',
-            payload: 'loading'
-        })
+        // SHOW TASK BUTTON
+        case true: { return (
+            <div id={ 'actions' }>
+                <li id={ 'action' } onClick={ create_task }>Create Task</li>
+            </div>
+        )}
 
-        // REGISTER THE WALLET ADDRESS
-        register(state).then(() => {
-            
-            // SLEEP FOR 2 SECONDS
-            sleep(2000).then(() => {
+        // SHOW REGISTER BUTTON
+        case false: { return (
+            <div id={ 'actions' }>
+                <li id={ 'action' } onClick={() => login(state, dispatch) } className={ 'user' }>Register User</li>
+            </div>
+        )}
 
-                // FETCH THE USERS CONTRACT ADDRESS
-                fetch(state.keys.public).then(address => {
-
-                    // VERIFY IT
-                    dispatch({
-                        type: 'verify',
-                        payload: address
-                    })
-
-                    // FINALLY HIDE THE LOADING SCREEN
-                    dispatch({ type: 'hide-prompt' })
-                })
-            })
-        })
+        // FALLBACK
+        default: { return null; }
     }
-    
-    return (
-        <div id={ 'actions' }>
-            {
-                state.verified ? <li id={ 'action' } onClick={ create_task }>Create Task</li> : null
-            }
-            <li id={ 'action' } onClick={ register_user } className={ 'user' }>Register User</li>
-        </div>
-    )
 }
 
 export default Actions;
