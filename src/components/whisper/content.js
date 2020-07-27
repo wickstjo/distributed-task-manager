@@ -1,22 +1,22 @@
 import React from 'react';
 import Message from './message';
 
-function Content({ data, fallback }) {
+function Content({ data }) {
     switch(data.length) {
 
         // NO MESSAGES FOUND
-        case 0: { return (
-            <div id={ 'fallback' }>{ fallback }</div>
-        )}
+        case 0: { return null }
 
         // OTHERWISE, LIST MESSAGES
         default: { return (
-            data.map((data, index) =>
-                <Message
-                    data={ data }
-                    key={ index }
-                />
-            )
+            <div id={ 'foo' }>
+                { data.map((data, index) =>
+                    <Message
+                        data={ data }
+                        key={ index }
+                    />
+                )}
+            </div>
         )}
     }
 }

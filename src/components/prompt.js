@@ -6,6 +6,7 @@ import EventListener from 'react-event-listener';
 
 import Device from './prompt/device';
 import Task from './prompt/task';
+import Token from './prompt/token';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -73,6 +74,11 @@ function Content({ type }) {
       // REGISTER DEVICE
       case 'device': {
          return <Device />
+      }
+
+      // PURCHASE TOKEN
+      case 'token': {
+         return <Token />
       }
 
       // FALLBACK

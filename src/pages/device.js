@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../assets/context';
+import Info from '../components/shared/info';
+import List from '../components/shared/list';
 
 function Device({ match }) {
 
@@ -18,7 +20,27 @@ function Device({ match }) {
 
    return (
       <div id={ 'devices' }>
-         <div id={ 'inner' }>Devices - { match.params.address }</div>
+         <div id={ 'inner' }>
+            <div id={ 'device' }>
+            <div id={ 'header' }>Device overview</div>
+               <Info
+                  data={{
+                     'Contract': 'TBA',
+                     'Hash': match.params.address,
+                     'Owner': 'TBA',
+                     'Whisper Signature': 'TBA',
+                     'Active': 'TBA',
+                     'Tasks Completed': 'TBA'
+
+                  }}
+               />
+               <div id={ 'header' }>Task backlog</div>
+               <List
+                  data={[]}
+                  fallback={ 'No tasks found.' }
+               />
+            </div>
+         </div>
       </div>
    )
 }

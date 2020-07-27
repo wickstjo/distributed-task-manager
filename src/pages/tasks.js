@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
 import { fetch_open } from '../funcs/contract/task';
-import List from '../components/tasks/list';
+import List from '../components/shared/list';
 import Actions from '../components/tasks/actions';
 import '../interface/css/tasks.scss';
 
@@ -31,13 +31,15 @@ function Tasks() {
    return (
       <div id={ 'tasks' }>
          <div id={ 'inner' }>
+            <div id={ 'header' }>Incomplete tasks ({ tasks.length })</div>
             <List
                data={ tasks }
-               fallback={ 'No open tasks found.' }
+               fallback={ 'No tasks found.' }
             />
             <Actions
                state={ state }
                dispatch={ dispatch }
+               category={ 'tasks' }
             />
          </div>
       </div>

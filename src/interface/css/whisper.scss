@@ -19,45 +19,60 @@
             height: 100%;
             width: 100%;
 
-            #message, #action, #error, #request {
-                color: #CECECE;
-                display: flex;
-                border-bottom: 1px solid #ffffff44;
+            #foo {
+                border-top: 1px solid rgba(0, 0, 0, 0.171);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.185);
 
-                div {
-                    padding: 7px 9px;
-                    padding-right: 0px;
+                #message, #action, #error, #request {
+                    color: #CECECE;
+                    display: flex;
+                    border-top: 1px solid rgba(255, 255, 255, 0.185);
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+    
+                    div {
+                        padding: 7px 9px;
+                        padding-right: 0px;
+                    }
+    
+                    #msg { flex: 1; }
+                    #timestamp { color: #F1F1F1; }
+                    #user { color: rgb(129, 188, 255); }
+                }
+    
+                #message:nth-child(odd) {
+                    background: rgba(255, 255, 255, 0.068);
+                }
+                
+                #message:nth-child(even) {
+                    background: rgba(124, 213, 255, 0.11);
                 }
 
-                #msg { flex: 1; }
-                #timestamp { color: #F1F1F1; }
-                #user { color: rgb(129, 188, 255); }
-            }
+                #message:first-child,
+                #action:first-child,
+                #error:first-child,
+                #request:first-child {
+                    border-top: 0px solid black;
+                }
+    
+                #action, #error {
+                    background: rgba(97, 255, 150, 0.192);
+                    color: white;
+                }
 
-            #message:nth-child(even) {
-                background: #ffffff1c;
+                #action {
+                    border-top: 0px solid black;
+                }
+    
+                #error {
+                    background: rgba(245, 111, 111, 0.349);
+                }
+    
+                #request {
+                    background: rgba(236, 245, 111, 0.178);
+                    color: #F1F1F1;
+                }
             }
-            
-            #message:nth-child(odd) {
-                background: #ffffff0c;
             }
-
-            #action, #error {
-                background: rgba(97, 255, 150, 0.192);
-                color: white;
-            }
-
-            #error {
-                background: rgba(245, 111, 111, 0.349);
-            }
-
-            #request {
-                background: rgba(111, 147, 245, 0.274);
-                color: #F1F1F1;
-            }
-        }
-
-        #scroller #message:nth-last-child() { border-bottom:solid 5px #999; }
     }
 
     #messages::-webkit-scrollbar { width: 12px; }

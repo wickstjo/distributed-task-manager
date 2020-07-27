@@ -7,7 +7,7 @@ function Actions({ dispatch }) {
     function purchase() {
         dispatch({
             type: 'show-prompt',
-            payload: 'task'
+            payload: 'token'
         })
     }
 

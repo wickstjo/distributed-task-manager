@@ -36,10 +36,7 @@ function Whisper() {
         <div id={ 'whisper' }>
             <div id={ 'messages' }>
                 <div id={ 'scroller' }>
-                    <Content
-                        data={ state.whisper.messages }
-                        fallback={ 'The whisper feed has been created!' }
-                    />
+                    <Content data={ state.whisper.messages } />
                     <div ref={ latest } />
                 </div>
             </div>

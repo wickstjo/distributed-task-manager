@@ -27,7 +27,7 @@ function Device() {
          // REGISTER THE DEVICE
          register(identifier, state).then(() => {
 
-            // SLEEP FOR 2 SECONDS,THEN HIDE PROMPT
+            // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
             sleep(2000).then(() => {
                dispatch({
                   type: 'hide-prompt'

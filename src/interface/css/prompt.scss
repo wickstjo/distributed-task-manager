@@ -37,6 +37,35 @@
             min-height: 400px;
          }
 
+         #cont {
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            margin-bottom: 5px;
+
+            #inp {
+               border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+
+               input {
+                  background: rgba(255, 255, 255, 0.075);
+                  border: 0px solid black;
+                  border: 1px solid rgba(0, 0, 0, 0.329);
+                  padding: 7px 9px;
+                  color: #F1F1F1;
+                  width: 100%;
+               }
+
+               input::placeholder {
+                  color: #c0c0c0;
+               }
+            }
+   
+            #total {
+               background: rgba(232, 120, 255, 0.137);
+               padding: 7px 9px;
+               color: white;
+               border: 1px solid rgba(0, 0, 0, 0.329);
+            }
+         }
+
          #submit {
             background-color: rgba(128, 255, 111, 0.185);
             border: 1px solid rgba(255, 255, 255, 0.205);

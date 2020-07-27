@@ -9,9 +9,9 @@ function refs(state) {
 }
 
 // FETCH USER SMART CONTRACT
-function fetch(user, state) {
+function fetch(state) {
     const { manager } = refs(state);
-    return manager.fetch(user).call();
+    return manager.fetch(state.keys.public).call();
 }
 
 // FETCH USER ADDRESS

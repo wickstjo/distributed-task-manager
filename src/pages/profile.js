@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
 import Actions from '../components/profile/actions';
-import List from '../components/tasks/list';
-import '../interface/css/profile.scss';
+import List from '../components/shared/list';
+import Info from '../components/shared/info';
 import { collection } from '../funcs/contract/device';
+import { fetch } from '../funcs/contract/user';
+import { balance } from '../funcs/contract/token';
 
 function Profile({ match }) {
 
@@ -12,6 +14,8 @@ function Profile({ match }) {
 
    // LOCAL STATE
    const [devices, set_devices] = useState([])
+   const [contract, set_contract] = useState('')
+   const [tokens, set_tokens] = useState('')
 
    // ON LOAD
    useEffect(() => {
@@ -25,6 +29,16 @@ function Profile({ match }) {
          set_devices(list)
       })
 
+      // FETCH & SET USER SMART CONTRACT LOCATION
+      fetch(state).then(address => {
+         set_contract(address)
+      })
+
+      // FETCH TOKEN BALANCE
+      balance(state).then(amount => {
+         set_tokens(amount)
+      })
+
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
@@ -32,11 +46,21 @@ function Profile({ match }) {
       <div id={ 'users' }>
          <div id={ 'inner' }>
             <div id={ 'profile' }>
-               <div id={ 'header' }>Profile overview</div>
-               <div id={ 'header' }>Device collection</div>
+               <div id={ 'header' }>User overview</div>
+               <Info
+                  data={{
+                     'Contract': contract,
+                     'ETH Wallet': state.keys.public,
+                     'Whisper Signature': 'TBA',
+                     'Reputation': 'TBA',
+                     'Token Balance': tokens
+                  }}
+               />
+               <div id={ 'header' }>Device collection ({ devices.length })</div>
                <List
                   data={ devices }
                   fallback={ 'foobar' }
+                  category={ '/devices' }
                />
             </div>
             {
