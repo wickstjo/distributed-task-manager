@@ -8,14 +8,9 @@ function refs(state) {
     }
 }
 
-// INITIALIZE
-function init(user_manager, task_manager, state) {
-    const { manager, address } = refs(state);
-
-    return transaction({
-       query: manager.init(user_manager, task_manager),
-       contract: address
-    }, state)
+// FETCH USER DEVICE COLLECTION
+function fetch(hash, state) {
+    return refs(state).manager.fetch_device(hash).call();
 }
 
 // FETCH USER DEVICE COLLECTION
@@ -43,25 +38,25 @@ async function device_overview(hash, state) {
 }
 
 // FETCH DEVICE ASSIGNMENT BACKLOG
-async function fetch_backlog(hash, state) {
+function backlog(hash, state) {
+    const { manager } = refs(state)
 
-    // FETCH THE DEVICES CONTRACT
-    const device = await refs(state).manager.fetch_device(hash).call();
-    
-    // CONSTRUCT CONTRACT
-    const contract = assemble({
-        address: device,
-        contract: 'device'
-    }, state);
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(hash).call().then(device => {
 
-    return contract.methods.fetch_backlog().call();
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return contract.methods.fetch_backlog().call();
+    })
 }
 
 // ADD DEVICE
 function register(hash, state) {
     const { manager, address } = refs(state);
-
-    console.log(state)
 
     return transaction({
         query: manager.add(hash),
@@ -70,9 +65,9 @@ function register(hash, state) {
 }
 
 export {
-    init,
+    fetch,
     collection,
+    backlog,
     device_overview,
-    fetch_backlog,
     register
 }

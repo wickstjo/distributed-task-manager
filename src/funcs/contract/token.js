@@ -10,15 +10,14 @@ function refs(state) {
 
 // FETCH TOKEN PRICE
 function price(state) {
-    const { manager } = refs(state);
-    return manager.price().call()
+   const { manager } = refs(state);
+   return manager.price().call()
 }
-
 
 // FETCH USERS TOKEN BALANCE
 function balance(state) {
-    const { manager } = refs(state);
-    return manager.balance(state.keys.public).call()
+   const { manager } = refs(state);
+   return manager.balance(state.keys.public).call()
 }
 
 // BUY TOKEN

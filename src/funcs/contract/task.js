@@ -8,33 +8,29 @@ function refs(state) {
     }
 }
 
-// INITIALIZE
-function init(user_manager, device_manager, token_manager, state) {
-    const { manager, address } = refs(state);
-
-    return transaction({
-        query: manager.init(2, user_manager, device_manager, token_manager),
-        contract: address
-    }, state)
-}
-
 // FETCH ALL OPEN TASKS
 function fetch_open(state) {
     return refs(state).manager.fetch_open().call();
 }
 
+// FETCH TASK FEE
+function fee(state) {
+    const { manager } = refs(state);
+    return manager.fee().call()
+}
+
 // ADD TASK
-function add_task({ name, reputation, reward, encryption }, state) {
+function add({ device, reward, timelimit  }, state) {
     const { manager, address } = refs(state);
 
     return transaction({
-        query: manager.add(reputation, 2, encryption, 200),
+        query: manager.add(device, reward, timelimit),
         contract: address
     }, state)
 }
 
-// FETCH TASK DETAILS
-async function task_details(task, state) {
+// FETCH TASK AUT
+function details(task, state) {
 
     // GENERATE REFERENCE
     const contract = assemble({
@@ -42,63 +38,28 @@ async function task_details(task, state) {
         contract: 'task'
     }, state);
 
-    return {
-        name: await contract.methods.name().call(),
-        owner: await contract.methods.creator().call(),
-        reputation: await contract.methods.min_reputation().call(),
-        reward: await contract.methods.reward().call(),
-        encryption: await contract.methods.public_user_key().call(),
-        locked: await contract.methods.locked().call() ? 'Yes' : 'No'
-    }
-}
+    // LIST OF PROMISES
+    const promises = [
+        contract.methods.creator().call(),
+        contract.methods.device().call(),
+        contract.methods.reward().call(),
+        contract.methods.expires().call()
+    ]
 
-// RELEASE TASK
-function release_task(task, state) {
-    const { manager, address } = refs(state);
-
-    return transaction({
-        query: manager.release_task(task),
-        contract: address
-    }, state)
-}
-
-// ACCEPT TASK
-async function accept_task(task, device, state) {
-    const { manager, address } = refs(state);
-
-    // GENERATE REFERENCE
-    const contract = assemble({
-        address: task,
-        contract: 'task'
-    }, state);
-
-    // FETCH THE TASK REWARD
-    const reward = await contract.methods.reward().call();
-
-    // ACCEPT THE TASK
-    return transaction({
-        query: manager.accept_task(task, device),
-        contract: address,
-        payable: reward / 2
-    }, state)
-}
-
-// SUBMIT TASK RESULT
-function submit_result(task, ipfs, encryption, state) {
-    const { manager, address } = refs(state);
-
-    return transaction({
-        query: manager.submit_result(task, ipfs, encryption),
-        contract: address
-    }, state)
+    // WAIT FOR PROMISES TO RESOLVE, THEN RETURN THEM
+    return Promise.all(promises).then(values => {
+        return {
+            creator: values[0],
+            device: values[1],
+            reward: values[2],
+            expires: values[3]
+        }
+    })
 }
 
 export {
-    init,
+    fee,
     fetch_open,
-    add_task,
-    task_details,
-    release_task,
-    accept_task,
-    submit_result
+    add,
+    details
 }

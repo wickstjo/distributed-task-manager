@@ -59,7 +59,7 @@ function Profile({ match }) {
                <div id={ 'header' }>Device collection ({ devices.length })</div>
                <List
                   data={ devices }
-                  fallback={ 'foobar' }
+                  fallback={ 'No devices found.' }
                   category={ '/devices' }
                />
             </div>

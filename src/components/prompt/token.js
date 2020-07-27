@@ -19,6 +19,8 @@ function Device() {
       get_price(state).then(amount => {
          set_price(amount)
       })
+
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
    // PROCESS SUBMISSION
@@ -58,7 +60,7 @@ function Device() {
             </div>
             <div id={ 'total' }>
                <div className={ 'split' }>
-                  <div>Total</div>
+                  <div>Total Cost</div>
                   <div>{ input * price } WEI</div>
                </div>
             </div>
