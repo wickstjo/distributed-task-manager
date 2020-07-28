@@ -18,25 +18,6 @@ function collection(state) {
     return refs(state).manager.fetch_collection(state.keys.public).call();
 }
 
-// FETCH DEVICE DETAILS
-async function device_overview(hash, state) {
-
-    // FETCH THE DEVICES CONTRACT
-    const device = await refs(state).manager.fetch_device(hash).call();
-    
-    // CONSTRUCT CONTRACT
-    const contract = assemble({
-        address: device,
-        contract: 'device'
-    }, state);
-
-    return {
-        name: await contract.methods.name().call(),
-        owner: await contract.methods.owner().call(),
-        contract: device
-    }
-}
-
 // FETCH DEVICE ASSIGNMENT BACKLOG
 function backlog(hash, state) {
     const { manager } = refs(state)
@@ -64,10 +45,50 @@ function register(hash, state) {
     }, state)
 }
 
+// FETCH DEVICE ASSIGNMENT BACKLOG
+function update(hash, state) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(hash).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        console.log(contract)
+
+        return transaction({
+            query: contract.methods.update(),
+            contract: device
+        }, state)
+    })
+}
+
+// FETCH DEVICE OWNER
+function owner(hash, state) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(hash).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return contract.methods.owner().call();
+    })
+}
+
 export {
     fetch,
     collection,
     backlog,
-    device_overview,
-    register
+    register,
+    update,
+    owner
 }

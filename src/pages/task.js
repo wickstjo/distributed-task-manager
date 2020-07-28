@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
 import Info from '../components/shared/info';
 import { details as get_details } from '../funcs/contract/task';
+import { Link } from 'react-router-dom';
+import Actions from '../components/task/actions';
 
 function Task({ match }) {
 
@@ -38,11 +40,15 @@ function Task({ match }) {
             <Info
                data={{
                   'Contract': match.params.address,
-                  'Creator': details.creator,
-                  'Assigned Device': details.device,
+                  'Creator': <Link to={ '/users/' + details.creator }>{ details.creator }</Link>,
+                  'Assigned Device': <Link to={ '/devices/' + details.device }>{ details.device }</Link>,
                   'Token Reward': details.reward,
                   'Block Expiration': details.expires,
                }}
+            />
+            <Actions
+               state={ state }
+               dispatch={ dispatch }
             />
          </div>
       </div>

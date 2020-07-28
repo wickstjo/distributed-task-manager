@@ -9,7 +9,7 @@ const values = {
 
     // WEB3 INSTANCE & SMART CONTRACTS
     web3: null,
-    contracts: {},
+    contracts: null,
     keys: {
         public: '',
         private: ''

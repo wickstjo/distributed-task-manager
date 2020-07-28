@@ -16,7 +16,7 @@ function Device() {
       if (input !== '' && validate(input)) {
 
          // HARDCODED DEVICE ID -- FOR NOW
-         const identifier = '77efa3007270eccb6f4aed46482b3c4d598918a2aaa81b7ec1ce64db802c9e9d';
+         const identifier = 'd7fdb8228681c9999294d997a0f21f58820115d5c830db4efe0fc7e9';
          
          // SHOW THE LOADING SCREEN
          dispatch({

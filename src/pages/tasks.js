@@ -22,7 +22,7 @@ function Tasks() {
          type: 'header',
          payload: 'tasks'
       })
-      
+
       // FETCH ALL OPEN TASKS & SET THEM IN LOCAL STATE
       fetch_open(state).then(result => {
          set_tasks(result)
@@ -55,7 +55,6 @@ function Tasks() {
             <Actions
                state={ state }
                dispatch={ dispatch }
-               category={ 'tasks' }
             />
          </div>
       </div>

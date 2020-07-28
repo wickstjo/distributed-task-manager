@@ -87,14 +87,18 @@ input, textarea {
                 border-bottom: 1px solid rgba(0, 0, 0, 0.171);
             }
         
-            #row:hover {
+            #row:hover, a:nth-child(even) #row:hover {
                 background: rgba(110, 255, 110, 0.144);
                 color: white;
             }
         
-            #topic:nth-child(even), #row:nth-child(even) {
+            #topic:nth-child(even), a:nth-child(even) #row {
                 background: rgba(124, 213, 255, 0.11);
                 border-bottom: 1px solid rgba(0, 0, 0, 0.233);
+            }
+
+            #topic a:hover {
+                color: white;
             }
         }
     }
