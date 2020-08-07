@@ -3,7 +3,7 @@ import { Context } from '../assets/context';
 import Actions from '../components/profile/actions';
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
-import { collection } from '../funcs/contract/device';
+import { collection, device_added } from '../funcs/contract/device';
 import { fetch } from '../funcs/contract/user';
 import { balance } from '../funcs/contract/token';
 
@@ -39,6 +39,15 @@ function Profile({ match }) {
          set_tokens(amount)
       })
 
+      // SUBSCRIBE TO DEVICE COLLECTION FEED ON MOUNT
+      const feed = device_added(match.params.address, state).on('data', response => {
+         const data = response.returnValues['collection']
+         set_devices(data)
+      })
+
+      // UNSUBSCRIBE ON UNMOUNT
+      return () => { feed.unsubscribe(); }
+
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
@@ -51,8 +60,8 @@ function Profile({ match }) {
                   data={{
                      'Contract': contract,
                      'ETH Wallet': state.keys.public,
-                     'Whisper Signature': 'TBA',
-                     'Reputation': 'TBA',
+                     'Whisper Signature': 'PH',
+                     'Reputation': 'PH',
                      'Token Balance': tokens
                   }}
                />

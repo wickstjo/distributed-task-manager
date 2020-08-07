@@ -34,10 +34,10 @@ function Tokens() {
             <Info
                data={{
                   'Contract': state.contracts.managers.token._address,
-                  'Symbol': 'TBA',
+                  'Symbol': 'PH',
                   'ETH Price': price + ' WEI',
-                  'In Circulation': 'TBA',
-                  'In Storage': 'TBA',
+                  'In Circulation': 'PH',
+                  'Available': 'PH',
                }}
             />
             <Actions dispatch={ dispatch } />

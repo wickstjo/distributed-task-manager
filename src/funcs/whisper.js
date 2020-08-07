@@ -39,9 +39,12 @@ function create_feed(state, dispatch) {
         // HEX TOPIC NAME
         const hexed_topic = state.whisper.utils.to_hex(state.whisper.topic.name)
 
+        // GENERATE NEW TOPIC KEY
+        // state.shh.newSymKey().then(console.log)
+
         // CREATE A NEW ONE
         const temp = state.shh.subscribe('messages', {
-           symKeyID: state.whisper.topic.id,
+           symKeyID: state.whisper.topic.key,
            topics: [hexed_topic]
 
         // ON MESSAGE, ADD IT
@@ -105,7 +108,7 @@ function add_message(input, set_input, state, dispatch, event) {
         // OTHERWISE, SEND MESSAGE PAYLOAD
         } else {
             state.shh.post({
-                symKeyID: state.whisper.topic.id,
+                symKeyID: state.whisper.topic.key,
                 sig: state.whisper.id,
                 ttl: 10,
                 topic: state.whisper.utils.to_hex(state.whisper.topic.name),

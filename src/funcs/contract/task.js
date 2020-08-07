@@ -29,6 +29,11 @@ function add({ device, reward, timelimit  }, state) {
     }, state)
 }
 
+// CHANGE IN OPEN TASKS EVENT
+function change(state) {
+    return state.contracts.managers['task'].events.change();
+}
+
 // FETCH TASK AUT
 function details(task, state) {
 
@@ -61,5 +66,6 @@ export {
     fee,
     fetch_open,
     add,
+    change,
     details
 }

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
 import Info from '../components/shared/info';
 import List from '../components/shared/list';
-import { fetch, backlog as get_backlog, owner as get_owner } from '../funcs/contract/device';
+import { fetch, backlog as get_backlog, owner as get_owner, assignment } from '../funcs/contract/device';
 import Actions from '../components/device/actions';
 import { Link } from 'react-router-dom';
 
@@ -38,6 +38,22 @@ function Device({ match }) {
          set_owner(foo)
       })
 
+      // DEVICE COLLECTION FEED PH
+      let feed = null;
+
+      // FETCH DEVICE CONTRACT
+      assignment(match.params.address, state).then(blob => {
+
+         // SUBSCRIBE TO DEVICE COLLECTION FEED ON MOUNT
+         feed = blob.on('data', response => {
+            const data = response.returnValues['backlog']
+            set_backlog(data)
+         })
+      })
+
+      // UNSUBSCRIBE ON UNMOUNT
+      return () => { feed.unsubscribe(); }
+
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
@@ -51,12 +67,12 @@ function Device({ match }) {
                      'Contract': contract,
                      'Hash': match.params.address,
                      'Owner': <Link to={ '/users/' + owner }>{ owner }</Link>,
-                     'Whisper Signature': 'TBA',
-                     'Active': 'TBA',
-                     'Tasks Completed': 'TBA'
+                     'Whisper Signature': 'PH',
+                     'Active': 'PH',
+                     'Tasks Completed': 'PH'
                   }}
                />
-               <div id={ 'header' }>Task backlog</div>
+               <div id={ 'header' }>Task backlog ({ backlog.length })</div>
                <List
                   data={ backlog }
                   fallback={ 'No tasks found.' }
