@@ -16,7 +16,8 @@ function init() {
             'user',
             'device',
             'task',
-            'token'
+            'token',
+            'tag'
          ], web3),
          interfaces: interfaces([
             'user',

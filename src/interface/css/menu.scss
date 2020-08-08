@@ -28,6 +28,10 @@
       background-image: url('../images/icons/list.png');
    }
 
+   li[alt="tags"] {
+      background-image: url('../images/icons/tags.png');
+   }
+
    li[alt="tokens"] {
       background-image: url('../images/icons/coin-dollar.png');
    }

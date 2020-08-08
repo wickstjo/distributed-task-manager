@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-function Info({ data }) { return (
-   <div id={ 'container' }>
-      { Object.keys(data).map((key, index) =>
-         <Row
-            header={ key }
-            content={ data[key] }
-            key={ index }
-         />
-      )}
-   </div>
+function Info({ data, header }) { return (
+   <Fragment>
+      <div id={ 'header' }>{ header }</div>
+      <div id={ 'container' }>
+         { Object.keys(data).map((key, index) =>
+            <Row
+               header={ key }
+               content={ data[key] }
+               key={ index }
+            />
+         )}
+      </div>
+   </Fragment>
 )}
 
 function Row({ header, content }) { return (

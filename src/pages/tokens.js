@@ -30,8 +30,8 @@ function Tokens() {
    return (
       <div id={ 'tokens' }>
          <div id={ 'inner' }>
-            <div id={ 'header' }>Token Manager</div>
             <Info
+               header={ 'Token Manager' }
                data={{
                   'Contract': state.contracts.managers.token._address,
                   'Symbol': 'PH',

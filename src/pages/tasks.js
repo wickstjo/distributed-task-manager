@@ -48,15 +48,15 @@ function Tasks() {
    return (
       <div id={ 'tasks' }>
          <div id={ 'inner' }>
-            <div id={ 'header' }>Task Manager</div>
             <Info
+               header={ 'Task Manager' }
                data={{
                   'Contract': state.contracts.managers.task._address,
                   'Token Fee': fee
                }}
             />
-            <div id={ 'header' }>Incomplete tasks ({ tasks.length })</div>
             <List
+               header={ 'Incomplete tasks (' + tasks.length + ')' }
                data={ tasks }
                fallback={ 'No tasks found.' }
                category={ 'tasks' }

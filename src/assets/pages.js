@@ -5,6 +5,8 @@ import { Context } from './context';
 import Tasks from '../pages/tasks';
 import Task from '../pages/task';
 
+import Tags from '../pages/tags';
+
 import Device from '../pages/device';
 import User from '../pages/profile';
 
@@ -25,6 +27,8 @@ function Pages() {
 
          <Route exact path={ '/tasks' } component={ Tasks } />
          <Route path={ '/tasks/:address' } component={ Task } />
+
+         <Route path={ '/tags' } component={ Tags } />
 
          <Route path={ '/devices/:address' } component={ Device } />
          <Route path={ '/users/:address' } component={ User } />
