@@ -13,83 +13,95 @@
    align-items: center;
 
    #inner {
+      width: 70vw;
 
-      #device, #task {
-         width: 70vw;
+      #header {
+         text-align: center;
+         color: white;
+         font-size: 18px;
+         text-transform: uppercase;
+         padding: 5px;
+      }
 
-         #top {
-            text-align: center;
-            color: white;
-            font-size: 18px;
-            text-transform: uppercase;
-            padding: 5px;
+      .input-wrapper {
+         border: 1px solid rgba(255, 255, 255, 0.26);
+         display: flex;
+         margin-bottom: 5px;
+
+         input, textarea {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.144);
+            border: 1px solid rgba(0, 0, 0, 0.329);
+            padding: 7px 9px;
+            color: #F1F1F1;
+            text-shadow: 1px 1px #242424;
          }
 
          textarea {
-            background: rgba(0, 0, 0, 0.295);
-            border: 1px solid rgba(255, 255, 255, 0.329);
-            padding: 7px 9px;
-            color: #F1F1F1;
             resize: vertical;
-            margin-bottom: 5px;
-            transition: background 0.2s;
             width: 100%;
             min-height: 400px;
          }
 
-         #cont {
-            border: 1px solid rgba(255, 255, 255, 0.26);
-            margin-bottom: 5px;
+         input::placeholder, textarea::placeholder {
+            color: #d8d8d8;
+         }
 
-            #inp {
-               border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+         #validation-wrapper {
+            border-left: 1px solid rgba(255, 255, 255, 0.26);
+            color: #F1F1F1;
+            width: 35px;
 
-               input {
-                  background: rgba(255, 255, 255, 0.075);
-                  border: 0px solid black;
-                  border: 1px solid rgba(0, 0, 0, 0.329);
-                  padding: 7px 9px;
-                  color: #F1F1F1;
-                  width: 100%;
-               }
-
-               input::placeholder {
-                  color: #c0c0c0;
-               }
+            .error, .success {
+               border: 1px solid rgba(0, 0, 0, 0.329);
+               background-color: rgba(255, 88, 88, 0.274);
+               background-image: url('../images/icons/cross.png');
+               background-repeat: no-repeat;
+               background-position: center center;
+               height: 100%;
+               transition: 0.2s;
             }
    
-            #total {
-               background: rgba(232, 120, 255, 0.137);
-               padding: 7px 9px;
-               color: white;
-               border: 1px solid rgba(0, 0, 0, 0.329);
+            .success {
+               background: rgba(99, 255, 99, 0.233);
+               background-image: url('../images/icons/checkmark.png');
+               background-repeat: no-repeat;
+               background-position: center center;
             }
-         }
-
-         #submit {
-            background-color: rgba(128, 255, 111, 0.185);
-            border: 1px solid rgba(255, 255, 255, 0.205);
-            padding: 8px;
-            padding-left: 35px;
-            color: #CECECE;
-            text-shadow: 1px 1px #242424;
-            background-image: url('../images/icons/plus.png');
-            background-repeat: no-repeat;
-            background-position-y: center;
-            background-position-x: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            width: 100%;
-         }
-      
-         #submit:hover {
-            background-color: rgba(128, 255, 111, 0.274);
-            color: white;
          }
       }
 
-      #task #cont {
-         border-bottom: 0px solid black;
+      #submit {
+         border: 1px solid rgba(255, 255, 255, 0.274);
+
+         input {
+            border: 1px solid rgba(0, 0, 0, 0.329);
+            padding: 7px 9px;
+            padding-left: 35px;
+            color: #CECECE;
+            text-shadow: 1px 1px #242424;
+            background-repeat: no-repeat;
+            background-position-y: center;
+            background-position-x: 10px;
+            transition: 0.2s;
+            width: 100%;
+         }
+
+         .success {
+            background-color: rgba(128, 255, 111, 0.185);
+            background-image: url('../images/icons/checkmark.png');
+         }
+
+         .success:hover {
+            background-color: rgba(128, 255, 111, 0.274);
+            color: white;
+            cursor: pointer;
+        }
+
+         .error {
+            background-color: rgba(252, 255, 88, 0.171);
+            background-image: url('../images/icons/cross.png');
+         }
       }
 
       // LOADING SCREEN -- https://loading.io/css/
@@ -118,7 +130,6 @@
       }
    }
 
-   // CLOSE PROMPT CROSS
    #close {
       background: url('../images/close.png') center center no-repeat;
       position: absolute;

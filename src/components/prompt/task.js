@@ -1,81 +1,104 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useReducer, Fragment } from 'react';
 import { Context } from "../../assets/context";
 import { add } from '../../funcs/contract/task';
 import { sleep } from '../../funcs/misc';
+
+import Header from './header';
+import Text from '../input/text';
+import Number from '../input/number';
+import Button from '../input/button';
+import { reducer } from '../../states/input';
 
 function Task() {
 
    // GLOBAL CONTEXT
    const { state, dispatch } = useContext(Context);
 
-   // LOCAL STATES
-   const [reward, set_reward] = useState('')
-   const [blocks, set_blocks] = useState('')
-   const [device, set_device] = useState('')
+   // LOCAL STATE
+   const [local, set_local] = useReducer(reducer, {
+      reward: {
+         value: '',
+         validation: false
+      },
+      blocks: {
+         value: '',
+         validation: false
+      },
+      device: {
+         value: '',
+         validation: false
+      }
+   })
 
    // PROCESS TASK
    function process() {
-      if (reward > 0 && blocks > 0 && device !== '') {
          
-         // SHOW THE LOADING SCREEN
-         dispatch({
-            type: 'show-prompt',
-            payload: 'loading'
-         })
+      // SHOW THE LOADING SCREEN
+      dispatch({
+         type: 'show-prompt',
+         payload: 'loading'
+      })
 
-         // SUBMIT THE TASK
-         add({
-            device: device,
-            reward: reward,
-            timelimit: blocks
-         }, state).then(() => {
+      // SUBMIT THE TASK
+      add({
+         device: local.device.value,
+         reward: local.reward.value,
+         timelimit: local.blocks.value
+      }, state).then(() => {
 
-            // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
-            sleep(2000).then(() => {
-               dispatch({
-                  type: 'hide-prompt'
-               })
+         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
+         sleep(2000).then(() => {
+            dispatch({
+               type: 'hide-prompt'
             })
          })
-      }  
+      })
    }
 
    return (
-      <div id={ 'task' }>
-         <div id={ 'top' }>Create New Task</div>
-         <div id={ 'cont' }>
-            <div id={ 'inp' }>
-               <input
-                  placeholder={ 'Set a token reward' }
-                  type={ 'number' }
-                  value={ reward }
-                  onChange={ event => set_reward(event.target.value) }
-               />
-            </div>
-            <div id={ 'inp' }>
-               <input
-                  placeholder={ 'Set a timelimit in blocks' }
-                  type={ 'number' }
-                  value={ blocks }
-                  onChange={ event => set_blocks(event.target.value) }
-               />
-            </div>
-            <div id={ 'inp' }>
-               <input
-                  placeholder={ 'Set a device to execute the task' }
-                  type={ 'text' }
-                  value={ device }
-                  onChange={ event => set_device(event.target.value) }
-               />
-            </div>
-         </div>
-         <input
-            type={ 'submit' }
-            value={ 'Create Task' }
-            onClick={ process }
-            id={ 'submit' }
+      <Fragment>
+         <Header text={ 'Create New Task' } />
+         <Number
+            placeholder={ 'Set the token reward' }
+            data={ local }
+            category={ 'reward' }
+            dispatch={ set_local }
+            limit={{
+               min: 1,
+               max: 1000
+            }}
          />
-      </div>
+         <Number
+            placeholder={ 'Set the timelimit in blocks' }
+            data={ local }
+            category={ 'blocks' }
+            dispatch={ set_local }
+            limit={{
+               min: 5,
+               max: 1000
+            }}
+         />
+         <Text
+            placeholder={ 'Set performing device' }
+            data={ local }
+            category={ 'device' }
+            dispatch={ set_local }
+            limit={{
+               min: 56,
+               max: 56
+            }}
+         />
+         <Button
+            value={ 'Submit Task' }
+            fallback={ 'Fix the fields above first!' }
+            execute={ process }
+            required={[
+               local.reward.validation,
+               local.blocks.validation,
+               local.device.validation
+            ]}
+         />
+      </Fragment>
    )
 }
 

@@ -55,8 +55,8 @@ function Profile({ match }) {
       <div id={ 'users' }>
          <div id={ 'inner' }>
             <div id={ 'profile' }>
-               <div id={ 'header' }>User overview</div>
                <Info
+                  header={ 'User overview' }
                   data={{
                      'Contract': contract,
                      'ETH Wallet': state.keys.public,
@@ -65,8 +65,8 @@ function Profile({ match }) {
                      'Token Balance': tokens
                   }}
                />
-               <div id={ 'header' }>Device collection ({ devices.length })</div>
                <List
+                  header={ 'Device collection (' + devices.length + ')' }
                   data={ devices }
                   fallback={ 'No devices found.' }
                   category={ '/devices' }

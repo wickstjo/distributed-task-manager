@@ -1,4 +1,4 @@
-import { transaction, assemble } from '../blockchain';
+// import { transaction, assemble } from '../blockchain';
 
 // CONTRACT REFERENCES
 function refs(state) {
@@ -8,18 +8,11 @@ function refs(state) {
     }
 }
 
-// FETCH USER SMART CONTRACT
-function formats(state) {
+function tags(state) {
     const { manager } = refs(state);
-    return manager.fetch_formats().call();
-}
-
-function transpiler(state) {
-    const { manager } = refs(state);
-    return manager.transpiler().call();
+    return manager.fetch_tags().call();
 }
 
 export {
-    formats,
-    transpiler
+    tags
 }

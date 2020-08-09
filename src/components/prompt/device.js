@@ -1,7 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, Fragment, useReducer } from 'react';
 import { Context } from "../../assets/context";
 import { sleep } from '../../funcs/misc';
 import { register } from '../../funcs/contract/device';
+
+import Header from './header';
+import Button from '../input/button';
+import Json from '../input/json';
+import { reducer } from '../../states/input';
 
 function Device() {
 
@@ -9,60 +14,56 @@ function Device() {
    const { state, dispatch } = useContext(Context)
 
    // LOCAL STATE
-   const [input, set_input] = useState('')
+   const [local, set_local] = useReducer(reducer, {
+      identifier: {
+         value: '',
+         validation: false
+      }
+   })
 
    // PROCESS SUBMISSION
    function process() {
-      if (input !== '' && validate(input)) {
 
-         // HARDCODED DEVICE ID -- FOR NOW
-         const identifier = 'd7fdb8228681c9999294d997a0f21f58820115d5c830db4efe0fc7e9';
-         
-         // SHOW THE LOADING SCREEN
-         dispatch({
-            type: 'show-prompt',
-            payload: 'loading'
-         })
+      // HARDCODED DEVICE ID -- FOR NOW
+      const dev_id = 'd7fdb8228681c9999294d997a0f21f58820115d5c830db4efe0fc7e9';
+      console.log(local.identifier.value)
+      
+      // SHOW THE LOADING SCREEN
+      dispatch({
+         type: 'show-prompt',
+         payload: 'loading'
+      })
 
-         // REGISTER THE DEVICE
-         register(identifier, state).then(() => {
+      // REGISTER THE DEVICE
+      register(dev_id, state).then(() => {
 
-            // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
-            sleep(2000).then(() => {
-               dispatch({
-                  type: 'hide-prompt'
-               })
+         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
+         sleep(2000).then(() => {
+            dispatch({
+               type: 'hide-prompt'
             })
          })
-      } 
-   }
-
-   // VALIDATE JSON OBJECT
-   function validate(data) {
-      try {
-         JSON.parse(data)
-         return true;
-      } catch {
-         console.log('validation error')
-         return false
-      }
+      })
    }
 
    return (
-      <div id={ 'device' }>
-         <div id={ 'top' }>Register Device</div>
-         <textarea
-            placeholder={ 'Paste in the JSON identifier' }
-            value={ input }
-            onChange={ event => set_input(event.target.value) }
+      <Fragment>
+         <Header text={ 'Register Device' } />
+         <Json
+            placeholder={ 'Set the identifier' }
+            data={ local }
+            category={ 'identifier' }
+            dispatch={ set_local }
          />
-         <input
-            type={ 'submit' }
-            value={ 'Submit' }
-            onClick={ process }
-            id={ 'submit' }
+         <Button
+            value={ 'Register Device' }
+            fallback={ 'Fix the fields above first!' }
+            execute={ process }
+            required={[
+               local.identifier.validation
+            ]}
          />
-      </div>
+      </Fragment>
    )
 }
 

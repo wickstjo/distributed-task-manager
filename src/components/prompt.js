@@ -7,6 +7,7 @@ import EventListener from 'react-event-listener';
 import Device from './prompt/device';
 import Task from './prompt/task';
 import Token from './prompt/token';
+import Tag from './prompt/tag';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -79,6 +80,11 @@ function Content({ type }) {
       // PURCHASE TOKEN
       case 'token': {
          return <Token />
+      }
+
+      // ADD TAG
+      case 'tag': {
+         return <Tag />
       }
 
       // FALLBACK
