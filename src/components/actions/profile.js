@@ -10,19 +10,10 @@ function Actions({ dispatch }) {
             payload: 'device'
         })
     }
-
-    // SET WHISPER NICKNAME
-    function whisper() {
-        dispatch({
-            type: 'show-prompt',
-            payload: 'user'
-        })
-    }
     
     return (
         <div id={ 'actions' }>
             <li id={ 'action' } onClick={ device }>Register Device</li>
-            <li id={ 'action' } onClick={ whisper } className={ 'keys' }>Manage Keys</li>
         </div>
     )
 }

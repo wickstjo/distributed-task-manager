@@ -1,11 +1,15 @@
-// REDUCER
 function reducer(state, { type, payload }) {
     switch (type) {
 
         // UPDATE INPUT
-        case 'update': { return {
+        case 'specific': { return {
             ...state,
             [payload.name]: payload.data
+        }}
+
+        // OVERWRITE ENTIRE STATE
+        case 'all': { return {
+            ...payload
         }}
 
         // FALLBACK

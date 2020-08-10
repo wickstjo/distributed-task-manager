@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
-import Actions from '../components/profile/actions';
+import Actions from '../components/actions/profile';
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
 import { collection, device_added } from '../funcs/contract/device';
@@ -60,7 +60,6 @@ function Profile({ match }) {
                   data={{
                      'Contract': contract,
                      'ETH Wallet': state.keys.public,
-                     'Whisper Signature': 'PH',
                      'Reputation': 'PH',
                      'Token Balance': tokens
                   }}

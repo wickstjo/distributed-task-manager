@@ -13,7 +13,7 @@ function Json({ placeholder, data, category, dispatch }) {
             JSON.parse(input)
             
             dispatch({
-                type: 'update',
+                type: 'specific',
                 payload: {
                     name: category,
                     data: {
@@ -26,7 +26,7 @@ function Json({ placeholder, data, category, dispatch }) {
         // IF IT FAILS
         } catch {
             dispatch({
-                type: 'update',
+                type: 'specific',
                 payload: {
                     name: category,
                     data: {

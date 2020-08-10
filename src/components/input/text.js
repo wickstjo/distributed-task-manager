@@ -11,7 +11,7 @@ function Text({ placeholder, data, category, dispatch, limit }) {
         // IF VALIDATION PASSES
         if (input.length >= limit.min && input.length <= limit.max) {
             dispatch({
-                type: 'update',
+                type: 'specific',
                 payload: {
                     name: category,
                     data: {
@@ -24,7 +24,7 @@ function Text({ placeholder, data, category, dispatch, limit }) {
         // OTHERWISE
         } else {
             dispatch({
-                type: 'update',
+                type: 'specific',
                 payload: {
                     name: category,
                     data: {

@@ -2,12 +2,12 @@ import React, { useContext, useReducer, Fragment } from 'react';
 import { Context } from "../../assets/context";
 import { add } from '../../funcs/contract/task';
 import { sleep } from '../../funcs/misc';
+import { reducer } from '../shared/reducer';
 
 import Header from './header';
 import Text from '../input/text';
 import Number from '../input/number';
 import Button from '../input/button';
-import { reducer } from '../../states/input';
 
 function Task() {
 
@@ -84,8 +84,8 @@ function Task() {
             category={ 'device' }
             dispatch={ set_local }
             limit={{
-               min: 56,
-               max: 56
+               min: 64,
+               max: 64
             }}
          />
          <Button

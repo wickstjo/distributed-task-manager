@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import { Context } from '../assets/context';
 import Info from '../components/shared/info';
 import List from '../components/shared/list';
-import { fetch, backlog as get_backlog, owner as get_owner, assignment } from '../funcs/contract/device';
-import Actions from '../components/device/actions';
+import { details, changes } from '../funcs/contract/device';
+import Actions from '../components/actions/device';
+import { reducer } from '../components/shared/reducer';
 import { Link } from 'react-router-dom';
 
 function Device({ match }) {
@@ -12,9 +13,11 @@ function Device({ match }) {
    const { state, dispatch } = useContext(Context)
 
    // LOCAL STATE
-   const [contract, set_contract] = useState('')
-   const [backlog, set_backlog] = useState([])
-   const [owner, set_owner] = useState('')
+   const [local, set_local] = useReducer(reducer, {
+      contract: '',
+      backlog: [],
+      owner: ''
+   })
 
    // ON LOAD
    useEffect(() => {
@@ -23,32 +26,20 @@ function Device({ match }) {
          payload: 'device'
       })
 
-      // FETCH THE DEVICE CONTRACT
-      fetch(match.params.address, state).then(address => {
-         set_contract(address)
-      })
-
-      // FETCH DEVICE BACKLOG
-      get_backlog(match.params.address, state).then(data => {
-         set_backlog(data)
-      })
-
-      // FETCH DEVICE OWNER
-      get_owner(match.params.address, state).then(foo => {
-         set_owner(foo)
+      // FETCH THE DEVICE CONTRACT DETAILS
+      details(match.params.address, state).then(response => {
+         set_local({
+            type: 'all',
+            payload: response
+         })
       })
 
       // DEVICE COLLECTION FEED PH
       let feed = null;
 
-      // FETCH DEVICE CONTRACT
-      assignment(match.params.address, state).then(blob => {
-
-         // SUBSCRIBE TO DEVICE COLLECTION FEED ON MOUNT
-         feed = blob.on('data', response => {
-            const data = response.returnValues['backlog']
-            set_backlog(data)
-         })
+      // SUBSCRIBE TO CHANGES IN CONTRACT
+      changes(match.params.address, set_local, state).then(blob => {
+         feed = blob
       })
 
       // UNSUBSCRIBE ON UNMOUNT
@@ -61,20 +52,25 @@ function Device({ match }) {
       <div id={ 'devices' }>
          <div id={ 'inner' }>
             <div id={ 'device' }>
-            <div id={ 'header' }>Device overview</div>
                <Info
+                  header={ 'Device overview' }
                   data={{
-                     'Contract': contract,
+                     'Contract': local.contract,
                      'Hash': match.params.address,
-                     'Owner': <Link to={ '/users/' + owner }>{ owner }</Link>,
-                     'Whisper Signature': 'PH',
-                     'Active': 'PH',
-                     'Tasks Completed': 'PH'
+                     'Owner': <Link to={ '/users/' + local.owner }>{ local.owner }</Link>,
+                     'Active': local.active,
+                     'Discoverable': local.discoverable,
+                     'Tasks Completed': local.completed
                   }}
                />
-               <div id={ 'header' }>Task backlog ({ backlog.length })</div>
+               <Info
+                  header={ 'Discovery tags' }
+                  fallback={ 'No tags found' }
+                  data={{}}
+               />
                <List
-                  data={ backlog }
+                  header={ 'Task backlog (' + local.backlog.length + ')' }
+                  data={ local.backlog }
                   fallback={ 'No tasks found.' }
                   category={ '/tasks' }
                />

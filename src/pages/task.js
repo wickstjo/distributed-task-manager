@@ -3,7 +3,7 @@ import { Context } from '../assets/context';
 import Info from '../components/shared/info';
 import { details as get_details } from '../funcs/contract/task';
 import { Link } from 'react-router-dom';
-import Actions from '../components/task/actions';
+import Actions from '../components/actions/task';
 
 function Task({ match }) {
 

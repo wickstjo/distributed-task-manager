@@ -3,7 +3,7 @@ import { Context } from '../assets/context';
 import { fetch_open } from '../funcs/contract/task';
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
-import Actions from '../components/tasks/actions';
+import Actions from '../components/actions/tasks';
 import { fee as get_fee, change } from '../funcs/contract/task';
 import '../interface/css/tasks.scss';
 

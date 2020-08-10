@@ -2,11 +2,11 @@ import React, { useContext, Fragment, useReducer } from 'react';
 import { Context } from "../../assets/context";
 import { sleep } from '../../funcs/misc';
 import { purchase } from '../../funcs/contract/token';
+import { reducer } from '../shared/reducer';
 
 import Header from './header';
 import Number from '../input/number';
 import Button from '../input/button';
-import { reducer } from '../../states/input';
 
 function Token() {
 

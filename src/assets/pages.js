@@ -6,6 +6,7 @@ import Tasks from '../pages/tasks';
 import Task from '../pages/task';
 
 import Tags from '../pages/tags';
+import Tag from '../pages/tag';
 
 import Device from '../pages/device';
 import User from '../pages/profile';
@@ -28,7 +29,8 @@ function Pages() {
          <Route exact path={ '/tasks' } component={ Tasks } />
          <Route path={ '/tasks/:address' } component={ Task } />
 
-         <Route path={ '/tags' } component={ Tags } />
+         <Route exact path={ '/tags' } component={ Tags } />
+         <Route path={ '/tags/:name' } component={ Tag } />
 
          <Route path={ '/devices/:address' } component={ Device } />
          <Route path={ '/users/:address' } component={ User } />

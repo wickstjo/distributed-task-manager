@@ -2,11 +2,12 @@ import React, { useContext, Fragment, useReducer } from 'react';
 import { Context } from "../../assets/context";
 import { sleep } from '../../funcs/misc';
 import { register } from '../../funcs/contract/device';
+import { reducer } from '../shared/reducer';
+import hashing from 'sha256';
 
 import Header from './header';
 import Button from '../input/button';
 import Json from '../input/json';
-import { reducer } from '../../states/input';
 
 function Device() {
 
@@ -24,9 +25,12 @@ function Device() {
    // PROCESS SUBMISSION
    function process() {
 
-      // HARDCODED DEVICE ID -- FOR NOW
-      const dev_id = 'd7fdb8228681c9999294d997a0f21f58820115d5c830db4efe0fc7e9';
-      console.log(local.identifier.value)
+      // PARSE & STRINGIFY THE JSON OBJECT
+      const parsed = JSON.parse(local.identifier.value)
+      const stringified = JSON.stringify(parsed, null, 2)
+
+      // HASH THE STRING
+      const result = hashing(stringified)
       
       // SHOW THE LOADING SCREEN
       dispatch({
@@ -35,7 +39,7 @@ function Device() {
       })
 
       // REGISTER THE DEVICE
-      register(dev_id, state).then(() => {
+      register(result, state).then(() => {
 
          // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
          sleep(2000).then(() => {

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
 import Info from '../components/shared/info';
-import Actions from '../components/tokens/actions';
+import Actions from '../components/actions/token';
 import { price as get_price } from '../funcs/contract/token';
 
 function Tokens() {
