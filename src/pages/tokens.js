@@ -34,8 +34,9 @@ function Tokens() {
                header={ 'Token Manager' }
                data={{
                   'Contract': state.contracts.managers.token._address,
+                  'Standard': 'ERC20',
+                  'Price': price + ' WEI',
                   'Symbol': 'PH',
-                  'ETH Price': price + ' WEI',
                   'In Circulation': 'PH',
                   'Available': 'PH',
                }}

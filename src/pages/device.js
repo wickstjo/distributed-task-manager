@@ -16,7 +16,8 @@ function Device({ match }) {
    const [local, set_local] = useReducer(reducer, {
       contract: '',
       backlog: [],
-      owner: ''
+      owner: '',
+      tags: {}
    })
 
    // ON LOAD
@@ -66,7 +67,7 @@ function Device({ match }) {
                <Info
                   header={ 'Discovery tags' }
                   fallback={ 'No tags found' }
-                  data={{}}
+                  data={ local.tags }
                />
                <List
                   header={ 'Task backlog (' + local.backlog.length + ')' }

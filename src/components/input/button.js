@@ -38,7 +38,6 @@ function Button({ value, fallback, execute, required }) {
                 type={ 'submit' }
                 value={ local.value }
                 onClick={ run }
-                id={ 'submit' }
                 className={ local.style }
             />
         </div>

@@ -8,6 +8,8 @@ import Device from './prompt/device';
 import Task from './prompt/task';
 import Token from './prompt/token';
 import Tag from './prompt/tag';
+import Config from './prompt/config';
+import Status from './prompt/status';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -85,6 +87,16 @@ function Content({ type }) {
       // ADD TAG
       case 'tag': {
          return <Tag />
+      }
+
+      // UPDATE DEVICE DISCOVERY CONFIG
+      case 'tag-config': {
+         return <Config />
+      }
+
+      // TOGGLE DEVICE STATUS
+      case 'status': {
+         return <Status />
       }
 
       // FALLBACK

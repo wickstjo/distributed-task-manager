@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
-import { Base64 as compression } from 'js-base64';
+import { decode } from '../funcs/process';
 import { details as fetch_details } from '../funcs/contract/tag';
 import '../interface/css/tasks.scss';
 import Info from '../components/shared/info';
@@ -26,15 +26,14 @@ function Tag({ match }) {
       fetch_details(match.params.name, state).then(response => {
 
          // DECODE & PARSE RULESET
-         const decoded = compression.decode(response.ruleset)
-         const parsed = JSON.parse(decoded)
+         const decoded = decode(response.ruleset)
 
          // SET IN STATE
          set_details({
             author: response.author,
             created: response.created,
             ruleset: response.ruleset,
-            decoded: parsed
+            decoded: decoded
          })
       })
 

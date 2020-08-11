@@ -59,7 +59,8 @@ function reducer(state, action) {
             ...state,
             prompt: {
                 visible: true,
-                type: action.payload
+                type: action.payload,
+                source: action.source
             }
         }}
 

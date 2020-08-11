@@ -3,7 +3,7 @@ import { Context } from "../../assets/context";
 import { sleep } from '../../funcs/misc';
 import { register } from '../../funcs/contract/device';
 import { reducer } from '../shared/reducer';
-import hashing from 'sha256';
+import { encode, hash } from '../../funcs/process';
 
 import Header from './header';
 import Button from '../input/button';
@@ -19,18 +19,19 @@ function Device() {
       identifier: {
          value: '',
          validation: false
+      },
+      discovery: {
+         value: '',
+         validation: false
       }
    })
 
    // PROCESS SUBMISSION
    function process() {
 
-      // PARSE & STRINGIFY THE JSON OBJECT
-      const parsed = JSON.parse(local.identifier.value)
-      const stringified = JSON.stringify(parsed, null, 2)
-
-      // HASH THE STRING
-      const result = hashing(stringified)
+      // PROCESS BOTH JSON OBJECTS
+      const hash_id = hash(local.identifier.value)
+      const encoded_config = encode(local.discovery.value)
       
       // SHOW THE LOADING SCREEN
       dispatch({
@@ -39,7 +40,7 @@ function Device() {
       })
 
       // REGISTER THE DEVICE
-      register(result, state).then(() => {
+      register(hash_id, encoded_config, state).then(() => {
 
          // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
          sleep(2000).then(() => {
@@ -59,12 +60,19 @@ function Device() {
             category={ 'identifier' }
             dispatch={ set_local }
          />
+         <Json
+            placeholder={ 'Set the discovery config' }
+            data={ local }
+            category={ 'discovery' }
+            dispatch={ set_local }
+         />
          <Button
             value={ 'Register Device' }
             fallback={ 'Fix the fields above first!' }
             execute={ process }
             required={[
-               local.identifier.validation
+               local.identifier.validation,
+               local.discovery.validation
             ]}
          />
       </Fragment>

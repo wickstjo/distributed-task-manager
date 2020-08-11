@@ -1,4 +1,5 @@
 import { transaction, assemble } from '../blockchain';
+import { decode } from '../process';
 
 // CONTRACT REFERENCES
 function refs(state) {
@@ -20,11 +21,11 @@ function collection(state) {
 }
 
 // ADD DEVICE
-function register(hash, state) {
+function register(hash, encoded, state) {
     const { manager, address } = refs(state);
 
     return transaction({
-        query: manager.add(hash),
+        query: manager.add(hash, encoded),
         contract: address
     }, state)
 }
@@ -58,7 +59,7 @@ function details(hash, state) {
                 owner: response[0],
                 backlog: response[1],
                 completed: response[2],
-                tags: response[3],
+                tags: decode(response[3]),
                 active: response[4] ? 'True' : 'False',
                 discoverable: response[5] ? 'True' : 'False'
             }
@@ -87,12 +88,92 @@ function changes(hash, dispatch, state) {
                     owner: response.returnValues.owner,
                     backlog: response.returnValues.backlog,
                     completed: response.returnValues.completed,
-                    tags: response.returnValues.tags,
+                    tags: decode(response.returnValues.tags),
                     active: response.returnValues.active ? 'True' : 'False',
                     discoverable: response.returnValues.discoverable ? 'True' : 'False'
                 }
             })
         })
+    })
+}
+
+// UPDATE IOT MIDDLEWARE
+function update_middleware(hash, state) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(hash).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return transaction({
+            query: contract.methods.update_middleware(),
+            contract: device
+        }, state)
+    })
+}
+
+// UPDATE DISCOVERY TAGS
+function update_tags({ hash, data }, state) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(hash).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return transaction({
+            query: contract.methods.update_tags(data),
+            contract: device
+        }, state)
+    })
+}
+
+// TOGGLE ACTIVE STATUS
+function toggle_active(state) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(state.prompt.source).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return transaction({
+            query: contract.methods.toggle_active(),
+            contract: device
+        }, state)
+    })
+}
+
+// TOGGLE DISCOVERY STATUS
+function toggle_discovery(state) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(state.prompt.source).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return transaction({
+            query: contract.methods.toggle_discoverable(),
+            contract: device
+        }, state)
     })
 }
 
@@ -103,5 +184,9 @@ export {
     register,
     device_added,
     details,
-    changes
+    changes,
+    update_middleware,
+    update_tags,
+    toggle_active,
+    toggle_discovery
 }

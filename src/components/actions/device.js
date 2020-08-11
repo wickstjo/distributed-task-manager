@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../interface/css/actions.scss';
+import { update_middleware } from '../../funcs/contract/device';
 import { sleep } from '../../funcs/misc';
 
 function Actions({ hash, state, dispatch }) {
@@ -14,7 +15,7 @@ function Actions({ hash, state, dispatch }) {
         })
 
         // EXECUTE THE TRANSACTION
-        /* update(hash, state).then(() => {
+        update_middleware(hash, state).then(() => {
             
             // SLEEP FOR 2 SECONDS
             sleep(2000).then(() => {
@@ -24,16 +25,30 @@ function Actions({ hash, state, dispatch }) {
                     type: 'hide-prompt'
                 })
             })
-        }) */
+        })
     }
 
-    // TRIGGER UPDATE CONFIG
+    // SHOW CONFIG PROMPT
     function trigger_config() {
-        console.log('foo')
+        dispatch({
+            type: 'show-prompt',
+            payload: 'tag-config',
+            source: hash
+        })
+    }
+
+    // SHOW CONFIG PROMPT
+    function trigger_status() {
+        dispatch({
+            type: 'show-prompt',
+            payload: 'status',
+            source: hash
+        })
     }
 
     return (
         <div id={ 'actions' }>
+            <li id={ 'action' } onClick={ trigger_status }>Toggle Status</li>
             <li id={ 'action' } onClick={ trigger_config }>Discovery Config</li>
             <li id={ 'action' } onClick={ trigger_update }>Update Middleware</li>
         </div>
