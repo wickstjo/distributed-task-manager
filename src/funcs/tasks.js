@@ -17,7 +17,7 @@ function login(state, dispatch) {
         sleep(2000).then(() => {
 
             // FETCH THE USERS CONTRACT ADDRESS
-            fetch(state).then(address => {
+            fetch(state.keys.public, state).then(address => {
 
                 // VERIFY IT
                 dispatch({

@@ -9,53 +9,58 @@ function refs(state) {
 }
 
 // FETCH USER SMART CONTRACT
-function fetch(state) {
+function fetch(wallet, state) {
     const { manager } = refs(state);
-    return manager.fetch(state.keys.public).call();
+    return manager.fetch(wallet).call();
 }
 
-// FETCH USER ADDRESS
-async function user_overview(user, state) {
-    const { manager } = refs(state);
+// FETCH DEVICE ASSIGNMENT BACKLOG
+function details(wallet, state) {
+    const { manager } = refs(state)
 
-    // USER CONTRACT LOCATION
-    const location = await manager.fetch_user(user).call();
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch(wallet).call().then(location => {
 
-    // CONSTRUCT USER CONTRACT
-    const contract = assemble({
-        address: location,
-        contract: 'user'
-    }, state);
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: location,
+            contract: 'user'
+        }, state);
 
-    return {
-        details: {
-            name: await contract.methods.name().call(),
-            reputation: await contract.methods.reputation().call()
-        },
-        completed: await contract.methods.fetch_completed().call()
-    }
+        return contract.methods.details().call().then(response => {
+            return {
+                contract: location,
+                devices: response[0],
+                reputation: response[1]
+            }
+        })
+    })
 }
 
-// FETCH TASK RESULT
-async function fetch_result(task, user, state) {
-    const { manager } = refs(state);
+// FETCH DEVICE ASSIGNMENT BACKLOG
+function changes(wallet, dispatch, state) {
+    const { manager } = refs(state)
 
-    // USER CONTRACT LOCATION
-    const location = await manager.fetch_user(user).call();
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch(wallet).call().then(location => {
 
-    // CONSTRUCT USER CONTRACT
-    const contract = assemble({
-        address: location,
-        contract: 'user'
-    }, state);
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: location,
+            contract: 'user'
+        }, state);
 
-    // FETCH THE TASKS DATA STRUCT
-    const result = await contract.methods.fetch_result(task).call();
-
-    return {
-        ipfs: result.ipfs,
-        key: result.key
-    }
+        // WHEN AN EVENT IS DETECTED
+        return contract.events.changes().on('data', response => {
+            dispatch({
+                type: 'partial',
+                payload: {
+                    results: response.results,
+                    reputation: response.reputation
+                }
+            })
+        })
+    })
 }
 
 // ADD USER
@@ -70,7 +75,7 @@ function register(state) {
 
 export {
     fetch,
-    user_overview,
-    fetch_result,
+    details,
+    changes,
     register
 }

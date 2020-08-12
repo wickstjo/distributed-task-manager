@@ -56,7 +56,7 @@ function Init() {
       if (state.web3 !== null) {
 
          // FETCH USER SMART CONTRACT
-         fetch(state).then(result => {
+         fetch(state.keys.public, state).then(result => {
 
             // VERYIFY LEGITIMICY IN STATE
             dispatch({

@@ -16,8 +16,8 @@ function fetch(hash, state) {
 }
 
 // FETCH USER DEVICE COLLECTION
-function collection(state) {
-    return refs(state).manager.fetch_collection(state.keys.public).call();
+function collection(user, state) {
+    return refs(state).manager.fetch_collection(user).call();
 }
 
 // ADD DEVICE

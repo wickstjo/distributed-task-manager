@@ -7,6 +7,12 @@ function reducer(state, { type, payload }) {
             [payload.name]: payload.data
         }}
 
+        // PARTIALLY OVERWRITE STATES
+        case 'partial': { return {
+            ...state,
+            ...payload
+        }}
+
         // OVERWRITE ENTIRE STATE
         case 'all': { return {
             ...payload

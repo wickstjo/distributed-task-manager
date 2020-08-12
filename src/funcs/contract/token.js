@@ -8,16 +8,21 @@ function refs(state) {
    }
 }
 
-// FETCH TOKEN PRICE
-function price(state) {
+// FETCH TOKEN DETAILS
+function details(state) {
    const { manager } = refs(state);
-   return manager.price().call()
+   return manager.details().call()
 }
 
 // FETCH USERS TOKEN BALANCE
-function balance(state) {
+function balance(user, state) {
    const { manager } = refs(state);
-   return manager.balance(state.keys.public).call()
+   return manager.balance(user).call()
+}
+
+// TOKEN CONTRACT CHANGE EVENT
+function changes(state) {
+   return state.contracts.managers.token.events.changes()
 }
 
 // BUY TOKEN
@@ -47,7 +52,8 @@ function transfer(amount, recipient, state) {
 }
 
 export {
-   price,
+   details,
+   changes,
    balance,
    purchase,
    transfer
