@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 import { update_middleware } from '../../funcs/contract/device';
 import { sleep } from '../../funcs/misc';
 
-function Actions({ hash, state, dispatch }) {
+function Actions({ state, dispatch }) {
 
     // TRIGGER UPDATE EVENT
     function trigger_update() {
@@ -15,7 +15,7 @@ function Actions({ hash, state, dispatch }) {
         })
 
         // EXECUTE THE TRANSACTION
-        update_middleware(hash, state).then(() => {
+        update_middleware(state.trigger, state).then(() => {
             
             // SLEEP FOR 2 SECONDS
             sleep(2000).then(() => {
@@ -32,8 +32,7 @@ function Actions({ hash, state, dispatch }) {
     function trigger_config() {
         dispatch({
             type: 'show-prompt',
-            payload: 'tag-config',
-            source: hash
+            payload: 'tag-config'
         })
     }
 
@@ -41,17 +40,16 @@ function Actions({ hash, state, dispatch }) {
     function trigger_status() {
         dispatch({
             type: 'show-prompt',
-            payload: 'status',
-            source: hash
+            payload: 'status'
         })
     }
 
     return (
-        <div id={ 'actions' }>
+        <Fragment>
             <li id={ 'action' } onClick={ trigger_status }>Toggle Status</li>
             <li id={ 'action' } onClick={ trigger_config }>Discovery Config</li>
             <li id={ 'action' } onClick={ trigger_update }>Update Middleware</li>
-        </div>
+        </Fragment>
     )
 }
 

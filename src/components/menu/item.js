@@ -6,17 +6,17 @@ function Item({ name, to, current }) {
 
       // THIS IS THE CURRENT HEADER
       case name.toLowerCase(): { return (
-         <li id={ 'item' } className={ 'inactive' } alt={ name.toLowerCase() }>
-            { name }
-         </li>
+         <div id={ 'item' } className={ 'active' } alt={ name.toLowerCase() }>
+            <div id={ 'inner' }>{ name }</div>
+         </div>
       )}
 
       // NOT THE CURRENT HEADER
       default: { return (
          <Link to={ to }>
-            <li id={ 'item' } className={ 'active' } alt={ name.toLowerCase() }>
-               { name }
-            </li>
+            <div id={ 'item' } className={ 'inactive' } alt={ name.toLowerCase() }>
+               <div id={ 'inner' }>{ name }</div>
+            </div>
          </Link>
       )}
    }

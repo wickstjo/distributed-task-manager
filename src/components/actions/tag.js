@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 
 function Actions({ dispatch }) {
@@ -12,9 +12,9 @@ function Actions({ dispatch }) {
     }
 
     return (
-        <div id={ 'actions' }>
+        <Fragment>
             <li id={ 'action' } onClick={ tag }>Add Tag</li>
-        </div>
+        </Fragment>
     )
 }
 

@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
 import { tags as fetch_tags, added } from '../funcs/contract/tag';
-import '../interface/css/tasks.scss';
-import Actions from '../components/actions/tag';
 
 function Tasks() {
    
@@ -39,23 +37,20 @@ function Tasks() {
    }, [])
 
    return (
-      <div id={ 'tags' }>
-         <div id={ 'inner' }>
-            <Info
-               header={ 'Tag Manager' }
-               data={{
-                  'Contract': state.contracts.managers.tag._address
-               }}
-            />
-            <List
-               header={ 'Standardized Tags' }
-               data={ tags }
-               fallback={ 'No tags found.' }
-               category={ 'tags' }
-            />
-            <Actions dispatch={ dispatch } />
-         </div>
-      </div>
+      <Fragment>
+         <Info
+            header={ 'Tag Manager' }
+            data={{
+               'Contract': state.contracts.managers.tag._address
+            }}
+         />
+         <List
+            header={ 'Standardized Tags' }
+            data={ tags }
+            fallback={ 'No tags found.' }
+            category={ 'tags' }
+         />
+      </Fragment>
    )
 }
 

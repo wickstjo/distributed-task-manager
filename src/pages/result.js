@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { result } from '../funcs/contract/task';
 import { reducer } from '../components/shared/reducer';
-import { Link } from 'react-router-dom';
 
 import Info from '../components/shared/info';
 
@@ -36,20 +35,16 @@ function Result({ match }) {
    }, [])
 
    return (
-      <div id={ 'devices' }>
-         <div id={ 'inner' }>
-            <div id={ 'device' }>
-               <Info
-                  header={ 'Task Result' }
-                  data={{
-                     'Task Contract': match.params.address,
-                     'IPFS': local.ipfs,
-                     'Encryption Key': local.key
-                  }}
-               />
-            </div>
-         </div>
-      </div>
+      <Fragment>
+         <Info
+            header={ 'Task Result' }
+            data={{
+               'Task Contract': match.params.address,
+               'IPFS': local.ipfs,
+               'Encryption Key': local.key
+            }}
+         />
+      </Fragment>
    )
 }
 

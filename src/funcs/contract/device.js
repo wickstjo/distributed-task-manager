@@ -138,11 +138,11 @@ function update_tags({ hash, data }, state) {
 }
 
 // TOGGLE ACTIVE STATUS
-function toggle_active(state) {
+function toggle_active(hash, state) {
     const { manager } = refs(state)
 
     // FETCH THE DEVICES SMART CONTRACT
-    return manager.fetch_device(state.prompt.source).call().then(device => {
+    return manager.fetch_device(hash).call().then(device => {
 
         // CONSTRUCT CONTRACT
         const contract = assemble({
@@ -158,11 +158,11 @@ function toggle_active(state) {
 }
 
 // TOGGLE DISCOVERY STATUS
-function toggle_discovery(state) {
+function toggle_discovery(hash, state) {
     const { manager } = refs(state)
 
     // FETCH THE DEVICES SMART CONTRACT
-    return manager.fetch_device(state.prompt.source).call().then(device => {
+    return manager.fetch_device(hash).call().then(device => {
 
         // CONSTRUCT CONTRACT
         const contract = assemble({

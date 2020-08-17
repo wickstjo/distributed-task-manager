@@ -1,72 +1,72 @@
 #menu {
-   display: table-row;
-   height: 1px;
-
-   > .inner {
-      background: rgba(0, 0, 0, 0.185);
-      border-bottom: 1px solid rgba(2, 2, 2, 0.103);
-   }
-
-   li {
-      background-color: rgba(0, 0, 0, 0);
-      display: inline-block;
-      padding: 11px;
-      padding-bottom: 9px;
-      padding-top: 9px;
-      padding-left: 35px;
-      color: #CECECE;
+   #inner {
+      background: rgba(0, 0, 0, 0.13);
+      border-bottom: 1px solid rgb(39, 39, 39);
+      border-top: 1px solid rgba(2, 2, 2, 0.103);
       text-shadow: 1px 1px #242424;
-      transition-property: background-color, color;
-      transition-duration: 0.3s, 0.3s;
-      transition: 0.2s;
-      background-repeat: no-repeat;
-      background-position-y: center;
-      background-position-x: 10px;
-   }
+      display: flex;
 
-   li[alt="tasks"] {
-      background-image: url('../images/icons/list.png');
-   }
+      a, #item {
+         flex: 1;
+      }
 
-   li[alt="tags"] {
-      background-image: url('../images/icons/tags.png');
-   }
+      #item {
+         background-color: rgba(0, 0, 0, 0);
+         color: #CECECE;
+         transition-property: background-color, color;
+         transition-duration: 0.3s, 0.3s;
+         transition: 0.2s;
+         background-repeat: no-repeat;
+         background-position-y: center;
+         background-position-x: 11px;
 
-   li[alt="tokens"] {
-      background-image: url('../images/icons/coin-dollar.png');
-   }
+         #inner {
+            display: block;
+            padding-top: 8px;
+            padding-bottom: 10px;
+            border-left: 1px solid rgb(37, 37, 37);
+            border-bottom: 0px solid black;
+            text-align: center;
+         }
+      }
 
-   li[alt="profile"], li[alt="user"] {
-      background-image: url('../images/icons/user.png');
-   }
-
-   li[alt="whisper"] {
-      background-image: url('../images/icons/bubble.png');
-   }
-
-   li[alt="settings"] {
-      background-image: url('../images/icons/wrench.png');
-   }
-
-   #page {
-      color: rgba(253, 255, 115, 0.774);
-   }
-
-   .active:hover, .extra:hover {
-      background-color: rgba(132, 255, 107, 0.11);
-      color: white;
-      cursor: pointer;
-   }
-
-   .inactive {
-      color: rgba(253, 255, 115, 0.774);
-   }
-
-   .extra {
-      color: rgba(175, 210, 255, 0.938);
-   }
-
-   .extra:hover {
-      background: rgba(179, 225, 255, 0.199);
+      #item.active {
+         color: rgba(253, 255, 115, 0.774);
+         background-color: rgba(125, 166, 255, 0.151);
+      }
+   
+      #item.inactive:hover {
+         background-color: rgba(132, 255, 107, 0.11);
+         color: white;
+         cursor: pointer;
+      }
+   
+      #item[alt="tasks"] {
+         background-image: url('../images/icons/list.png');
+         
+         #inner {
+            border-left: 0px solid black;
+         }
+      }
+   
+      #item[alt="tags"] {
+         background-image: url('../images/icons/tags.png');
+      }
+   
+      #item[alt="tokens"] {
+         background-image: url('../images/icons/coin-dollar.png');
+      }
+   
+      #item[alt="profile"], #item[alt="user"] {
+         background-image: url('../images/icons/user.png');
+      }
+   
+      #item[alt="whisper"] {
+         background-image: url('../images/icons/bubble.png');
+      }
+   
+      #item[alt="settings"] {
+         background-image: url('../images/icons/wrench.png');
+      }
    }
 }

@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { details, changes } from '../funcs/contract/token';
 import { separator } from '../funcs/format';
 import { reducer } from '../components/shared/reducer';
 
 import Info from '../components/shared/info';
-import Actions from '../components/actions/token';
 
 function Tokens() {
 
@@ -60,22 +59,19 @@ function Tokens() {
    }, [])
 
    return (
-      <div id={ 'tokens' }>
-         <div id={ 'inner' }>
-            <Info
-               header={ 'Token Manager' }
-               data={{
-                  'Contract': state.contracts.managers.token._address,
-                  'Standard': local.standard,
-                  'Price': separator(local.price) + ' WEI',
-                  'Symbol': local.symbol,
-                  'Tokens In Circulation': separator(local.sold),
-                  'Tokens Available': separator(local.available)
-               }}
-            />
-            <Actions dispatch={ dispatch } />
-         </div>
-      </div>
+      <Fragment>
+         <Info
+            header={ 'Token Manager' }
+            data={{
+               'Contract': state.contracts.managers.token._address,
+               'Standard': local.standard,
+               'Price': separator(local.price) + ' WEI',
+               'Symbol': local.symbol,
+               'Tokens In Circulation': separator(local.sold),
+               'Tokens Available': separator(local.available)
+            }}
+         />
+      </Fragment>
    )
 }
 

@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { fetch_open } from '../funcs/contract/task';
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
-import Actions from '../components/actions/tasks';
 import { fee as get_fee, change } from '../funcs/contract/task';
-import '../interface/css/tasks.scss';
 
 function Tasks() {
    
@@ -46,27 +44,21 @@ function Tasks() {
    }, [])
 
    return (
-      <div id={ 'tasks' }>
-         <div id={ 'inner' }>
-            <Info
-               header={ 'Task Manager' }
-               data={{
-                  'Contract': state.contracts.managers.task._address,
-                  'Token Fee': fee
-               }}
-            />
-            <List
-               header={ 'Incomplete tasks' }
-               data={ tasks }
-               fallback={ 'No tasks found.' }
-               category={ 'tasks' }
-            />
-            <Actions
-               state={ state }
-               dispatch={ dispatch }
-            />
-         </div>
-      </div>
+      <Fragment>
+         <Info
+            header={ 'Task Manager' }
+            data={{
+               'Contract': state.contracts.managers.task._address,
+               'Token Fee': fee
+            }}
+         />
+         <List
+            header={ 'Incomplete tasks' }
+            data={ tasks }
+            fallback={ 'No tasks found.' }
+            category={ 'tasks' }
+         />
+      </Fragment>
    )
 }
 

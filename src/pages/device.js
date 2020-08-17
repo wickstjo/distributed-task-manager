@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, Fragment } from 'react';
 import { Context } from '../assets/context';
 import Info from '../components/shared/info';
 import List from '../components/shared/list';
 import { details, changes } from '../funcs/contract/device';
-import Actions from '../components/actions/device';
 import { reducer } from '../components/shared/reducer';
 import { Link } from 'react-router-dom';
 
@@ -25,6 +24,12 @@ function Device({ match }) {
       dispatch({
          type: 'header',
          payload: 'device'
+      })
+
+      // SET TRIGGER
+      dispatch({
+         type: 'trigger',
+         payload: match.params.address
       })
 
       // FETCH THE DEVICE CONTRACT DETAILS
@@ -50,39 +55,30 @@ function Device({ match }) {
    }, [])
 
    return (
-      <div id={ 'devices' }>
-         <div id={ 'inner' }>
-            <div id={ 'device' }>
-               <Info
-                  header={ 'Device overview' }
-                  data={{
-                     'Contract': local.contract,
-                     'Hash': match.params.address,
-                     'Owner': <Link to={ '/users/' + local.owner }>{ local.owner }</Link>,
-                     'Active': local.active,
-                     'Discoverable': local.discoverable,
-                     'Tasks Completed': local.completed
-                  }}
-               />
-               <Info
-                  header={ 'Discovery tags' }
-                  fallback={ 'No tags found' }
-                  data={ local.tags }
-               />
-               <List
-                  header={ 'Task backlog' }
-                  data={ local.backlog }
-                  fallback={ 'No tasks found' }
-                  category={ '/tasks' }
-               />
-            </div>
-            <Actions
-               state={ state }
-               dispatch={ dispatch }
-               hash={ match.params.address }
-            />
-         </div>
-      </div>
+      <Fragment>
+         <Info
+            header={ 'Device overview' }
+            data={{
+               'Contract': local.contract,
+               'Hash': match.params.address,
+               'Owner': <Link to={ '/users/' + local.owner }>{ local.owner }</Link>,
+               'Active': local.active,
+               'Discoverable': local.discoverable,
+               'Tasks Completed': local.completed
+            }}
+         />
+         <Info
+            header={ 'Discovery tags' }
+            fallback={ 'No tags found' }
+            data={ local.tags }
+         />
+         <List
+            header={ 'Task backlog' }
+            data={ local.backlog }
+            fallback={ 'No tasks found' }
+            category={ '/tasks' }
+         />
+      </Fragment>
    )
 }
 

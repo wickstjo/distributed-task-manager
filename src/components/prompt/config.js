@@ -36,7 +36,7 @@ function Config() {
 
       // REGISTER THE DEVICE
       update_tags({
-         hash: state.prompt.source,
+         hash: state.trigger,
          data: encoded
       }, state).then(() => {
 

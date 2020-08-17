@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 import { login } from '../../funcs/tasks';
 
@@ -17,16 +17,16 @@ function Actions({ state, dispatch }) {
 
         // SHOW TASK BUTTON
         case true: { return (
-            <div id={ 'actions' }>
+            <Fragment>
                 <li id={ 'action' } onClick={ create_task }>Create Task</li>
-            </div>
+            </Fragment>
         )}
 
         // SHOW REGISTER BUTTON
         case false: { return (
-            <div id={ 'actions' }>
+            <Fragment>
                 <li id={ 'action' } onClick={() => login(state, dispatch) } className={ 'user' }>Register User</li>
-            </div>
+            </Fragment>
         )}
 
         // FALLBACK

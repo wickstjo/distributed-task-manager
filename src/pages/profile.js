@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { collection, device_added } from '../funcs/contract/device';
 import { details, changes } from '../funcs/contract/user';
@@ -6,7 +6,6 @@ import { balance } from '../funcs/contract/token';
 import { reducer } from '../components/shared/reducer';
 import { separator } from '../funcs/format';
 
-import Actions from '../components/actions/profile';
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
 
@@ -95,36 +94,29 @@ function Profile({ match }) {
    }, [])
 
    return (
-      <div id={ 'users' }>
-         <div id={ 'inner' }>
-            <div id={ 'profile' }>
-               <Info
-                  header={ 'User overview' }
-                  data={{
-                     'Contract': local.contract,
-                     'ETH Wallet': state.keys.public,
-                     'Reputation': separator(local.reputation),
-                     'Token Balance': separator(local.tokens)
-                  }}
-               />
-               <List
-                  header={ 'Device collection' }
-                  data={ local.devices }
-                  fallback={ 'No devices found.' }
-                  category={ '/devices' }
-               />
-               <List
-                  header={ 'Task Results' }
-                  data={ local.results }
-                  fallback={ 'No results found.' }
-                  category={ '/results' }
-               />
-            </div>
-            {
-               match.params.address === state.keys.public ? <Actions dispatch={ dispatch } /> : null
-            }
-         </div>
-      </div>
+      <Fragment>
+         <Info
+            header={ 'User overview' }
+            data={{
+               'Contract': local.contract,
+               'ETH Wallet': state.keys.public,
+               'Reputation': separator(local.reputation),
+               'Token Balance': separator(local.tokens)
+            }}
+         />
+         <List
+            header={ 'Device collection' }
+            data={ local.devices }
+            fallback={ 'No devices found.' }
+            category={ '/devices' }
+         />
+         <List
+            header={ 'Task Results' }
+            data={ local.results }
+            fallback={ 'No results found.' }
+            category={ '/results' }
+         />
+      </Fragment>
    )
 }
 

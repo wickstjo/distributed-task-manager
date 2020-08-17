@@ -1,5 +1,4 @@
-import React from 'react';
-import '../../interface/css/actions.scss';
+import React, { Fragment } from 'react';
 
 function Actions({ dispatch }) {
 
@@ -28,11 +27,11 @@ function Actions({ dispatch }) {
     }
     
     return (
-        <div id={ 'actions' }>
+        <Fragment>
             <li id={ 'action' } onClick={ purchase }>Purchase</li>
             <li id={ 'action' } onClick={ transfer }>Transfer</li>
             <li id={ 'action' } onClick={ trade }>Trade</li>
-        </div>
+        </Fragment>
     )
 }
 

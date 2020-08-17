@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 import { retire, complete } from '../../funcs/contract/task';
 import { sleep } from '../../funcs/misc';
@@ -52,14 +52,10 @@ function Actions({ state, dispatch, source }) {
     }
 
     return (
-        <div id={ 'actions' }>
-            <li id={ 'action' } onClick={ force_complte }>
-                Force Completion
-            </li>
-            <li id={ 'action' } onClick={ retire_task } className={ 'retire' }>
-                Retire Task
-            </li>
-        </div>
+        <Fragment>
+            <li id={ 'action' } onClick={ force_complte }>Force Complete</li>
+            <li id={ 'action' } onClick={ retire_task } className={ 'bin' }>Retire Task</li>
+        </Fragment>
     )
 }
 

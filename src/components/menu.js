@@ -10,7 +10,7 @@ function Menu() {
 
    return (
       <div id={ 'menu' }>
-         <div className={ 'inner' }>
+         <div id={ 'inner' }>
             <Item
                name={ 'Tasks' }
                to={ '/' }
@@ -36,11 +36,6 @@ function Menu() {
             <Item
                name={ 'Whisper' }
                to={ '/whisper' }
-               current={ state.header }
-            />
-            <Item
-               name={ 'Settings' }
-               to={ '/settings' }
                current={ state.header }
             />
          </div>

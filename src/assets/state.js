@@ -5,7 +5,10 @@ import { exists } from '../funcs/blockchain';
 const values = {
 
     // PAGE HEADER
-    header: 'Tasks',
+    header: 'tasks',
+
+    // EVENT TRIGGER
+    trigger: '',
 
     // WEB3 INSTANCE & SMART CONTRACTS
     web3: null,
@@ -77,6 +80,12 @@ function reducer(state, action) {
         case 'header': { return {
             ...state,
             header: action.payload
+        }}
+
+        // SET TRIGGER
+        case 'trigger': { return {
+            ...state,
+            trigger: action.payload
         }}
 
         // SET WHISPER FEED

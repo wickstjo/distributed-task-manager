@@ -1,0 +1,79 @@
+#main {
+    border-top: 2px solid #ffffff2a;
+    flex: 1;
+
+    #inner {
+        border-top: 1px solid rgba(0, 0, 0, 0.171);
+        text-shadow: 1px 1px #242424;
+
+        #header {
+            color: white;
+            font-size: 18px;
+            text-transform: uppercase;
+            padding: 8px;
+            padding-left: 10px;
+        }
+
+        #container {
+            border-top: 1px solid rgba(0, 0, 0, 0.171);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.185);
+        
+            #row, #topic, #fallback {
+                background: rgba(255, 255, 255, 0.068);
+                padding: 8px 10px;
+                color: #CECECE;
+                transition: 0.2s;
+                border: 0px solid black;
+                border-top: 1px solid rgba(255, 255, 255, 0.185);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.171);
+            }
+        
+            #row:hover, a:nth-child(even) #row:hover {
+                background: rgba(110, 255, 110, 0.144);
+                color: white;
+                padding-left: 15px;
+            }
+        
+            #topic:nth-child(even), a:nth-child(even) #row {
+                background: rgba(124, 213, 255, 0.11);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.233);
+            }
+
+            #topic a:hover {
+                color: white;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+#errorframe {
+    color: white;
+    padding: 12px;
+}
+
+#tasks, #tokens, #settings {
+    overflow: auto;
+    height: 100%;
+}
+
+#tasks::-webkit-scrollbar,
+#devices::-webkit-scrollbar,
+#users::-webkit-scrollbar,
+#tokens::-webkit-scrollbar,
+#settings::-webkit-scrollbar
+{ width: 12px; }
+
+#tasks::-webkit-scrollbar-track,
+#devices::-webkit-scrollbar-track,
+#users::-webkit-scrollbar-track,
+#tokens::-webkit-scrollbar-track,
+#settings::-webkit-scrollbar-track
+{ background: #ffffff2a; }
+
+#tasks::-webkit-scrollbar-thumb,
+#devices::-webkit-scrollbar-thumb,
+#users::-webkit-scrollbar-thumb,
+#tokens::-webkit-scrollbar-thumb,
+#settings::-webkit-scrollbar-thumb
+{ background: rgba(87, 160, 255, 0.514); }

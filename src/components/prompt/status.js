@@ -21,7 +21,7 @@ function Status() {
       })
 
       // EXECUTE TOGGLE
-      toggle_active(state).then(() => {
+      toggle_active(state.trigger, state).then(() => {
 
          // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
          sleep(2000).then(() => {

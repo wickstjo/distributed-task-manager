@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { decode } from '../funcs/process';
 import { details as fetch_details } from '../funcs/contract/tag';
-import '../interface/css/tasks.scss';
 import Info from '../components/shared/info';
 
 function Tag({ match }) {
@@ -41,23 +40,21 @@ function Tag({ match }) {
    }, [])
 
    return (
-      <div id={ 'tags' }>
-         <div id={ 'inner' }>
-            <Info
-               header={ 'Tag Overview' }
-               data={{
-                  'Name': match.params.name,
-                  'Created': details.created,
-                  'Author': details.author,
-                  'Encoded': details.ruleset
-               }}
-            />
-            <Info
-               header={ 'Ruleset' }
-               data={ details.decoded }
-            />
-         </div>
-      </div>
+      <Fragment>
+         <Info
+            header={ 'Tag Overview' }
+            data={{
+               'Name': match.params.name,
+               'Created': details.created,
+               'Author': details.author,
+               'Encoded': details.ruleset
+            }}
+         />
+         <Info
+            header={ 'Ruleset' }
+            data={ details.decoded }
+         />
+      </Fragment>
    )
 }
 
