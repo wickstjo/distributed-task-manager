@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Context } from '../assets/context';
 import { details, changes } from '../funcs/contract/token';
+import { separator } from '../funcs/format';
 import { reducer } from '../components/shared/reducer';
 
 import Info from '../components/shared/info';
@@ -66,10 +67,10 @@ function Tokens() {
                data={{
                   'Contract': state.contracts.managers.token._address,
                   'Standard': local.standard,
-                  'Price': local.price + ' WEI',
+                  'Price': separator(local.price) + ' WEI',
                   'Symbol': local.symbol,
-                  'In Circulation': local.sold,
-                  'Available': local.available
+                  'Tokens In Circulation': separator(local.sold),
+                  'Tokens Available': separator(local.available)
                }}
             />
             <Actions dispatch={ dispatch } />

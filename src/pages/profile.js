@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Context } from '../assets/context';
-import Actions from '../components/actions/profile';
-import List from '../components/shared/list';
-import Info from '../components/shared/info';
 import { collection, device_added } from '../funcs/contract/device';
 import { details, changes } from '../funcs/contract/user';
 import { balance } from '../funcs/contract/token';
 import { reducer } from '../components/shared/reducer';
+import { separator } from '../funcs/format';
+
+import Actions from '../components/actions/profile';
+import List from '../components/shared/list';
+import Info from '../components/shared/info';
 
 function Profile({ match }) {
 
@@ -67,7 +69,7 @@ function Profile({ match }) {
          user_feed = blob;
       })
 
-      // SUBSCRIBE TO DEVICE COLLECTION FEED ON MOUNT
+      // SUBSCRIBE TO DEVICE COLLECTION FEED
       const device_feed = device_added(match.params.address, state).on('data', response => {
 
          // EXTRACT DATA
@@ -75,7 +77,7 @@ function Profile({ match }) {
 
          // UPDATE DEVICES
          set_local({
-            type: 'update',
+            type: 'specific',
             payload: {
                name: 'devices',
                data: data
@@ -101,18 +103,18 @@ function Profile({ match }) {
                   data={{
                      'Contract': local.contract,
                      'ETH Wallet': state.keys.public,
-                     'Reputation': local.reputation,
-                     'Token Balance': local.tokens
+                     'Reputation': separator(local.reputation),
+                     'Token Balance': separator(local.tokens)
                   }}
                />
                <List
-                  header={ 'Device collection (' + local.devices.length + ')' }
+                  header={ 'Device collection' }
                   data={ local.devices }
                   fallback={ 'No devices found.' }
                   category={ '/devices' }
                />
                <List
-                  header={ 'Task Results (' + local.results.length + ')' }
+                  header={ 'Task Results' }
                   data={ local.results }
                   fallback={ 'No results found.' }
                   category={ '/results' }

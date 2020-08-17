@@ -48,7 +48,7 @@ function Tasks() {
                }}
             />
             <List
-               header={ 'Standardized Tags (' + tags.length + ')' }
+               header={ 'Standardized Tags' }
                data={ tags }
                fallback={ 'No tags found.' }
                category={ 'tags' }

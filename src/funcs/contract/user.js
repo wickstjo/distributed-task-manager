@@ -30,7 +30,7 @@ function details(wallet, state) {
         return contract.methods.details().call().then(response => {
             return {
                 contract: location,
-                devices: response[0],
+                results: response[0],
                 reputation: response[1]
             }
         })

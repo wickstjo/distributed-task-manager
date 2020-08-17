@@ -70,9 +70,9 @@ function Device({ match }) {
                   data={ local.tags }
                />
                <List
-                  header={ 'Task backlog (' + local.backlog.length + ')' }
+                  header={ 'Task backlog' }
                   data={ local.backlog }
-                  fallback={ 'No tasks found.' }
+                  fallback={ 'No tasks found' }
                   category={ '/tasks' }
                />
             </div>

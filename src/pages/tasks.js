@@ -56,7 +56,7 @@ function Tasks() {
                }}
             />
             <List
-               header={ 'Incomplete tasks (' + tasks.length + ')' }
+               header={ 'Incomplete tasks' }
                data={ tasks }
                fallback={ 'No tasks found.' }
                category={ 'tasks' }

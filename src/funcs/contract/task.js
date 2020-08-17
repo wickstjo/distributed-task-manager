@@ -62,10 +62,42 @@ function details(task, state) {
     })
 }
 
+// FORCE COMPLETE TASK
+function complete(task, state) {
+    const { manager, address } = refs(state);
+
+    const ipfs = 'QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u'
+    const key = '0x4f7a87EE7A53ae8606e80FE96a47038DF8ab7956'
+
+    return transaction({
+        query: manager.complete(task, ipfs, key),
+        contract: address
+    }, state)
+}
+
+// RETIRE TASK
+function retire(task, state) {
+    const { manager, address } = refs(state);
+
+    return transaction({
+        query: manager.retire(task),
+        contract: address
+    }, state)
+}
+
+// FETCH TASK FEE
+function result(task, state) {
+    const { manager } = refs(state);
+    return manager.fetch_result(task).call()
+}
+
 export {
     fee,
     fetch_open,
     add,
     change,
-    details
+    details,
+    complete,
+    retire,
+    result
 }

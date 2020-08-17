@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../assets/context';
-import Info from '../components/shared/info';
 import { details as get_details } from '../funcs/contract/task';
 import { Link } from 'react-router-dom';
+import { separator, filter_zeros } from '../funcs/format';
+
+import Info from '../components/shared/info';
 import Actions from '../components/actions/task';
 
 function Task({ match }) {
@@ -36,19 +38,20 @@ function Task({ match }) {
    return (
       <div id={ 'tasks' }>
          <div id={ 'inner' }>
-            <div id={ 'header' }>Task Overview</div>
             <Info
+               header={ 'Task Overview' }
                data={{
                   'Contract': match.params.address,
                   'Creator': <Link to={ '/users/' + details.creator }>{ details.creator }</Link>,
                   'Assigned Device': <Link to={ '/devices/' + details.device }>{ details.device }</Link>,
-                  'Token Reward': details.reward,
-                  'Block Expiration': details.expires,
+                  'Token Reward': separator(details.reward),
+                  'Block Expiration': separator(details.expires)
                }}
             />
             <Actions
                state={ state }
                dispatch={ dispatch }
+               source={ match.params.address }
             />
          </div>
       </div>

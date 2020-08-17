@@ -10,6 +10,7 @@ import Tag from '../pages/tag';
 
 import Device from '../pages/device';
 import User from '../pages/profile';
+import Result from '../pages/result';
 
 import Tokens from '../pages/tokens';
 import Whisper from '../pages/whisper';
@@ -34,6 +35,7 @@ function Pages() {
 
          <Route path={ '/devices/:address' } component={ Device } />
          <Route path={ '/users/:address' } component={ User } />
+         <Route path={ '/results/:address' } component={ Result } />
 
          <Route exact path={ '/tokens' } component={ Tokens } />
          <Route exact path={ '/whisper' } component={ Whisper } />
