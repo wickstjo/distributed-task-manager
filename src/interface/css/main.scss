@@ -1,10 +1,14 @@
 #main {
     border-top: 2px solid #ffffff2a;
     flex: 1;
+    position: relative;
 
     #inner {
-        border-top: 1px solid rgba(0, 0, 0, 0.171);
         text-shadow: 1px 1px #242424;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        position: absolute;
 
         #header {
             color: white;
@@ -45,35 +49,16 @@
             }
         }
     }
+
+    #inner::-webkit-scrollbar {
+        width: 12px;
+    }
+    
+    #inner::-webkit-scrollbar-track {
+        background: #ffffff2a;
+    }
+    
+    #inner::-webkit-scrollbar-thumb {
+        background: rgba(87, 160, 255, 0.514);
+    }
 }
-
-#errorframe {
-    color: white;
-    padding: 12px;
-}
-
-#tasks, #tokens, #settings {
-    overflow: auto;
-    height: 100%;
-}
-
-#tasks::-webkit-scrollbar,
-#devices::-webkit-scrollbar,
-#users::-webkit-scrollbar,
-#tokens::-webkit-scrollbar,
-#settings::-webkit-scrollbar
-{ width: 12px; }
-
-#tasks::-webkit-scrollbar-track,
-#devices::-webkit-scrollbar-track,
-#users::-webkit-scrollbar-track,
-#tokens::-webkit-scrollbar-track,
-#settings::-webkit-scrollbar-track
-{ background: #ffffff2a; }
-
-#tasks::-webkit-scrollbar-thumb,
-#devices::-webkit-scrollbar-thumb,
-#users::-webkit-scrollbar-thumb,
-#tokens::-webkit-scrollbar-thumb,
-#settings::-webkit-scrollbar-thumb
-{ background: rgba(87, 160, 255, 0.514); }

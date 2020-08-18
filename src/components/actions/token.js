@@ -12,25 +12,13 @@ function Actions({ dispatch }) {
 
     // TRANSFER TOKENS PROMPT
     function transfer() {
-        dispatch({
-            type: 'show-prompt',
-            payload: 'user'
-        })
-    }
-
-    // TRADE TOKENS PROMPT
-    function trade() {
-        dispatch({
-            type: 'show-prompt',
-            payload: 'user'
-        })
+        console.log('foo')
     }
     
     return (
         <Fragment>
             <li id={ 'action' } onClick={ purchase }>Purchase</li>
             <li id={ 'action' } onClick={ transfer }>Transfer</li>
-            <li id={ 'action' } onClick={ trade }>Trade</li>
         </Fragment>
     )
 }
