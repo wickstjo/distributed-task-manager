@@ -42,7 +42,7 @@ function Status() {
       })
 
       // EXECUTE TOGGLE
-      toggle_discovery(state).then(() => {
+      toggle_discovery(state.trigger, state).then(() => {
 
          // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
          sleep(2000).then(() => {

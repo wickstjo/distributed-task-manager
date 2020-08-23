@@ -45,8 +45,16 @@ function Tag() {
          description: encoded
       }, state).then(() => {
 
-         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
+         // SLEEP FOR 2 SECONDS
          sleep(2000).then(() => {
+
+            // REDIRECT TO THE TAG PAGE
+            dispatch({
+               type: 'redirect',
+               payload: '/tags/' + local.name.value
+            })
+
+            // FINALLY HIDE PROMPT
             dispatch({
                type: 'hide-prompt'
             })

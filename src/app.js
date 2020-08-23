@@ -14,6 +14,7 @@ import Pages from './assets/pages';
 import Menu from './components/menu';
 import Prompt from './components/prompt';
 import Actions from './components/actions';
+import Redirect from './components/redirect';
 
 function App() { return (
    <HashRouter>
@@ -29,6 +30,7 @@ function App() { return (
             <Actions />
          </div>
          <Prompt />
+         <Redirect />
       </Provider>
    </HashRouter>
 )}

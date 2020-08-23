@@ -42,11 +42,17 @@ function Device() {
       // REGISTER THE DEVICE
       register(hash_id, encoded_config, state).then(() => {
 
-         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
+         // SLEEP FOR 2 SECONDS
          sleep(2000).then(() => {
+
+            // REDIRECT TO DEVICE PAGE
             dispatch({
-               type: 'hide-prompt'
+               type: 'redirect',
+               payload: '/devices/' + hash_id
             })
+
+            // FINALLY HIDE PROMPT
+            dispatch({ type: 'hide-prompt' })
          })
       })
    }

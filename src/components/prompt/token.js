@@ -33,8 +33,16 @@ function Token() {
       // EXECUTE THE PURCHASE
       purchase(local.amount.value, state).then(() => {
 
-         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
+         // SLEEP FOR 2 SECONDS
          sleep(2000).then(() => {
+
+            // REDIRECT TO USER PAGE
+            dispatch({
+               type: 'redirect',
+               payload: '/users/' + state.keys.public
+            })
+
+            // FINALLY HIDE PROMPT
             dispatch({
                type: 'hide-prompt'
             })

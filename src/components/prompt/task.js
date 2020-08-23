@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, Fragment } from 'react';
 import { Context } from "../../assets/context";
-import { add } from '../../funcs/contract/task';
+import { add, fetch_open } from '../../funcs/contract/task';
 import { sleep } from '../../funcs/misc';
 import { reducer } from '../shared/reducer';
 
@@ -46,10 +46,22 @@ function Task() {
          timelimit: local.blocks.value
       }, state).then(() => {
 
-         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
-         sleep(2000).then(() => {
-            dispatch({
-               type: 'hide-prompt'
+         // FETCH OPEN TASKS
+         fetch_open(state).then(list => {
+            
+            // SLEEP FOR 2 SECONDS
+            sleep(2000).then(() => {
+
+               // REDIRECT TO THE TASK PAGE
+               dispatch({
+                  type: 'redirect',
+                  payload: '/tasks/' + list[list.length - 1]
+               })
+
+               // FINALLY HIDE THE PROMPT
+               dispatch({
+                  type: 'hide-prompt'
+               })
             })
          })
       })

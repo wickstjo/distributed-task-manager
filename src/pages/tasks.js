@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { fetch_open } from '../funcs/contract/task';
+import { fee as get_fee, change } from '../funcs/contract/task';
+
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
-import { fee as get_fee, change } from '../funcs/contract/task';
 
 function Tasks() {
    

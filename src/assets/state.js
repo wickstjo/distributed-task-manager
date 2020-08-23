@@ -38,6 +38,12 @@ const values = {
     prompt: {
         visible: true,
         type: 'loading'
+    },
+
+    // REDIRECT PARAMS
+    redirect: {
+        status: false,
+        location: ''
     }
 }
 
@@ -126,6 +132,24 @@ function reducer(state, action) {
         case 'verify': { return {
             ...state,
             verified: exists(action.payload)
+        }}
+
+        // REDIRECT TO PAGE
+        case 'redirect': { return {
+            ...state,
+            redirect: {
+                status: true,
+                location: action.payload
+            }
+        }}
+
+        // RESET REDIRECT LOGIC
+        case 'reset-redirect': { return {
+            ...state,
+            redirect: {
+                status: false,
+                location: ''
+            }
         }}
 
         // FALLBACK
