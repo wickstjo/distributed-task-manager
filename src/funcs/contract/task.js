@@ -20,11 +20,11 @@ function fee(state) {
 }
 
 // ADD TASK
-function add({ device, reward, timelimit  }, state) {
+function add({ device, reward, encryption, timelimit }, state) {
     const { manager, address } = refs(state);
 
     return transaction({
-        query: manager.add(device, reward, timelimit),
+        query: manager.add(device, reward, encryption, timelimit),
         contract: address
     }, state)
 }
@@ -48,6 +48,7 @@ function details(task, state) {
         contract.methods.creator().call(),
         contract.methods.device().call(),
         contract.methods.reward().call(),
+        contract.methods.encryption().call(),
         contract.methods.expires().call()
     ]
 
@@ -57,7 +58,8 @@ function details(task, state) {
             creator: values[0],
             device: values[1],
             reward: values[2],
-            expires: values[3]
+            encryption: values[3],
+            expires: values[4]
         }
     })
 }

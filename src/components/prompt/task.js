@@ -24,6 +24,10 @@ function Task() {
          value: '',
          validation: false
       },
+      encryption: {
+         value: '',
+         validation: false
+      },
       device: {
          value: '',
          validation: false
@@ -43,6 +47,7 @@ function Task() {
       add({
          device: local.device.value,
          reward: local.reward.value,
+         encryption: local.encryption.value,
          timelimit: local.blocks.value
       }, state).then(() => {
 
@@ -88,6 +93,16 @@ function Task() {
             limit={{
                min: 5,
                max: 1000
+            }}
+         />
+         <Text
+            placeholder={ 'Set encryption key' }
+            data={ local }
+            category={ 'encryption' }
+            dispatch={ set_local }
+            limit={{
+               min: 5,
+               max: 64
             }}
          />
          <Text
