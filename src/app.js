@@ -15,6 +15,7 @@ import Menu from './components/menu';
 import Prompt from './components/prompt';
 import Actions from './components/actions';
 import Redirect from './components/redirect';
+import Alerts from './components/alerts';
 
 function App() { return (
    <HashRouter>
@@ -26,6 +27,7 @@ function App() { return (
                <div id={ 'inner' }>
                   <Pages />
                </div>
+               <Alerts />
             </div>
             <Actions />
          </div>

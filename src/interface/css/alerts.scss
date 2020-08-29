@@ -1,0 +1,42 @@
+#alerts {
+   position: absolute;
+   bottom: 10px;
+   right: 0px;
+   transition: opacity 0.3s;
+   opacity: 1;
+
+   div {
+      flex-direction: column;
+      align-items: flex-end;
+      display: flex;
+      overflow: hidden;
+
+      #message {
+         color: white;
+         text-transform: uppercase;
+         text-shadow: 1px 1px #242424;
+         margin-bottom: 5px;
+         transition-duration: 0.3s;
+         transition-property: right, opacity;
+         opacity: 0;
+         width: fit-content;
+         position: relative;
+         border: 1px solid rgba(255, 255, 255, 0.384);
+         border-right: 0px solid black;
+
+         div {
+            border: 1px solid rgba(0, 0, 0, 0.411);
+            border-right: 0px solid black;
+            padding: 8px 11px;
+         }
+      }
+   
+      .bad {
+         background-color: rgba(187, 49, 49, 0.562);
+      }
+      
+      .good {
+         background: rgba(128, 255, 111, 0.26);
+      }
+   }
+}

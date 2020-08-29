@@ -44,7 +44,10 @@ const values = {
     redirect: {
         status: false,
         location: ''
-    }
+    },
+
+    // ALERT MESSAGES
+    messages: []
 }
 
 // REDUCER
@@ -150,6 +153,15 @@ function reducer(state, action) {
                 status: false,
                 location: ''
             }
+        }}
+
+        // ADD ALERT MESSAGE
+        case 'alert': { return {
+            ...state,
+            messages: [
+                ...state.messages,
+                action.payload
+            ]
         }}
 
         // FALLBACK

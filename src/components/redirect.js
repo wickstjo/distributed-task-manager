@@ -7,8 +7,9 @@ function Redir() {
    // GLOBAL STATE
    const { state, dispatch } = useContext(Context);
 
+   // AFTER REDIRECTING, RESET THE COMPONENT
    useEffect(() => {
-      if (!state.redirect.status) {
+      if (state.redirect.status) {
          dispatch({ type: 'reset-redirect' })
       }
 

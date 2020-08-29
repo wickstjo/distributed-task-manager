@@ -10,12 +10,12 @@
       }
    },
    "keys": {
-      "public": "0xa9615Ca5ab87D7ab042ad72DCD9ac7D138C07535",
-      "private": "0x09e661536017d90af075632282883a85d30c6874ec71381b555f64de2fb63dd5"
+      "public": "0x360BdF9A9Fc34Fee63bDF30882CfDc8859Aa97a2",
+      "private": "0x3c42c4a3d8bbdc675d43fe87e8636af23cf3df71cd1f6e9db65699b7a10fa478"
    },
    "whisper": {
       "topic": {
-         "key": "4224a2c9aa11e189aa5fd6e139f29a20a5a2b73ceb74fe3222a10715a80874cf",
+         "key": "b73be8c5d75eb8dcfeb8b91375a4a3dc1ea2d08a28e87bc569f4e7d480b9543e",
          "name": "arca"
       },
       "id": ""

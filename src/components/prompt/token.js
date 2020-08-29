@@ -42,6 +42,15 @@ function Token() {
                payload: '/users/' + state.keys.public
             })
 
+            // ADD ALERT MESSAGE
+            dispatch({
+               type: 'alert',
+               payload: {
+                  text: local.amount.value + ' tokens have been added to your account',
+                  type: 'good'
+               }
+            })
+
             // FINALLY HIDE PROMPT
             dispatch({
                type: 'hide-prompt'
