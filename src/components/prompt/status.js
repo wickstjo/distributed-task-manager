@@ -1,7 +1,6 @@
 import React, { useContext, Fragment } from 'react';
 import { Context } from '../../assets/context';
 import { toggle_active, toggle_discovery } from '../../funcs/contract/device';
-import { sleep } from '../../funcs/misc';
 
 import Header from './header';
 import Button from '../input/button';
@@ -13,44 +12,22 @@ function Status() {
 
    // TOGGLE DISCOVERY
    function active() {
+      toggle_active(() => {
 
-      // SHOW THE LOADING SCREEN
-      dispatch({
-         type: 'show-prompt',
-         payload: 'loading'
-      })
+         // SUCCESS MESSAGE
+         return 'device active status changed'
 
-      // EXECUTE TOGGLE
-      toggle_active(state.trigger, state).then(() => {
-
-         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
-         sleep(2000).then(() => {
-            dispatch({
-               type: 'hide-prompt'
-            })
-         })
-      })
+      }, state.trigger, state, dispatch)
    }
 
    // TOGGLE DISCOVERY
    function discovery() {
+      toggle_discovery(() => {
 
-      // SHOW THE LOADING SCREEN
-      dispatch({
-         type: 'show-prompt',
-         payload: 'loading'
-      })
+         // SUCCESS MESSAGE
+         return 'device discovery status changed'
 
-      // EXECUTE TOGGLE
-      toggle_discovery(state.trigger, state).then(() => {
-
-         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
-         sleep(2000).then(() => {
-            dispatch({
-               type: 'hide-prompt'
-            })
-         })
-      })
+      }, state.trigger, state, dispatch)
    }
 
    return (

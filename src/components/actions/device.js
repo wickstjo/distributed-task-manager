@@ -1,31 +1,17 @@
 import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 import { update_middleware } from '../../funcs/contract/device';
-import { sleep } from '../../funcs/misc';
 
 function Actions({ state, dispatch }) {
 
     // TRIGGER UPDATE EVENT
     function trigger_update() {
-        
-        // SHOW LOADING SCREEN
-        dispatch({
-            type: 'show-prompt',
-            payload: 'loading'
-        })
+        update_middleware(() => {
 
-        // EXECUTE THE TRANSACTION
-        update_middleware(state.trigger, state).then(() => {
-            
-            // SLEEP FOR 2 SECONDS
-            sleep(2000).then(() => {
+            // SUCCESS MESSAGE
+            return 'middleware update triggered'
 
-                // FINALLY HIDE THE LOADING SCREEN
-                dispatch({
-                    type: 'hide-prompt'
-                })
-            })
-        })
+        }, state.trigger, state, dispatch)
     }
 
     // SHOW CONFIG PROMPT

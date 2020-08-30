@@ -1,6 +1,5 @@
 import React, { useContext, Fragment, useReducer } from 'react';
 import { Context } from "../../assets/context";
-import { sleep } from '../../funcs/misc';
 import { register } from '../../funcs/contract/device';
 import { reducer } from '../shared/reducer';
 import { encode, hash } from '../../funcs/process';
@@ -32,29 +31,20 @@ function Device() {
       // PROCESS BOTH JSON OBJECTS
       const hash_id = hash(local.identifier.value)
       const encoded_config = encode(local.discovery.value)
-      
-      // SHOW THE LOADING SCREEN
-      dispatch({
-         type: 'show-prompt',
-         payload: 'loading'
-      })
 
       // REGISTER THE DEVICE
-      register(hash_id, encoded_config, state).then(() => {
+      register(() => {
 
-         // SLEEP FOR 2 SECONDS
-         sleep(2000).then(() => {
-
-            // REDIRECT TO DEVICE PAGE
-            dispatch({
-               type: 'redirect',
-               payload: '/devices/' + hash_id
-            })
-
-            // FINALLY HIDE PROMPT
-            dispatch({ type: 'hide-prompt' })
+         // REDIRECT TO DEVICE PAGE
+         dispatch({
+            type: 'redirect',
+            payload: '/devices/' + hash_id
          })
-      })
+
+         // SUCCESS MESSAGE
+         return 'THE DEVICE HAS BEEN ADDED TO YOUR COLLECTION'
+
+      }, hash_id, encoded_config, state, dispatch)
    }
 
    return (

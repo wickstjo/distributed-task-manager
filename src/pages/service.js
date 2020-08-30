@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { decode } from '../funcs/process';
-import { details as fetch_details } from '../funcs/contract/tag';
+import { details as fetch_details } from '../funcs/contract/service';
 import Info from '../components/shared/info';
 
 function Tag({ match }) {

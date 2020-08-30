@@ -1,4 +1,4 @@
-import { transaction } from '../blockchain';
+import { transaction, animate } from '../blockchain';
 
 // CONTRACT REFERENCES
 function refs(state) {
@@ -26,11 +26,11 @@ function changes(state) {
 }
 
 // BUY TOKEN
-function purchase(amount, state) {
+function purchase(callback, amount, state, dispatch) {
    const { manager, address } = refs(state);
 
    // FETCH THE TOKEN PRICE
-   return manager.price().call().then(price => {
+   const func = manager.price().call().then(price => {
 
       // EXECUTE THE TRANSACTION
       return transaction({
@@ -39,6 +39,9 @@ function purchase(amount, state) {
          payable: amount * price
       }, state)
    })
+
+   // ANIMATE EXECUTION
+   animate(func, callback, dispatch)
 }
 
 // TRANSFER TOKENS

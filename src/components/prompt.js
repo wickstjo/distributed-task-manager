@@ -7,7 +7,7 @@ import EventListener from 'react-event-listener';
 import Device from './prompt/device';
 import Task from './prompt/task';
 import Token from './prompt/token';
-import Tag from './prompt/tag';
+import Service from './prompt/service';
 import Config from './prompt/config';
 import Status from './prompt/status';
 
@@ -85,8 +85,8 @@ function Content({ type }) {
       }
 
       // ADD TAG
-      case 'tag': {
-         return <Tag />
+      case 'service': {
+         return <Service />
       }
 
       // UPDATE DEVICE DISCOVERY CONFIG

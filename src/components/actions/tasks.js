@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 import { fetch, register } from '../../funcs/contract/user';
-import { sleep } from '../../funcs/misc';
 
 function Actions({ state, dispatch }) {
 
@@ -14,44 +13,28 @@ function Actions({ state, dispatch }) {
     }
 
     // LOG A USER IN
-    function login(state, dispatch) {
+    function login() {
+        register(async() => {
 
-        // SHOW LOADING SCREEN
-        dispatch({
-            type: 'show-prompt',
-            payload: 'loading'
-        })
+            // FETCH THE USERS ADDRESS
+            const address = await fetch(state.keys.public, state);
 
-        // REGISTER THE WALLET ADDRESS
-        register(state).then(() => {
-            
-            // SLEEP FOR 2 SECONDS
-            sleep(2000).then(() => {
-
-                // FETCH THE USERS CONTRACT ADDRESS
-                fetch(state.keys.public, state).then(address => {
-
-                    // VERIFY IT
-                    dispatch({
-                        type: 'verify',
-                        payload: address
-                    })
-
-                    // REDIRECT TO USER PAGE
-                    dispatch({
-                        type: 'redirect',
-                        payload: '/users/' + state.keys.public
-                    })
-
-                    // FINALLY HIDE THE LOADING SCREEN
-                    dispatch({
-                        type: 'hide-prompt'
-                    })
-
-                    return 
-                })
+            // VERIFY IT
+            dispatch({
+                type: 'verify',
+                payload: address
             })
-        })
+
+            // REDIRECT TO USER PAGE
+            dispatch({
+                type: 'redirect',
+                payload: '/users/' + state.keys.public
+            })
+
+            // RETURN SUCCESS MESSAGE
+            return 'your wallet has been registered'
+
+        }, state, dispatch)
     }
 
     // SWITCH BUTTONS BASED ON VERIFICATION STATUS
@@ -67,7 +50,7 @@ function Actions({ state, dispatch }) {
         // SHOW REGISTER BUTTON
         case false: { return (
             <Fragment>
-                <li id={ 'action' } onClick={() => login(state, dispatch) } className={ 'user' }>Register User</li>
+                <li id={ 'action' } onClick={() => login() } className={ 'user' }>Register User</li>
             </Fragment>
         )}
 

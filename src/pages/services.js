@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import List from '../components/shared/list';
 import Info from '../components/shared/info';
-import { tags as fetch_tags, added } from '../funcs/contract/tag';
+import { services, added } from '../funcs/contract/service';
 
-function Tasks() {
+function Services() {
    
    // GLOBAL STATE
    const { state, dispatch } = useContext(Context)
@@ -16,11 +16,11 @@ function Tasks() {
    useEffect(() => {
       dispatch({
          type: 'header',
-         payload: 'tags'
+         payload: 'services'
       })
 
       // FETCH TRANSPILER
-      fetch_tags(state).then(response => {
+      services(state).then(response => {
          set_tags(response)
       })
 
@@ -39,19 +39,19 @@ function Tasks() {
    return (
       <Fragment>
          <Info
-            header={ 'Tag Manager' }
+            header={ 'Service Manager' }
             data={{
-               'Contract': state.contracts.managers.tag._address
+               'Contract': state.contracts.managers.service._address
             }}
          />
          <List
             header={ 'Standardized Tags' }
             data={ tags }
             fallback={ 'No tags found.' }
-            category={ 'tags' }
+            category={ 'services' }
          />
       </Fragment>
    )
 }
 
-export default Tasks;
+export default Services;

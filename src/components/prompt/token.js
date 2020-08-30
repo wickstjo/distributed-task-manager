@@ -1,6 +1,5 @@
 import React, { useContext, Fragment, useReducer } from 'react';
 import { Context } from "../../assets/context";
-import { sleep } from '../../funcs/misc';
 import { purchase } from '../../funcs/contract/token';
 import { reducer } from '../shared/reducer';
 
@@ -23,40 +22,18 @@ function Token() {
 
    // PROCESS SUBMISSION
    function process() {
-         
-      // SHOW THE LOADING SCREEN
-      dispatch({
-         type: 'show-prompt',
-         payload: 'loading'
-      })
+      purchase(() => {
 
-      // EXECUTE THE PURCHASE
-      purchase(local.amount.value, state).then(() => {
-
-         // SLEEP FOR 2 SECONDS
-         sleep(2000).then(() => {
-
-            // REDIRECT TO USER PAGE
-            dispatch({
-               type: 'redirect',
-               payload: '/users/' + state.keys.public
-            })
-
-            // ADD ALERT MESSAGE
-            dispatch({
-               type: 'alert',
-               payload: {
-                  text: local.amount.value + ' tokens have been added to your account',
-                  type: 'good'
-               }
-            })
-
-            // FINALLY HIDE PROMPT
-            dispatch({
-               type: 'hide-prompt'
-            })
+         // REDIRECT TO USER PAGE
+         dispatch({
+            type: 'redirect',
+            payload: '/users/' + state.keys.public
          })
-      })
+
+         // SUCCESS MESSAGE
+         return local.amount.value + ' tokens have been added to your account'
+
+      }, local.amount.value, state, dispatch)
    } 
 
    return (

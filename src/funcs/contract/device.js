@@ -1,4 +1,4 @@
-import { transaction, assemble } from '../blockchain';
+import { transaction, assemble, animate } from '../blockchain';
 import { decode } from '../process';
 
 // CONTRACT REFERENCES
@@ -21,13 +21,15 @@ function collection(user, state) {
 }
 
 // ADD DEVICE
-function register(hash, encoded, state) {
+function register(callback, hash, encoded, state, dispatch) {
     const { manager, address } = refs(state);
 
-    return transaction({
+    const func = transaction({
         query: manager.add(hash, encoded),
         contract: address
     }, state)
+
+    animate(func, callback, dispatch)
 }
 
 // NEW DEVICE ADDED EVENT
@@ -98,11 +100,11 @@ function changes(hash, dispatch, state) {
 }
 
 // UPDATE IOT MIDDLEWARE
-function update_middleware(hash, state) {
+function update_middleware(callback, hash, state, dispatch) {
     const { manager } = refs(state)
 
     // FETCH THE DEVICES SMART CONTRACT
-    return manager.fetch_device(hash).call().then(device => {
+    const func = manager.fetch_device(hash).call().then(device => {
 
         // CONSTRUCT CONTRACT
         const contract = assemble({
@@ -115,14 +117,16 @@ function update_middleware(hash, state) {
             contract: device
         }, state)
     })
+
+    animate(func, callback, dispatch)
 }
 
 // UPDATE DISCOVERY TAGS
-function update_tags({ hash, data }, state) {
+function update_tags(callback, hash, data, state, dispatch) {
     const { manager } = refs(state)
 
     // FETCH THE DEVICES SMART CONTRACT
-    return manager.fetch_device(hash).call().then(device => {
+    const func = manager.fetch_device(hash).call().then(device => {
 
         // CONSTRUCT CONTRACT
         const contract = assemble({
@@ -135,14 +139,16 @@ function update_tags({ hash, data }, state) {
             contract: device
         }, state)
     })
+
+    animate(func, callback, dispatch)
 }
 
 // TOGGLE ACTIVE STATUS
-function toggle_active(hash, state) {
+function toggle_active(callback, hash, state, dispatch) {
     const { manager } = refs(state)
 
     // FETCH THE DEVICES SMART CONTRACT
-    return manager.fetch_device(hash).call().then(device => {
+    const func = manager.fetch_device(hash).call().then(device => {
 
         // CONSTRUCT CONTRACT
         const contract = assemble({
@@ -155,14 +161,16 @@ function toggle_active(hash, state) {
             contract: device
         }, state)
     })
+
+    animate(func, callback, dispatch)
 }
 
 // TOGGLE DISCOVERY STATUS
-function toggle_discovery(hash, state) {
+function toggle_discovery(callback, hash, state, dispatch) {
     const { manager } = refs(state)
 
     // FETCH THE DEVICES SMART CONTRACT
-    return manager.fetch_device(hash).call().then(device => {
+    const func = manager.fetch_device(hash).call().then(device => {
 
         // CONSTRUCT CONTRACT
         const contract = assemble({
@@ -175,6 +183,8 @@ function toggle_discovery(hash, state) {
             contract: device
         }, state)
     })
+
+    animate(func, callback, dispatch)
 }
 
 

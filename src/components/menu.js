@@ -17,8 +17,8 @@ function Menu() {
                current={ state.header }
             />
             <Item
-               name={ 'Tags' }
-               to={ '/tags' }
+               name={ 'Services' }
+               to={ '/services' }
                current={ state.header }
             />
             <Item

@@ -4,16 +4,16 @@ import '../../interface/css/actions.scss';
 function Actions({ dispatch }) {
 
     // OPEN TAG PROMPT
-    function tag() {
+    function service() {
         dispatch({
             type: 'show-prompt',
-            payload: 'tag'
+            payload: 'service'
         })
     }
 
     return (
         <Fragment>
-            <li id={ 'action' } onClick={ tag }>Add Tag</li>
+            <li id={ 'action' } onClick={ service }>Add Service</li>
         </Fragment>
     )
 }

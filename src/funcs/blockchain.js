@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 import { gateways, keys } from '../settings.json';
 import references from '../latest.json';
+import { sleep } from './misc';
 
 // PARSE SC & WEB3
 function init() {
@@ -17,7 +18,7 @@ function init() {
             'device',
             'task',
             'token',
-            'tag'
+            'service'
          ], web3),
          interfaces: interfaces([
             'user',
@@ -101,6 +102,87 @@ function transaction({ query, contract, payable }, state) {
       return {
          reason: prune(error)
       }
+   })
+}
+
+// ANIMATE PROMPT
+function animate(func, callback, dispatch) {
+
+   // SHOW LOADING SCREEN
+   dispatch({
+      type: 'show-prompt',
+      payload: 'loading'
+   })
+
+   // EXECUTE THE PRIMARY FUNCTION
+   func.then(result => {
+      
+      // SLEEP FOR 2 SECONDS
+      sleep(2000).then(() => {
+
+         // IF THE TRANSACTION WENT THROUGH
+         if (result.success) {
+
+            // IF THE CALLBACK IS ASYNC
+            if (callback.constructor.name === 'AsyncFunction') {
+
+               // AFTERWARDS, 
+               callback().then(response => {
+
+                  // ALERT WITH SUCCESS
+                  dispatch({
+                     type: 'alert',
+                     payload: {
+                        text: response,
+                        type: 'good'
+                     }
+                  })
+
+                  // FINALLY HIDE THE LOADING SCREEN
+                  dispatch({
+                     type: 'hide-prompt'
+                  })
+               })
+
+            // OTHERWISE..
+            } else {
+
+               // EXECUTE CALLBACK & GET RESPONSE TEXT
+               const response = callback()
+
+               // ALERT WITH SUCCESS
+               dispatch({
+                  type: 'alert',
+                  payload: {
+                     text: response,
+                     type: 'good'
+                  }
+               })
+
+               // FINALLY HIDE THE LOADING SCREEN
+               dispatch({
+                  type: 'hide-prompt'
+               })
+            }
+
+         // OTHERWISE...
+         } else {
+
+            // ALERT WITH ERROR
+            dispatch({
+               type: 'alert',
+               payload: {
+                  text: 'transaction reverted',
+                  type: 'bad'
+               }
+            })
+
+            // FINALLY HIDE THE LOADING SCREEN
+            dispatch({
+               type: 'hide-prompt'
+            })
+         }
+      })
    })
 }
 
@@ -205,5 +287,6 @@ export {
    assess,
    exists,
    prune,
-   is_address
+   is_address,
+   animate
 }

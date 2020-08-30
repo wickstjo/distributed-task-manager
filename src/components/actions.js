@@ -6,7 +6,7 @@ import Tasks from './actions/tasks';
 import Task from './actions/task';
 import Token from './actions/token';
 import Device from './actions/device';
-import Tag from './actions/tag';
+import Service from './actions/service';
 import Profile from './actions/profile';
 
 // PROMPT CONTAINER
@@ -19,7 +19,7 @@ function Actions() {
    const [whitelist] = useState([
       'tasks',
       'task',
-      'tags',
+      'services',
       'device',
       'tokens',
       'profile'
@@ -87,8 +87,8 @@ function Content({ state, dispatch }) {
       )}
 
       // TAG ACTIONS
-      case 'tags': { return (
-         <Tag
+      case 'services': { return (
+         <Service
             state={ state }
             dispatch={ dispatch }
          />

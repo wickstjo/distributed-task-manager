@@ -2,7 +2,6 @@ import React, { useContext, useReducer, Fragment } from 'react';
 import { Context } from '../../assets/context';
 import { reducer } from '../shared/reducer';
 import { update_tags } from '../../funcs/contract/device';
-import { sleep } from '../../funcs/misc';
 import { encode } from '../../funcs/process';
 
 import Header from './header';
@@ -28,25 +27,13 @@ function Config() {
       // PARSE & ENCODE THE JSON DATA
       const encoded = encode(local.tags.value)
       
-      // SHOW THE LOADING SCREEN
-      dispatch({
-         type: 'show-prompt',
-         payload: 'loading'
-      })
+      // UPDATE DEVICE DISCOVERY TAGS
+      update_tags(() => {
 
-      // REGISTER THE DEVICE
-      update_tags({
-         hash: state.trigger,
-         data: encoded
-      }, state).then(() => {
+         // SUCCESS MESSAGE
+         return 'device discovery tags changed'
 
-         // SLEEP FOR 2 SECONDS, THEN HIDE PROMPT
-         sleep(2000).then(() => {
-            dispatch({
-               type: 'hide-prompt'
-            })
-         })
-      })
+      }, state.trigger, encoded, state, dispatch)
    }
 
    return (

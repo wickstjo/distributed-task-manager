@@ -1,4 +1,4 @@
-import { transaction, assemble } from '../blockchain';
+import { transaction, assemble, animate } from '../blockchain';
 
 // CONTRACT REFERENCES
 function refs(state) {
@@ -64,13 +64,17 @@ function changes(wallet, dispatch, state) {
 }
 
 // ADD USER
-function register(state) {
+function register(callback, state, dispatch) {
     const { manager, address } = refs(state);
 
-    return transaction({
+    // THE TRANSACTION
+    const func = transaction({
         query: manager.add(),
         contract: address
     }, state)
+
+    // ANIMATE EXECUTION
+    animate(func, callback, dispatch)
 }
 
 export {
