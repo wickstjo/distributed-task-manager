@@ -20,12 +20,29 @@ function collection(user, state) {
     return refs(state).manager.fetch_collection(user).call();
 }
 
+// FETCH DEVICE ASSIGNMENT BACKLOG
+function config(hash, state) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    return manager.fetch_device(hash).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return contract.methods.tags().call()
+    })
+}
+
 // ADD DEVICE
-function register(callback, hash, encoded, state, dispatch) {
+function register(callback, hash, state, dispatch) {
     const { manager, address } = refs(state);
 
     const func = transaction({
-        query: manager.add(hash, encoded),
+        query: manager.add(hash),
         contract: address
     }, state)
 
@@ -62,8 +79,9 @@ function details(hash, state) {
                 backlog: response[1],
                 completed: response[2],
                 tags: decode(response[3]),
-                active: response[4] ? 'True' : 'False',
-                discoverable: response[5] ? 'True' : 'False'
+                services: response[4],
+                active: response[5] ? 'True' : 'False',
+                discoverable: response[6] ? 'True' : 'False'
             }
         })
     })
@@ -91,6 +109,7 @@ function changes(hash, dispatch, state) {
                     backlog: response.returnValues.backlog,
                     completed: response.returnValues.completed,
                     tags: decode(response.returnValues.tags),
+                    services: response.returnValues.services,
                     active: response.returnValues.active ? 'True' : 'False',
                     discoverable: response.returnValues.discoverable ? 'True' : 'False'
                 }
@@ -136,6 +155,28 @@ function update_tags(callback, hash, data, state, dispatch) {
 
         return transaction({
             query: contract.methods.update_tags(data),
+            contract: device
+        }, state)
+    })
+
+    animate(func, callback, dispatch)
+}
+
+// UPDATE DISCOVERY TAGS
+function update_services(callback, hash, data, state, dispatch) {
+    const { manager } = refs(state)
+
+    // FETCH THE DEVICES SMART CONTRACT
+    const func = manager.fetch_device(hash).call().then(device => {
+
+        // CONSTRUCT CONTRACT
+        const contract = assemble({
+            address: device,
+            contract: 'device'
+        }, state);
+
+        return transaction({
+            query: contract.methods.update_services(data),
             contract: device
         }, state)
     })
@@ -197,6 +238,8 @@ export {
     changes,
     update_middleware,
     update_tags,
+    update_services,
     toggle_active,
-    toggle_discovery
+    toggle_discovery,
+    config
 }

@@ -27,6 +27,12 @@ function Task({ match }) {
          payload: 'task'
       })
 
+      // SET TRIGGER
+      dispatch({
+         type: 'trigger',
+         payload: match.params.address
+      })
+
       // FETCH TASK DETAILS
       get_details(match.params.address, state).then(response => {
          set_details(response)

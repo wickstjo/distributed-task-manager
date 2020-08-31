@@ -1,60 +1,30 @@
 import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
-import { retire, complete } from '../../funcs/contract/task';
-import { sleep } from '../../funcs/misc';
+import { retire } from '../../funcs/contract/task';
 
-function Actions({ state, dispatch, source }) {
+import Option from './option';
+
+function Actions({ state, dispatch }) {
 
     // RETIRE TASK
     function retire_task() {
-        
-        // SHOW LOADING SCREEN
-        dispatch({
-            type: 'show-prompt',
-            payload: 'loading'
-        })
+        retire(() => {
 
-        // EXECUTE THE TRANSACTION
-        retire(source, state).then(() => {
-            
-            // SLEEP FOR 2 SECONDS
-            sleep(2000).then(() => {
-
-                // FINALLY HIDE THE LOADING SCREEN
-                dispatch({
-                    type: 'hide-prompt'
-                })
+            // REDIRECT TO TASKS PAGE
+            dispatch({
+                type: 'redirect',
+                payload: '/tasks'
             })
-        })
-    }
 
-    // FORCE COMPLETE TASK
-    function force_complte() {
-        
-        // SHOW LOADING SCREEN
-        dispatch({
-            type: 'show-prompt',
-            payload: 'loading'
-        })
+            // ALERT WITH MESSAGE
+            return 'the task was retired and unlisted'
 
-        // EXECUTE THE TRANSACTION
-        complete(source, state).then(() => {
-            
-            // SLEEP FOR 2 SECONDS
-            sleep(2000).then(() => {
-
-                // FINALLY HIDE THE LOADING SCREEN
-                dispatch({
-                    type: 'hide-prompt'
-                })
-            })
-        })
+        }, state.trigger, state, dispatch)
     }
 
     return (
         <Fragment>
-            <li id={ 'action' } onClick={ force_complte }>Force Complete</li>
-            <li id={ 'action' } onClick={ retire_task } className={ 'bin' }>Retire Task</li>
+            <Option header={ 'Retire Task' } func={ retire_task } />
         </Fragment>
     )
 }

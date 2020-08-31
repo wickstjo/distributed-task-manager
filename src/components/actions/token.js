@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Option from './option';
 
 function Actions({ dispatch }) {
 
@@ -17,8 +18,8 @@ function Actions({ dispatch }) {
     
     return (
         <Fragment>
-            <li id={ 'action' } onClick={ purchase }>Purchase</li>
-            <li id={ 'action' } onClick={ transfer }>Transfer</li>
+            <Option header={ 'Purchase' } func={ purchase } />
+            <Option header={ 'Transfer' } func={ transfer } />
         </Fragment>
     )
 }

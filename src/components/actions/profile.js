@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 
+import Option from './option';
+
 function Actions({ dispatch }) {
 
     // REGISTER DEVICE
@@ -13,7 +15,7 @@ function Actions({ dispatch }) {
     
     return (
         <Fragment>
-            <li id={ 'action' } onClick={ device }>Register Device</li>
+            <Option header={ 'Register Device' } func={ device } />
         </Fragment>
     )
 }

@@ -1,6 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import '../../interface/css/actions.scss';
 import { fetch, register } from '../../funcs/contract/user';
+
+import Option from './option';
 
 function Actions({ state, dispatch }) {
 
@@ -42,16 +44,12 @@ function Actions({ state, dispatch }) {
 
         // SHOW TASK BUTTON
         case true: { return (
-            <Fragment>
-                <li id={ 'action' } onClick={ create_task }>Create Task</li>
-            </Fragment>
+            <Option header={ 'Create Task' } func={ create_task } />
         )}
 
         // SHOW REGISTER BUTTON
         case false: { return (
-            <Fragment>
-                <li id={ 'action' } onClick={() => login() } className={ 'user' }>Register User</li>
-            </Fragment>
+            <Option header={ 'Register User' } func={ login } />
         )}
 
         // FALLBACK

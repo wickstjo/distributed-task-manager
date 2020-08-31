@@ -20,8 +20,14 @@ function decode(string) {
     // DECODE STRING
     const decoded = compression.decode(string);
 
-    // PARSE & RETURN
-    return JSON.parse(decoded);
+    // ATTEMPT TO PARSE AS JSON OBJECT
+    try {
+        return JSON.parse(decoded);
+
+    // IF IT FAILS, RETURN EMPTY OBJECT
+    } catch {
+        return {}
+    }
 }
 
 // SHA256 HASH A OBJECT

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import '../../interface/css/actions.scss';
 
+import Option from './option';
+
 function Actions({ dispatch }) {
 
     // OPEN TAG PROMPT
@@ -13,7 +15,7 @@ function Actions({ dispatch }) {
 
     return (
         <Fragment>
-            <li id={ 'action' } onClick={ service }>Add Service</li>
+            <Option header={ 'Add Service' } func={ service } />
         </Fragment>
     )
 }

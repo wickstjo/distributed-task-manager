@@ -1,7 +1,6 @@
 import React, { useContext, useReducer, Fragment } from 'react';
 import { Context } from "../../assets/context";
 import { add, fetch_open } from '../../funcs/contract/task';
-import { sleep } from '../../funcs/misc';
 import { reducer } from '../shared/reducer';
 
 import Header from './header';
@@ -36,40 +35,21 @@ function Task() {
 
    // PROCESS TASK
    function process() {
-         
-      // SHOW THE LOADING SCREEN
-      dispatch({
-         type: 'show-prompt',
-         payload: 'loading'
-      })
+      add(async() => {
 
-      // SUBMIT THE TASK
-      add({
-         device: local.device.value,
-         reward: local.reward.value,
-         encryption: local.encryption.value,
-         timelimit: local.blocks.value
-      }, state).then(() => {
+         // FETCH LATEST LIST OF OPEN TASKS
+         const list = await fetch_open(state);
 
-         // FETCH OPEN TASKS
-         fetch_open(state).then(list => {
-            
-            // SLEEP FOR 2 SECONDS
-            sleep(2000).then(() => {
-
-               // REDIRECT TO THE TASK PAGE
-               dispatch({
-                  type: 'redirect',
-                  payload: '/tasks/' + list[list.length - 1]
-               })
-
-               // FINALLY HIDE THE PROMPT
-               dispatch({
-                  type: 'hide-prompt'
-               })
-            })
+         // REDIRECT TO THE TASK PAGE
+         dispatch({
+            type: 'redirect',
+            payload: '/tasks/' + list[list.length - 1]
          })
-      })
+
+         // SUCCESS MESSAGE
+         return 'THE TASK HAS BEEN CREATED & ASSIGNED'
+
+      }, local.device.value,local.reward.value, local.encryption.value, local.blocks.value, state, dispatch)
    }
 
    return (

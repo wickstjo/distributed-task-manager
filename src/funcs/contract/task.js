@@ -1,4 +1,4 @@
-import { transaction, assemble } from '../blockchain';
+import { transaction, assemble, animate } from '../blockchain';
 
 // CONTRACT REFERENCES
 function refs(state) {
@@ -20,13 +20,15 @@ function fee(state) {
 }
 
 // ADD TASK
-function add({ device, reward, encryption, timelimit }, state) {
+function add(callback, device, reward, encryption, timelimit, state, dispatch) {
     const { manager, address } = refs(state);
 
-    return transaction({
+    const func = transaction({
         query: manager.add(device, reward, encryption, timelimit),
         contract: address
     }, state)
+
+    animate(func, callback, dispatch)
 }
 
 // CHANGE IN OPEN TASKS EVENT
@@ -64,27 +66,16 @@ function details(task, state) {
     })
 }
 
-// FORCE COMPLETE TASK
-function complete(task, state) {
-    const { manager, address } = refs(state);
-
-    const ipfs = 'QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u'
-    const key = '0x4f7a87EE7A53ae8606e80FE96a47038DF8ab7956'
-
-    return transaction({
-        query: manager.complete(task, ipfs, key),
-        contract: address
-    }, state)
-}
-
 // RETIRE TASK
-function retire(task, state) {
+function retire(callback, task, state, dispatch) {
     const { manager, address } = refs(state);
 
-    return transaction({
+    const func = transaction({
         query: manager.retire(task),
         contract: address
     }, state)
+
+    animate(func, callback, dispatch)
 }
 
 // FETCH TASK FEE
@@ -99,7 +90,6 @@ export {
     add,
     change,
     details,
-    complete,
     retire,
     result
 }

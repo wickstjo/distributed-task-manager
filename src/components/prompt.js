@@ -10,6 +10,7 @@ import Token from './prompt/token';
 import Service from './prompt/service';
 import Config from './prompt/config';
 import Status from './prompt/status';
+import DeviceService from './prompt/device_service';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -79,16 +80,6 @@ function Content({ type }) {
          return <Device />
       }
 
-      // PURCHASE TOKEN
-      case 'token': {
-         return <Token />
-      }
-
-      // ADD TAG
-      case 'service': {
-         return <Service />
-      }
-
       // UPDATE DEVICE DISCOVERY CONFIG
       case 'tag-config': {
          return <Config />
@@ -97,6 +88,21 @@ function Content({ type }) {
       // TOGGLE DEVICE STATUS
       case 'status': {
          return <Status />
+      }
+
+      // UPDATE DEVIEC SERVICE
+      case 'device-service': {
+         return <DeviceService />
+      }
+
+      // PURCHASE TOKEN
+      case 'token': {
+         return <Token />
+      }
+
+      // ADD TAG
+      case 'service': {
+         return <Service />
       }
 
       // FALLBACK

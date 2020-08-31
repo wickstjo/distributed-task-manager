@@ -40,7 +40,7 @@
          textarea {
             resize: vertical;
             width: 100%;
-            min-height: 250px;
+            min-height: 350px;
          }
 
          input::placeholder, textarea::placeholder {
@@ -63,7 +63,7 @@
             }
    
             .success {
-               background: rgba(99, 255, 99, 0.233);
+               background-color: rgba(128, 255, 111, 0.185);
                background-image: url('../images/icons/checkmark.png');
                background-repeat: no-repeat;
                background-position: center center;

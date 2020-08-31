@@ -16,7 +16,8 @@ function Device({ match }) {
       contract: '',
       backlog: [],
       owner: '',
-      tags: {}
+      tags: {},
+      services: []
    })
 
    // ON LOAD
@@ -68,14 +69,20 @@ function Device({ match }) {
             }}
          />
          <Info
-            header={ 'Discovery tags' }
-            fallback={ 'No tags found' }
+            header={ 'Discovery parameters' }
+            fallback={ 'No tags found.' }
             data={ local.tags }
+         />
+         <List
+            header={ 'Available Services' }
+            data={ local.services }
+            fallback={ 'No services found.' }
+            category={ '/services' }
          />
          <List
             header={ 'Task backlog' }
             data={ local.backlog }
-            fallback={ 'No tasks found' }
+            fallback={ 'No tasks found.' }
             category={ '/tasks' }
          />
       </Fragment>

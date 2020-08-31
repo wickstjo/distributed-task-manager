@@ -1,21 +1,20 @@
-import React, { useContext, useEffect, useReducer, Fragment } from 'react';
-import { Context } from '../../assets/context';
+import React, { useContext, useEffect, Fragment, useReducer } from 'react';
+import { Context } from "../../assets/context";
+import { update_services, details } from '../../funcs/contract/device';
 import { reducer } from '../shared/reducer';
-import { update_tags, config } from '../../funcs/contract/device';
-import { encode, decode } from '../../funcs/process';
 
 import Header from './header';
 import Button from '../input/button';
 import Json from '../input/json';
 
-function Config() {
+function DeviceService() {
 
    // GLOBAL STATE
    const { state, dispatch } = useContext(Context)
 
    // LOCAL STATE
    const [local, set_local] = useReducer(reducer, {
-      tags: {
+      data: {
          value: '',
          validation: false
       }
@@ -23,17 +22,18 @@ function Config() {
 
    // FETCH CURRENT DATA
    useEffect(() => {
-      config(state.trigger, state).then(result => {
+      details(state.trigger, state).then(result => {
 
          // DECODE & STRINGIFY
-         const decoded = decode(result)
-         const stringified = JSON.stringify(decoded, null, '\t')
+         const stringified = JSON.stringify({
+            services: result.services
+         }, null, '\t')
 
          // SET IN STATE
          set_local({
             type: 'specific',
             payload: {
-               name: 'tags',
+               name: 'data',
                data: {
                   value: stringified,
                   validation: true
@@ -48,37 +48,37 @@ function Config() {
    // PROCESS SUBMISSION
    function process() {
 
-      // PARSE & ENCODE THE JSON DATA
-      const encoded = encode(local.tags.value)
-      
-      // UPDATE DEVICE DISCOVERY TAGS
-      update_tags(() => {
+      // PARSE AS JSON
+      const parsed = JSON.parse(local.data.value);
+
+      // REGISTER THE DEVICE
+      update_services(() => {
 
          // SUCCESS MESSAGE
-         return 'device discovery config changed'
+         return 'THE DEVICE SERVICES HAVE BEEN UPDATED'
 
-      }, state.trigger, encoded, state, dispatch)
+      }, state.trigger, parsed.services, state, dispatch)
    }
 
    return (
       <Fragment>
-         <Header text={ 'Update Device Discovery Parameters' } />
+         <Header text={ 'Update Device Services' } />
          <Json
-            placeholder={ 'Set the tags' }
+            placeholder={ 'Set device services' }
             data={ local }
-            category={ 'tags' }
+            category={ 'data' }
             dispatch={ set_local }
          />
          <Button
-            value={ 'Submit Tag' }
+            value={ 'Register Device' }
             fallback={ 'Fix the fields above first!' }
             execute={ process }
             required={[
-               local.tags.validation
+               local.data.validation
             ]}
          />
       </Fragment>
    )
 }
 
-export default Config;
+export default DeviceService;
