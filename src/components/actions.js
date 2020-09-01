@@ -6,6 +6,7 @@ import Tasks from './actions/tasks';
 import Task from './actions/task';
 import Token from './actions/token';
 import Device from './actions/device';
+import Services from './actions/services';
 import Service from './actions/service';
 import Profile from './actions/profile';
 
@@ -20,6 +21,7 @@ function Actions() {
       'tasks',
       'task',
       'services',
+      'service',
       'device',
       'tokens',
       'profile'
@@ -86,8 +88,16 @@ function Content({ state, dispatch }) {
          />
       )}
 
-      // TAG ACTIONS
+      // SERVICES
       case 'services': { return (
+         <Services
+            state={ state }
+            dispatch={ dispatch }
+         />
+      )}
+
+      // SERVICE
+      case 'service': { return (
          <Service
             state={ state }
             dispatch={ dispatch }

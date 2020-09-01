@@ -15,6 +15,7 @@ function Task({ match }) {
    const [details, set_details] = useState({
       creator: '',
       device: '',
+      service: '',
       reward: '',
       encryption: '',
       expires: ''
@@ -49,6 +50,7 @@ function Task({ match }) {
                'Contract': match.params.address,
                'Creator': <Link to={ '/users/' + details.creator }>{ details.creator }</Link>,
                'Assigned Device': <Link to={ '/devices/' + details.device }>{ details.device }</Link>,
+               'Service': <Link to={ '/services/' + details.service }>{ details.service }</Link>,
                'Encryption Key': details.encryption,
                'Token Reward': separator(details.reward),
                'Block Expiration': separator(details.expires)

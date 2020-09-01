@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { decode } from '../funcs/process';
 import { details as fetch_details } from '../funcs/contract/service';
-import Info from '../components/shared/info';
 
-function Tag({ match }) {
+import Info from '../components/shared/info';
+import List from '../components/shared/list';
+
+function Service({ match }) {
    
    // GLOBAL STATE
    const { state, dispatch } = useContext(Context)
@@ -18,7 +20,7 @@ function Tag({ match }) {
    useEffect(() => {
       dispatch({
          type: 'header',
-         payload: 'tag'
+         payload: 'service'
       })
 
       // FETCH TRANSPILER
@@ -54,8 +56,14 @@ function Tag({ match }) {
             header={ 'Ruleset' }
             data={ details.decoded }
          />
+         <List
+            header={ 'Available Devices' }
+            data={ [] }
+            fallback={ 'A query must first be performed.' }
+            category={ '/devices' }
+         />
       </Fragment>
    )
 }
 
-export default Tag;
+export default Service;

@@ -63,6 +63,15 @@ function Init() {
                type: 'verify',
                payload: result
             })
+
+            // ALERT WITH MESSAGE
+            dispatch({
+               type: 'alert',
+               payload: {
+                  text: 'you have been autologged in',
+                  type: 'good'
+               }
+            })
          })
       }
 

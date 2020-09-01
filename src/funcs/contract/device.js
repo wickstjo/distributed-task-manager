@@ -78,7 +78,7 @@ function details(hash, state) {
                 owner: response[0],
                 backlog: response[1],
                 completed: response[2],
-                tags: decode(response[3]),
+                discovery: decode(response[3]),
                 services: response[4],
                 active: response[5] ? 'True' : 'False',
                 discoverable: response[6] ? 'True' : 'False'
@@ -108,7 +108,7 @@ function changes(hash, dispatch, state) {
                     owner: response.returnValues.owner,
                     backlog: response.returnValues.backlog,
                     completed: response.returnValues.completed,
-                    tags: decode(response.returnValues.tags),
+                    discovery: decode(response.returnValues.tags),
                     services: response.returnValues.services,
                     active: response.returnValues.active ? 'True' : 'False',
                     discoverable: response.returnValues.discoverable ? 'True' : 'False'
@@ -164,22 +164,12 @@ function update_tags(callback, hash, data, state, dispatch) {
 
 // UPDATE DISCOVERY TAGS
 function update_services(callback, hash, data, state, dispatch) {
-    const { manager } = refs(state)
+    const { manager, address } = refs(state)
 
-    // FETCH THE DEVICES SMART CONTRACT
-    const func = manager.fetch_device(hash).call().then(device => {
-
-        // CONSTRUCT CONTRACT
-        const contract = assemble({
-            address: device,
-            contract: 'device'
-        }, state);
-
-        return transaction({
-            query: contract.methods.update_services(data),
-            contract: device
-        }, state)
-    })
+    const func = transaction({
+        query: manager.set_services(hash, data),
+        contract: address
+    }, state)
 
     animate(func, callback, dispatch)
 }

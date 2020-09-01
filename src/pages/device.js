@@ -16,7 +16,7 @@ function Device({ match }) {
       contract: '',
       backlog: [],
       owner: '',
-      tags: {},
+      discovery: {},
       services: []
    })
 
@@ -70,8 +70,8 @@ function Device({ match }) {
          />
          <Info
             header={ 'Discovery parameters' }
-            fallback={ 'No tags found.' }
-            data={ local.tags }
+            fallback={ 'No parameters found.' }
+            data={ local.discovery }
          />
          <List
             header={ 'Available Services' }

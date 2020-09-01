@@ -11,6 +11,7 @@ import Service from './prompt/service';
 import Config from './prompt/config';
 import Status from './prompt/status';
 import DeviceService from './prompt/device_service';
+import AddService from './prompt/add_service';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -101,8 +102,13 @@ function Content({ type }) {
       }
 
       // ADD TAG
-      case 'service': {
+      case 'create-service': {
          return <Service />
+      }
+
+      // ADD TAG
+      case 'add-service': {
+         return <AddService />
       }
 
       // FALLBACK

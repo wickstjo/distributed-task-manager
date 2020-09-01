@@ -3,21 +3,27 @@ import '../../interface/css/actions.scss';
 
 import Option from './option';
 
-function Actions({ dispatch }) {
+function Service({ dispatch }) {
 
-    // OPEN TAG PROMPT
-    function service() {
+    // OPEN SERVICE PROMPT
+    function trigger() {
         dispatch({
             type: 'show-prompt',
-            payload: 'service'
+            payload: 'add-service'
         })
+    }
+
+    // FIND DEVICES WITH SERVICE
+    function find() {
+        console.log('find devices')
     }
 
     return (
         <Fragment>
-            <Option header={ 'Add Service' } func={ service } />
+            <Option header={ 'Add Service to Device' } func={ trigger } />
+            <Option header={ 'Query Available Devices' } func={ find } />
         </Fragment>
     )
 }
 
-export default Actions;
+export default Service;

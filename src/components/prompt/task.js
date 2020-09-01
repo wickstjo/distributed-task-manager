@@ -15,6 +15,10 @@ function Task() {
 
    // LOCAL STATE
    const [local, set_local] = useReducer(reducer, {
+      service: {
+         value: '',
+         validation: false
+      },
       reward: {
          value: '',
          validation: false
@@ -49,12 +53,22 @@ function Task() {
          // SUCCESS MESSAGE
          return 'THE TASK HAS BEEN CREATED & ASSIGNED'
 
-      }, local.device.value,local.reward.value, local.encryption.value, local.blocks.value, state, dispatch)
+      }, local.service.value, local.device.value, local.reward.value, local.encryption.value, local.blocks.value, state, dispatch)
    }
 
    return (
       <Fragment>
          <Header text={ 'Create New Task' } />
+         <Text
+            placeholder={ 'Set the service' }
+            data={ local }
+            category={ 'service' }
+            dispatch={ set_local }
+            limit={{
+               min: 2,
+               max: 64
+            }}
+         />
          <Number
             placeholder={ 'Set the token reward' }
             data={ local }
@@ -100,8 +114,10 @@ function Task() {
             fallback={ 'Fix the fields above first!' }
             execute={ process }
             required={[
+               local.service.validation,
                local.reward.validation,
                local.blocks.validation,
+               local.encryption.validation,
                local.device.validation
             ]}
          />

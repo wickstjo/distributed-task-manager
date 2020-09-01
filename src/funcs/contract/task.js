@@ -20,11 +20,11 @@ function fee(state) {
 }
 
 // ADD TASK
-function add(callback, device, reward, encryption, timelimit, state, dispatch) {
+function add(callback, service, device, reward, encryption, timelimit, state, dispatch) {
     const { manager, address } = refs(state);
 
     const func = transaction({
-        query: manager.add(device, reward, encryption, timelimit),
+        query: manager.add(service, device, reward, encryption, timelimit),
         contract: address
     }, state)
 
@@ -49,6 +49,7 @@ function details(task, state) {
     const promises = [
         contract.methods.creator().call(),
         contract.methods.device().call(),
+        contract.methods.service().call(),
         contract.methods.reward().call(),
         contract.methods.encryption().call(),
         contract.methods.expires().call()
@@ -59,9 +60,10 @@ function details(task, state) {
         return {
             creator: values[0],
             device: values[1],
-            reward: values[2],
-            encryption: values[3],
-            expires: values[4]
+            service: values[2],
+            reward: values[3],
+            encryption: values[4],
+            expires: values[5]
         }
     })
 }
