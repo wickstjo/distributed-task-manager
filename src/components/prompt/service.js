@@ -9,7 +9,7 @@ import Text from '../input/text';
 import Button from '../input/button';
 import Json from '../input/json';
 
-function Tag() {
+export default () => {
 
    // GLOBAL STATE
    const { state, dispatch } = useContext(Context)
@@ -56,8 +56,8 @@ function Tag() {
             category={ 'name' }
             dispatch={ set_local }
             limit={{
-               min: 4,
-               max: 15
+               min: 2,
+               max: 25
             }}
          />
          <Json
@@ -78,5 +78,3 @@ function Tag() {
       </Fragment>
    )
 }
-
-export default Tag;

@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 import { gateways, whisper } from '../settings.json';
 import { shorten, to_date } from './chat';
+import { encode } from './process';
 
 // CREATE WHISPER INSTANCE & SET BASE PARAMS
 function init(state) {
@@ -135,8 +136,48 @@ function add_message(input, set_input, state, dispatch, event) {
     }
 }
 
+// SUBMIT DEVICE SERVICE QUERY
+function query(response, state, dispatch) {
+
+    // STRINGIFY & ENCODE THE RESPONSE MESSAGE
+    const stringify = JSON.stringify(response);
+    const encoded = encode(stringify);
+
+    // SEND THE MESSAGE
+    state.shh.post({
+        symKeyID: state.whisper.topic.key,
+        sig: state.whisper.id,
+        ttl: 10,
+        topic: state.whisper.utils.to_hex(state.whisper.topic.name),
+        payload: state.whisper.utils.to_hex(encoded),
+        powTime: 3,
+        powTarget: 0.5
+    
+    // EVERYTHING OK, SHOW ALERT
+    }).then(() => {
+        dispatch({
+            type: 'alert',
+            payload: {
+                type: 'good',
+                text: 'A query has been sent submitted'
+            }
+        })
+
+    // OTHERWISE, SHOW ERROR
+    }).catch(() => {
+        dispatch({
+            type: 'alert',
+            payload: {
+                type: 'bad',
+                text: 'Could not submit query'
+            }
+        })
+    })
+}
+
 export {
     init,
     create_feed,
-    add_message
+    add_message,
+    query
 }

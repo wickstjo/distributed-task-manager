@@ -43,7 +43,7 @@ function Actions({ state, dispatch }) {
     return (
         <Fragment>
             <Option header={ 'Toggle Status' } func={ trigger_status } />
-            <Option header={ 'Discovery Config' } func={ trigger_config } />
+            <Option header={ 'Discovery Parameters' } func={ trigger_config } />
             <Option header={ 'Available Services' } func={ trigger_services } />
             <Option header={ 'Update Middleware' } func={ trigger_update } />
         </Fragment>

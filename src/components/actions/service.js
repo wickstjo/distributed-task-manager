@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
+import { query } from '../../funcs/whisper';
 import '../../interface/css/actions.scss';
 
 import Option from './option';
 
-function Service({ dispatch }) {
+function Service({ state, dispatch }) {
 
     // OPEN SERVICE PROMPT
     function trigger() {
@@ -15,7 +16,13 @@ function Service({ dispatch }) {
 
     // FIND DEVICES WITH SERVICE
     function find() {
-        console.log('find devices')
+        query({
+            type: 'request',
+            services: ['foo'],
+            discovery: {
+                location: 'helsinki'
+            }
+        }, state, dispatch)
     }
 
     return (

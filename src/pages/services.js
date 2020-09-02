@@ -45,9 +45,9 @@ function Services() {
             }}
          />
          <List
-            header={ 'Standardized Tags' }
+            header={ 'Standardized Services' }
             data={ tags }
-            fallback={ 'No tags found.' }
+            fallback={ 'No services found.' }
             category={ 'services' }
          />
       </Fragment>

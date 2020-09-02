@@ -7,7 +7,7 @@ import Header from './header';
 import Button from '../input/button';
 import Json from '../input/json';
 
-function DeviceService() {
+export default () => {
 
    // GLOBAL STATE
    const { state, dispatch } = useContext(Context)
@@ -70,7 +70,7 @@ function DeviceService() {
             dispatch={ set_local }
          />
          <Button
-            value={ 'Register Device' }
+            value={ 'Submit Modification' }
             fallback={ 'Fix the fields above first!' }
             execute={ process }
             required={[
@@ -80,5 +80,3 @@ function DeviceService() {
       </Fragment>
    )
 }
-
-export default DeviceService;

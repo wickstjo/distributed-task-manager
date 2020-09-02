@@ -53,7 +53,7 @@ function Task({ match }) {
                'Service': <Link to={ '/services/' + details.service }>{ details.service }</Link>,
                'Encryption Key': details.encryption,
                'Token Reward': separator(details.reward),
-               'Block Expiration': separator(details.expires)
+               'Expiration Block': separator(details.expires)
             }}
          />
       </Fragment>

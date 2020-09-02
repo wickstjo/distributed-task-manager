@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { decode } from '../funcs/process';
 import { details as fetch_details } from '../funcs/contract/service';
+import { Link } from 'react-router-dom';
 
 import Info from '../components/shared/info';
 import List from '../components/shared/list';
@@ -33,7 +34,6 @@ function Service({ match }) {
          set_details({
             author: response.author,
             created: response.created,
-            ruleset: response.ruleset,
             decoded: decoded
          })
       })
@@ -44,12 +44,11 @@ function Service({ match }) {
    return (
       <Fragment>
          <Info
-            header={ 'Tag Overview' }
+            header={ 'Service Overview' }
             data={{
                'Name': match.params.name,
-               'Created': details.created,
-               'Author': details.author,
-               'Encoded': details.ruleset
+               'Author': <Link to={ '/users/' + details.author }>{ details.author }</Link>,
+               'Genesis Block': details.created,
             }}
          />
          <Info
