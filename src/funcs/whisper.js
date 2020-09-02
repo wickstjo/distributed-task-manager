@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import { gateways, whisper } from '../settings.json';
-import { shorten, to_date } from './chat';
+import { to_date } from './chat';
 import { encode } from './process';
 
 // CREATE WHISPER INSTANCE & SET BASE PARAMS
@@ -29,50 +29,23 @@ function init(state) {
 }
 
 // UBSUBCRIBE FROM OLD & SUBSCRIBE TO NEW WHISPER FEED
-function create_feed(state, dispatch) {
-    if (state.whisper.utils !== null) {
+function create_feed(callback, state, dispatch) {
 
-        // UNSUBSCRIBE FROM ANY EXISTING FEED
-        if (state.whisper.feed !== null) {
-           state.whisper.feed.unsubscribe()
-        }
+    // CREATE & RETURN A NEW FEED
+    const feed = state.shh.subscribe('messages', {
+        symKeyID: state.whisper.topic.key,
+        topics: [state.whisper.utils.to_hex(state.whisper.topic.name)]
 
-        // HEX TOPIC NAME
-        const hexed_topic = state.whisper.utils.to_hex(state.whisper.topic.name)
+    // ON MESSAGE, RUN CALLBACK FUNCTION
+    }).on('data', response => {
+        callback(response)
+    })
 
-        // GENERATE NEW TOPIC KEY
-        // state.shh.newSymKey().then(console.log)
-
-        // CREATE A NEW ONE
-        const temp = state.shh.subscribe('messages', {
-           symKeyID: state.whisper.topic.key,
-           topics: [hexed_topic]
-
-        // ON MESSAGE, ADD IT
-        }).on('data', response => {
-
-           // PARSE MESSAGE PARAM & DERIVATE FIRST WORK
-           const message = state.whisper.utils.to_string(response.payload)
-           const first = message.split(' ')[0].toLowerCase();
-
-           // SET MESSAGE TYPE BASED ON FIRST WORD
-           dispatch({
-                type: 'message',
-                payload: {
-                    user: shorten(response.sig, 4),
-                    msg: message,
-                    timestamp: to_date(response.timestamp),
-                    type: first === '!request' ? 'request' : 'message'
-                }
-            })
-        })
-
-        // SET FEED IN STATE
-        dispatch({
-           type: 'feed',
-           payload: temp
-        })
-    }
+    // SAVE IT IN STATE
+    dispatch({
+        type: 'feed',
+        payload: feed
+    })
 }
 
 // ENTER KEY LISTENER
@@ -153,8 +126,16 @@ function query(response, state, dispatch) {
         powTime: 3,
         powTarget: 0.5
     
-    // EVERYTHING OK, SHOW ALERT
+    // EVERYTHING OK...
     }).then(() => {
+
+        // ACTIVATE QUERY
+        dispatch({
+            type: 'set-query',
+            payload: encoded
+        })
+
+        // SHOW POSITIVE ALERT
         dispatch({
             type: 'alert',
             payload: {

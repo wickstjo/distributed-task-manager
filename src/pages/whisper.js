@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useContext, useState } from 'react';
 import { Context } from '../assets/context';
 import '../interface/css/whisper.scss';
-import Content from '../components/whisper/content';
 import { add_message } from '../funcs/whisper';
 
-function Whisper() {
+export default () => {
 
     // GLOBAL STATE
     const { state, dispatch } = useContext(Context)
@@ -60,4 +59,26 @@ function Whisper() {
     )
 }
 
-export default Whisper;
+// CONTENT SWITCHER
+function Content({ data }) {
+    switch (data.length) {
+
+        // NO MESSAGES
+        case 0: {
+            return null;
+        }
+
+        // RENDER MESSAGES
+        default: { return (
+            <div id={ 'foo' }>
+            { data.map((data, index) =>
+                <div id={ 'message' } key={ index }>
+                    <div id={ 'timestamp' }>{ data.timestamp }</div>
+                    <div id={ 'user' }>{ data.user }</div>
+                    <div id={ 'msg' }>{ data.msg.length > 40 ? data.msg.substring(0, 37) + '...' : data.msg }</div>
+                </div>
+            )}
+            </div>
+        )}
+    }
+}

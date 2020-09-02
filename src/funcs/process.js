@@ -17,11 +17,9 @@ function encode(string) {
 // BASE64 DECODE STRING
 function decode(string) {
 
-    // DECODE STRING
-    const decoded = compression.decode(string);
-
-    // ATTEMPT TO PARSE AS JSON OBJECT
+    // ATTEMPT TO DECODE & PARSE AS JSON OBJECT
     try {
+        const decoded = compression.decode(string);
         return JSON.parse(decoded);
 
     // IF IT FAILS, RETURN EMPTY OBJECT

@@ -47,7 +47,14 @@ const values = {
     },
 
     // ALERT MESSAGES
-    messages: []
+    messages: [],
+
+    // DEVICE SERVICE QUERY
+    query: {
+        active: false,
+        id: '',
+        results: []
+    }
 }
 
 // REDUCER
@@ -85,10 +92,15 @@ function reducer(state, action) {
             }
         }}
 
-        // SET PAGE HEADER
+        // SET PAGE HEADER & RESET ANY ACTIVE QUERY
         case 'header': { return {
             ...state,
-            header: action.payload
+            header: action.payload,
+            query: {
+                active: false,
+                id: '',
+                results: []
+            }
         }}
 
         // SET TRIGGER
@@ -162,6 +174,28 @@ function reducer(state, action) {
                 ...state.messages,
                 action.payload
             ]
+        }}
+
+        // SET DEVICE SERVICE QUERY
+        case 'set-query': { return {
+            ...state,
+            query: {
+                active: true,
+                id: action.payload,
+                results: []
+            }
+        }}
+
+        // ADD QUERY RESPONSE
+        case 'query-response': { return {
+            ...state,
+            query: {
+                ...state.query,
+                results: [
+                    ...state.query.results,
+                    action.payload
+                ]
+            }
         }}
 
         // FALLBACK

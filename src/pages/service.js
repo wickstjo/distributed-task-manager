@@ -57,7 +57,7 @@ function Service({ match }) {
          />
          <List
             header={ 'Available Devices' }
-            data={ [] }
+            data={ state.query.results }
             fallback={ 'A query must first be performed.' }
             category={ '/devices' }
          />
