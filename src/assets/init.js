@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { Context } from "./context";
 import { sleep } from '../funcs/misc';
-import { init as init_blockchain } from '../funcs/blockchain';
-import { init as init_whisper, create_feed } from '../funcs/whisper';
+import { init } from '../funcs/blockchain';
+import { create_feed } from '../funcs/whisper';
 import { fetch } from '../funcs/contract/user';
 import { shorten, to_date } from '../funcs/chat';
-import { decode } from '../funcs/process';
+import { decode, exists } from '../funcs/process';
 
 function Init() {
 
@@ -14,41 +14,69 @@ function Init() {
 
    // ON INITIAL PAGE LOAD
    useEffect(() => {
+      init(state).then(data => {
 
-      // INIT WHISPER DATA
-      init_whisper(state).then(whisper_data => {
-
-         // INIT BLOCKCHAIN DATA
-         const blockchain_data = init_blockchain(state);
-
-         // SET BOTH IN STATE
+         // SAVE CONNECTION DATA IN STATE
          dispatch({
             type: 'init',
-            payload: {
-               ...whisper_data,
-               ...blockchain_data
-            }
+            payload: data
          })
-
-         // SLEEP FOR ABIT, THEN HIDE LOADING SCREEN
-         sleep(2000).then(() => {
-            dispatch({
-               type: 'hide-prompt'
-            })
-         })
-
-         // TURN OFF METAMASK WARNING
-         if (window.ethereum !== undefined) {
-            window.ethereum.autoRefreshOnNetworkChange = false;
-         }
       })
+
+      // TURN OFF METAMASK WARNING
+      if (window.ethereum !== undefined) {
+         window.ethereum.autoRefreshOnNetworkChange = false;
+      }
 
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
 
+   // AUTOLOGIN IF REGISTERED
+   useEffect(() => {
+      if (state.web3 !== null) {
+
+         // FETCH USER SMART CONTRACT
+         fetch(state.keys.public, state).then(result => {
+
+            // SLEEP FOR 2 SECONDS
+            sleep(2000).then(() => {
+
+               // CHECK THE RESULT VALIDITY
+               const check = exists(result);
+
+               // IF EVERYTHING CHECKS OUT
+               if (check) {
+
+                  // SET LOGIN IN STATE
+                  dispatch({
+                     type: 'verify',
+                     payload: result
+                  })
+
+                  // ALERT WITH MESSAGE
+                  dispatch({
+                     type: 'alert',
+                     payload: {
+                        text: 'you have been autologged in',
+                        type: 'good'
+                     }
+                  })
+               }
+
+               // FINALLY, HIDE THE LOADING SCREEN
+               dispatch({
+                  type: 'hide-prompt'
+               })
+            })
+         })
+      }
+
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [state.web3])
+
    // CREATE WHISPER MESSAGE FEED
    useEffect(() => {
-      if (state.whisper.utils !== null) {
+      if (state.shh !== null) {
 
          // ON MESSAGE..
          create_feed(response => {
@@ -100,33 +128,6 @@ function Init() {
 
    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [state.whisper.messages])
- 
-   // CHECK IF USER WALLET IS REGISTERED
-   useEffect(() => {
-      if (state.web3 !== null) {
-
-         // FETCH USER SMART CONTRACT
-         fetch(state.keys.public, state).then(result => {
-
-            // VERYIFY LEGITIMICY IN STATE
-            dispatch({
-               type: 'verify',
-               payload: result
-            })
-
-            // ALERT WITH MESSAGE
-            dispatch({
-               type: 'alert',
-               payload: {
-                  text: 'you have been autologged in',
-                  type: 'good'
-               }
-            })
-         })
-      }
-
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [state.web3])
 
    return null;
 }

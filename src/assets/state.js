@@ -18,9 +18,6 @@ const values = {
         private: ''
     },
 
-    // VERIFY USER REGISTRATION
-    verified: false,
-
     // WHISPER PARAMS
     shh: null,
     whisper: {
@@ -30,9 +27,17 @@ const values = {
         },
         id: '',
         feed: null,
-        messages: [],
-        utils: null
+        messages: []
     },
+
+    // HEX UTILITIES
+    utils: {},
+
+    // PRELOAD STATUS
+    preload: false,
+
+    // VERIFY USER REGISTRATION
+    verified: false,
 
     // PROMPT PARAMS
     prompt: {

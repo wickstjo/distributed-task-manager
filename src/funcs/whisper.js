@@ -1,32 +1,5 @@
-import Web3 from 'web3';
-import { gateways, whisper } from '../settings.json';
 import { to_date } from './chat';
 import { encode } from './process';
-
-// CREATE WHISPER INSTANCE & SET BASE PARAMS
-function init(state) {
-
-    // ESTABLISH WEB3 CONNECTION
-    const web3 = new Web3('ws://' + gateways.whisper.host + ':' + gateways.whisper.port);
-
-    // GENERATE NEW KEYPAIR
-    return web3.shh.newKeyPair().then(identification => {
-
-        // RESOLVE WITH EVERYTHING
-        return {
-            shh: web3.shh,
-            whisper: {
-                ...state.whisper,
-                topic: whisper.topic,
-                id: identification,
-                utils: {
-                    to_string: web3.utils.hexToString,
-                    to_hex: web3.utils.stringToHex
-                }
-            }
-        }
-    })
-}
 
 // UBSUBCRIBE FROM OLD & SUBSCRIBE TO NEW WHISPER FEED
 function create_feed(callback, state, dispatch) {
@@ -34,7 +7,7 @@ function create_feed(callback, state, dispatch) {
     // CREATE & RETURN A NEW FEED
     const feed = state.shh.subscribe('messages', {
         symKeyID: state.whisper.topic.key,
-        topics: [state.whisper.utils.to_hex(state.whisper.topic.name)]
+        topics: [state.utils.to_hex(state.whisper.topic.name)]
 
     // ON MESSAGE, RUN CALLBACK FUNCTION
     }).on('data', response => {
@@ -85,8 +58,8 @@ function add_message(input, set_input, state, dispatch, event) {
                 symKeyID: state.whisper.topic.key,
                 sig: state.whisper.id,
                 ttl: 10,
-                topic: state.whisper.utils.to_hex(state.whisper.topic.name),
-                payload: state.whisper.utils.to_hex(input),
+                topic: state.utils.to_hex(state.whisper.topic.name),
+                payload: state.utils.to_hex(input),
                 powTime: 3,
                 powTarget: 0.5
             
@@ -121,8 +94,8 @@ function query(response, state, dispatch) {
         symKeyID: state.whisper.topic.key,
         sig: state.whisper.id,
         ttl: 10,
-        topic: state.whisper.utils.to_hex(state.whisper.topic.name),
-        payload: state.whisper.utils.to_hex(encoded),
+        topic: state.utils.to_hex(state.whisper.topic.name),
+        payload: state.utils.to_hex(encoded),
         powTime: 3,
         powTarget: 0.5
     
@@ -157,7 +130,6 @@ function query(response, state, dispatch) {
 }
 
 export {
-    init,
     create_feed,
     add_message,
     query

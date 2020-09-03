@@ -41,8 +41,17 @@ function hash(string) {
     return hashing(stringified_id)
 }
 
+function exists(string) {
+    if (string === '0x0000000000000000000000000000000000000000') {
+        return false;
+    }
+
+    return true;
+}
+
 export {
     encode,
     decode,
-    hash
+    hash,
+    exists
 }
