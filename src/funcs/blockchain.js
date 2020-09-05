@@ -1,7 +1,6 @@
 import Web3 from 'web3';
 import { gateway, keys, whisper } from '../settings.json';
 import references from '../latest.json';
-import { sleep } from './misc';
 
 // PARSE SC & WEB3
 async function init(state) {
@@ -109,7 +108,7 @@ function transaction({ query, contract, payable }, state) {
          // IF THE TRANSACTION FAILS
          }).catch(error => {
             return {
-               reason: prune(error)
+               reason: error
             }
          })
       })
@@ -117,7 +116,7 @@ function transaction({ query, contract, payable }, state) {
    // IF THE GAS ESTIMATION FAILS
    }).catch(error => {
       return {
-         reason: prune(error)
+         reason: error
       }
    })
 }
@@ -133,39 +132,15 @@ function animate(func, callback, dispatch) {
 
    // EXECUTE THE PRIMARY FUNCTION
    func.then(result => {
-      
-      // SLEEP FOR 2 SECONDS
-      sleep(2000).then(() => {
 
-         // IF THE TRANSACTION WENT THROUGH
-         if (result.success) {
+      // IF THE TRANSACTION WENT THROUGH
+      if (result.success) {
 
-            // IF THE CALLBACK IS ASYNC
-            if (callback.constructor.name === 'AsyncFunction') {
+         // IF THE CALLBACK IS ASYNC
+         if (callback.constructor.name === 'AsyncFunction') {
 
-               // AFTERWARDS, 
-               callback().then(response => {
-
-                  // ALERT WITH SUCCESS
-                  dispatch({
-                     type: 'alert',
-                     payload: {
-                        text: response,
-                        type: 'good'
-                     }
-                  })
-
-                  // FINALLY HIDE THE LOADING SCREEN
-                  dispatch({
-                     type: 'hide-prompt'
-                  })
-               })
-
-            // OTHERWISE..
-            } else {
-
-               // EXECUTE CALLBACK & GET RESPONSE TEXT
-               const response = callback()
+            // AFTERWARDS, 
+            callback().then(response => {
 
                // ALERT WITH SUCCESS
                dispatch({
@@ -180,17 +155,20 @@ function animate(func, callback, dispatch) {
                dispatch({
                   type: 'hide-prompt'
                })
-            }
+            })
 
-         // OTHERWISE...
+         // OTHERWISE..
          } else {
 
-            // ALERT WITH ERROR
+            // EXECUTE CALLBACK & GET RESPONSE TEXT
+            const response = callback()
+
+            // ALERT WITH SUCCESS
             dispatch({
                type: 'alert',
                payload: {
-                  text: 'transaction reverted',
-                  type: 'bad'
+                  text: response,
+                  type: 'good'
                }
             })
 
@@ -199,7 +177,24 @@ function animate(func, callback, dispatch) {
                type: 'hide-prompt'
             })
          }
-      })
+
+      // OTHERWISE...
+      } else {
+
+         // ALERT WITH ERROR
+         dispatch({
+            type: 'alert',
+            payload: {
+               text: 'transaction reverted',
+               type: 'bad'
+            }
+         })
+
+         // FINALLY HIDE THE LOADING SCREEN
+         dispatch({
+            type: 'hide-prompt'
+         })
+      }
    })
 }
 
@@ -222,7 +217,7 @@ function call({ query, modify }) {
       }
    }).catch(error => {
       return {
-         reason: prune(error)
+         reason: error
       }
    })
 }
@@ -236,16 +231,6 @@ function exists(query) {
    }
 }
 
-// PRUNE ERROR MESSAGE
-function prune(error) {
-
-   // CONVERT TO STRING & NUKE GARBAGE
-   error = error.toString();
-   error = error.replace('Error: Returned error: VM Exception while processing transaction: revert ', '');
-
-   return error;
-}
-
 // ASSEMBLE SINGLE CONTRACT REFERENCE
 function assemble({ address, contract }, state) {
    return new state.web3.eth.Contract(
@@ -254,56 +239,11 @@ function assemble({ address, contract }, state) {
    )
 }
 
-// ASSESS METHOD RESPONSE
-function assess({ msg, next }, result, dispatch) {
-   switch(result.success) {
-
-      // ON SUCCESS
-      case true:
-
-         // IF PROVIDED, SEND MESSAGE
-         if (msg !== undefined) {
-            dispatch({
-               type: 'add-message',
-               payload: {
-                  text: msg,
-                  type: 'good'
-               }
-            })
-         }
-
-         // IF PROVIDED, EXECUTE FOLLOW-UP FUNCTION
-         if (next !== undefined) {
-            next(result.data)
-         }
-      break;
-
-      // ON ERROR
-      default: {
-         dispatch({
-            type: 'add-message',
-            payload: {
-               text: result.reason,
-               type: 'bad'
-            }
-         })
-      }
-   }
-}
-
-// CHECK IF STRING IS AN ADDRESS
-function is_address(string, state) {
-   return state.web3.utils.isAddress(string);
-}
-
 export {
    init,
    transaction,
    call,
    assemble,
-   assess,
    exists,
-   prune,
-   is_address,
    animate
 }

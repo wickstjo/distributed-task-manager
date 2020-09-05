@@ -7,7 +7,7 @@ import Header from './header';
 import Number from '../input/number';
 import Button from '../input/button';
 
-function Token() {
+export default () => {
 
    // GLOBAL STATE
    const { state, dispatch } = useContext(Context)
@@ -60,5 +60,3 @@ function Token() {
       </Fragment>
    )
 }
-
-export default Token;

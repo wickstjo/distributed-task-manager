@@ -10,8 +10,8 @@ import Token from './prompt/token';
 import Service from './prompt/service';
 import Config from './prompt/config';
 import Status from './prompt/status';
-import DeviceService from './prompt/device_service';
 import AddService from './prompt/add_service';
+import RemoveService from './prompt/remove_service';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -91,9 +91,14 @@ function Content({ type }) {
          return <Status />
       }
 
-      // UPDATE DEVIEC SERVICE
-      case 'device-service': {
-         return <DeviceService />
+      // ADD SERVICE TO DEVICE
+      case 'add-service': {
+         return <AddService />
+      }
+
+      // UPDATE SERVICE FROM DEVICE
+      case 'remove-service': {
+         return <RemoveService />
       }
 
       // PURCHASE TOKEN
@@ -104,11 +109,6 @@ function Content({ type }) {
       // ADD TAG
       case 'create-service': {
          return <Service />
-      }
-
-      // ADD TAG
-      case 'add-service': {
-         return <AddService />
       }
 
       // FALLBACK

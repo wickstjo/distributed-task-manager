@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useReducer, Fragment } from 'react';
 import { Context } from '../../assets/context';
 import { reducer } from '../shared/reducer';
-import { collection, add_service } from '../../funcs/contract/device';
+import { details, remove_service } from '../../funcs/contract/device';
+import { filter_zeros } from '../../funcs/format';
 
 import Header from './header';
 import Button from '../input/button';
@@ -14,7 +15,7 @@ export default () => {
 
    // LOCAL STATE
    const [local, set_local] = useReducer(reducer, {
-      devices: [],
+      services: [],
       selected: {
          value: '',
          validation: false
@@ -23,14 +24,17 @@ export default () => {
 
    // FETCH CURRENT DATA
    useEffect(() => {
-      collection(state.keys.public, state).then(result => {
+      details(state.trigger, state).then(result => {
+
+         // FILTER GARBAGE
+         const filtered = filter_zeros(result.services)
 
          // SET IN STATE
          set_local({
             type: 'specific',
             payload: {
-               name: 'devices',
-               data: result
+               name: 'services',
+               data: filtered
             }
          })
       })
@@ -40,31 +44,26 @@ export default () => {
 
    // PROCESS SUBMISSION
    function process() {
-      add_service(() => {
-
-         // REDIRECT TO DEVICE PAGE
-         dispatch({
-            type: 'redirect',
-            payload: '/devices/' + local.selected.value
-         })
+      remove_service(() => {
 
          // SUCCESS MESSAGE
-         return 'THE SERVICE WAS ADDED TO YOUR DEVICE'
+         return 'THE SERVICE WAS REMOVED FROM YOUR DEVICE'
 
-      }, local.selected.value, state.trigger, state, dispatch)
+      }, state.trigger, local.selected.value, state, dispatch)
    }
 
    return (
       <Fragment>
-         <Header text={ 'Add Service to Device' } />
+         <Header text={ 'Remove Service from Device' } />
          <Selection
-            data={ local.devices }
+            data={ local.services }
             current={ local.selected.value }
+            fallback={ 'This device has no assigned services.' }
             dispatch={ set_local }
          />
          <Button
             value={ 'Add The Service' }
-            fallback={ 'Select a device to assign service to!' }
+            fallback={ 'Select a service to remove!' }
             execute={ process }
             required={[
                local.selected.validation

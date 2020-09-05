@@ -24,7 +24,13 @@ function Service({ match }) {
          payload: 'service'
       })
 
-      // FETCH TRANSPILER
+      // SET TRIGGER
+      dispatch({
+         type: 'trigger',
+         payload: match.params.name
+      })
+
+      // FETCH THE DETAILS
       fetch_details(match.params.name, state).then(response => {
 
          // DECODE & PARSE RULESET
@@ -54,11 +60,12 @@ function Service({ match }) {
          <Info
             header={ 'Ruleset' }
             data={ details.decoded }
+            fallback={ 'No ruleset found for service.' }
          />
          <List
             header={ 'Available Devices' }
             data={ state.query.results }
-            fallback={ 'A query must first be performed.' }
+            fallback={ state.query.active ? 'Awaiting responses...' : 'A query must first be performed.' }
             category={ '/devices' }
          />
       </Fragment>

@@ -18,10 +18,8 @@ function Service({ state, dispatch }) {
     function find() {
         query({
             type: 'request',
-            services: ['foo'],
-            discovery: {
-                location: 'helsinki'
-            }
+            services: [state.trigger],
+            discovery: {}
         }, state, dispatch)
     }
 

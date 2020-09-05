@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Json({ placeholder, data, category, dispatch }) {
+export default ({ placeholder, data, category, dispatch }) => {
 
     // LOCAL STATE
     const [style, set_style] = useState('error')
@@ -11,7 +11,7 @@ function Json({ placeholder, data, category, dispatch }) {
         // ATTEMPT TO PARSE THE INPUT
         try {
             JSON.parse(input)
-            
+
             dispatch({
                 type: 'specific',
                 payload: {
@@ -62,5 +62,3 @@ function Json({ placeholder, data, category, dispatch }) {
         </div>
     )
 }
-
-export default Json;

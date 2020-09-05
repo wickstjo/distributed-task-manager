@@ -3,9 +3,10 @@ function separator(string) {
     return string.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, " ");
 }
 
-// FILTER OUT NULLIFIED HEXES
+// FILTER ZEROES & EMPTY STRINGS FROM LIST
 function filter_zeros(list) {
-    return list.filter(value => value !== '0x0000000000000000000000000000000000000000');
+    const foo = list.filter(value => value !== '0x0000000000000000000000000000000000000000');
+    return foo.filter(item => item);
 }
 
 export {

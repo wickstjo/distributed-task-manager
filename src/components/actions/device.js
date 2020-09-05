@@ -4,7 +4,7 @@ import { update_middleware } from '../../funcs/contract/device';
 
 import Option from './option';
 
-function Actions({ state, dispatch }) {
+export default ({ state, dispatch }) => {
 
     // TRIGGER UPDATE EVENT
     function trigger_update() {
@@ -28,7 +28,7 @@ function Actions({ state, dispatch }) {
     function trigger_services() {
         dispatch({
             type: 'show-prompt',
-            payload: 'device-service'
+            payload: 'remove-service'
         })
     }
 
@@ -43,11 +43,9 @@ function Actions({ state, dispatch }) {
     return (
         <Fragment>
             <Option header={ 'Toggle Status' } func={ trigger_status } />
-            <Option header={ 'Discovery Parameters' } func={ trigger_config } />
-            <Option header={ 'Available Services' } func={ trigger_services } />
+            <Option header={ 'Discovery' } func={ trigger_config } />
+            <Option header={ 'Remove Service' } func={ trigger_services } />
             <Option header={ 'Update Middleware' } func={ trigger_update } />
         </Fragment>
     )
 }
-
-export default Actions;

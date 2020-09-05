@@ -4,7 +4,7 @@ import { filter_zeros } from '../../funcs/format';
 import Row from './row';
 
 // TASK LAYOUT DECIDER
-function List({ data, header, show_number = false, fallback, category }) {
+function List({ data, header, fallback, category }) {
 
    // FILTER AWAY NULLIFIED VALUES
    const filtered = filter_zeros(data)

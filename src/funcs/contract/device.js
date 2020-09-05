@@ -174,6 +174,30 @@ function update_services(callback, hash, data, state, dispatch) {
     animate(func, callback, dispatch)
 }
 
+// UPDATE DISCOVERY TAGS
+function add_service(callback, device, service, state, dispatch) {
+    const { manager, address } = refs(state)
+
+    const func = transaction({
+        query: manager.add_service(device, service),
+        contract: address
+    }, state)
+
+    animate(func, callback, dispatch)
+}
+
+// UPDATE DISCOVERY TAGS
+function remove_service(callback, device, service, state, dispatch) {
+    const { manager, address } = refs(state)
+
+    const func = transaction({
+        query: manager.remove_service(device, service),
+        contract: address
+    }, state)
+
+    animate(func, callback, dispatch)
+}
+
 // TOGGLE ACTIVE STATUS
 function toggle_active(callback, hash, state, dispatch) {
     const { manager } = refs(state)
@@ -231,5 +255,7 @@ export {
     update_services,
     toggle_active,
     toggle_discovery,
-    config
+    config,
+    add_service,
+    remove_service
 }

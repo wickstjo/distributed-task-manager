@@ -86,7 +86,7 @@ function Init() {
                type: 'message',
                payload: {
                   user: shorten(response.sig, 4),
-                  msg: state.whisper.utils.to_string(response.payload),
+                  msg: state.utils.to_string(response.payload),
                   timestamp: to_date(response.timestamp)
                }
             })
