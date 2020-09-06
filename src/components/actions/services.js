@@ -15,7 +15,7 @@ function Services({ dispatch }) {
 
     return (
         <Fragment>
-            <Option header={ 'Add Service' } func={ service } />
+            <Option header={ 'Create Service' } func={ service } />
         </Fragment>
     )
 }

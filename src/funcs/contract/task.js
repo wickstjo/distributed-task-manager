@@ -20,11 +20,11 @@ function fee(state) {
 }
 
 // ADD TASK
-function add(callback, service, device, reward, encryption, timelimit, state, dispatch) {
+function add(callback, service, device, encryption, timelimit, state, dispatch) {
     const { manager, address } = refs(state);
 
     const func = transaction({
-        query: manager.add(service, device, reward, encryption, timelimit),
+        query: manager.add(service, device, encryption, timelimit),
         contract: address
     }, state)
 

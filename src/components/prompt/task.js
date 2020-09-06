@@ -5,8 +5,8 @@ import { reducer } from '../shared/reducer';
 
 import Header from './header';
 import Text from '../input/text';
-import Number from '../input/number';
 import Button from '../input/button';
+import Number from '../input/number';
 
 function Task() {
 
@@ -53,7 +53,7 @@ function Task() {
          // SUCCESS MESSAGE
          return 'THE TASK HAS BEEN CREATED & ASSIGNED'
 
-      }, local.service.value, local.device.value, local.reward.value, local.encryption.value, local.blocks.value, state, dispatch)
+      }, local.service.value, local.device.value, local.encryption.value, local.blocks.value, state, dispatch)
    }
 
    return (
@@ -69,14 +69,14 @@ function Task() {
                max: 64
             }}
          />
-         <Number
-            placeholder={ 'Set the token reward' }
+         <Text
+            placeholder={ 'Set performing device' }
             data={ local }
-            category={ 'reward' }
+            category={ 'device' }
             dispatch={ set_local }
             limit={{
-               min: 1,
-               max: 1000
+               min: 64,
+               max: 64
             }}
          />
          <Number
@@ -99,23 +99,12 @@ function Task() {
                max: 64
             }}
          />
-         <Text
-            placeholder={ 'Set performing device' }
-            data={ local }
-            category={ 'device' }
-            dispatch={ set_local }
-            limit={{
-               min: 64,
-               max: 64
-            }}
-         />
          <Button
-            value={ 'Submit Task' }
+            value={ 'Create Task' }
             fallback={ 'Fix the fields above first!' }
             execute={ process }
             required={[
                local.service.validation,
-               local.reward.validation,
                local.blocks.validation,
                local.encryption.validation,
                local.device.validation

@@ -2,12 +2,11 @@ import React, { useContext, useReducer, Fragment } from 'react';
 import { Context } from '../../assets/context';
 import { reducer } from '../shared/reducer';
 import { add } from '../../funcs/contract/service';
-import { encode } from '../../funcs/process';
 
 import Header from './header';
 import Text from '../input/text';
 import Button from '../input/button';
-import Json from '../input/json';
+import Number from '../input/number';
 
 export default () => {
 
@@ -20,7 +19,7 @@ export default () => {
          value: '',
          validation: false
       },
-      json: {
+      price: {
          value: '',
          validation: false
       }
@@ -28,9 +27,6 @@ export default () => {
 
    // PROCESS SUBMISSION
    function process() {
-
-      // PARSE & ENCODE THE JSON DATA
-      const encoded = encode(local.json.value)
 
       // REGISTER THE SERVICE
       add(() => {
@@ -42,9 +38,9 @@ export default () => {
          })
 
          // SUCCESS MESSAGE
-         return 'the service tag was added'
+         return 'the service was added'
 
-      }, local.name.value, encoded, state, dispatch)
+      }, local.name.value, local.price.value, state, dispatch)
    }
 
    return (
@@ -60,19 +56,23 @@ export default () => {
                max: 25
             }}
          />
-         <Json
-            placeholder={ 'Set the description' }
+         <Number
+            placeholder={ 'Set the token price' }
             data={ local }
-            category={ 'json' }
+            category={ 'price' }
             dispatch={ set_local }
+            limit={{
+               min: 1,
+               max: 1000
+            }}
          />
          <Button
-            value={ 'Submit Tag' }
+            value={ 'Create Service' }
             fallback={ 'Fix the fields above first!' }
             execute={ process }
             required={[
                local.name.validation,
-               local.json.validation
+               local.price.validation
             ]}
          />
       </Fragment>

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
-import { decode } from '../funcs/process';
 import { details as fetch_details } from '../funcs/contract/service';
 import { Link } from 'react-router-dom';
 
@@ -33,14 +32,11 @@ function Service({ match }) {
       // FETCH THE DETAILS
       fetch_details(match.params.name, state).then(response => {
 
-         // DECODE & PARSE RULESET
-         const decoded = decode(response.ruleset)
-
          // SET IN STATE
          set_details({
             author: response.author,
             created: response.created,
-            decoded: decoded
+            price: response.price
          })
       })
 
@@ -53,14 +49,10 @@ function Service({ match }) {
             header={ 'Service Overview' }
             data={{
                'Name': match.params.name,
+               'Token Price': details.price,
                'Author': <Link to={ '/users/' + details.author }>{ details.author }</Link>,
                'Genesis Block': details.created,
             }}
-         />
-         <Info
-            header={ 'Ruleset' }
-            data={ details.decoded }
-            fallback={ 'No ruleset found for service.' }
          />
          <List
             header={ 'Available Devices' }

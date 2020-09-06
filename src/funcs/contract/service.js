@@ -15,11 +15,11 @@ function services(state) {
 }
 
 // ADD TAG
-function add(callback, name, description, state, dispatch) {
+function add(callback, name, price, state, dispatch) {
     const { manager, address } = refs(state);
 
     const func = transaction({
-        query: manager.add(name, description),
+        query: manager.add(name, price),
         contract: address
     }, state)
 

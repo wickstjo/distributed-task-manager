@@ -108,17 +108,28 @@ function transaction({ query, contract, payable }, state) {
          // IF THE TRANSACTION FAILS
          }).catch(error => {
             return {
-               reason: error
+               reason: prune(error)
             }
          })
       })
 
    // IF THE GAS ESTIMATION FAILS
    }).catch(error => {
+      prune(error)
       return {
-         reason: error
+         reason: prune(error)
       }
    })
+}
+
+// PRUNE GARBAGE FROM TRANSACTION ERRORS
+function prune(error) {
+
+   // CONVERT TO STRING & NUKE GARBAGE
+   error = error.toString();
+   error = error.replace('Error: Returned error: execution reverted: ', '');
+
+   return error;
 }
 
 // ANIMATE PROMPT
@@ -185,7 +196,7 @@ function animate(func, callback, dispatch) {
          dispatch({
             type: 'alert',
             payload: {
-               text: 'transaction reverted',
+               text: result.reason,
                type: 'bad'
             }
          })
