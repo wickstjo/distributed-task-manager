@@ -1,0 +1,23 @@
+#tooltip {
+    background: red;
+    cursor: pointer;
+
+    #content {
+        background: yellow;
+        padding: 5px 7px;
+        color: black;
+        position: absolute;
+        transition: opacity 0.1s, visibility 0.1s;
+        min-width: 150px;
+    }
+
+    #content.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    #content.inactive {
+        visibility: hidden;
+        opacity: 0;
+    }
+}

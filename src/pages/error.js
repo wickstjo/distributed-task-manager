@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-function Error() { return (
-   <div id={ 'errorframe' }>
-      <div id={ 'inner' }>Error - Page not found!</div>
-   </div>
+export default () => { return (
+   <Fragment>
+      <div id={ 'header' }>Error 404</div>
+      <div id={ 'container' }>
+         <div id={ 'fallback' }>This page does not exist!</div>
+      </div>
+   </Fragment>
 )}
-
-export default Error;

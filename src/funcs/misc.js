@@ -1,3 +1,4 @@
+// GENERATE NEW WHISPER KEYS
 async function generate_keys(shh) {
     return {
         msg: await shh.newSymKey(),
@@ -7,7 +8,7 @@ async function generate_keys(shh) {
 
 // WAIT FOR GIVEN MILLISECONDS
 function sleep (time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
+    return new Promise((resolve) => setTimeout(resolve, time))
 }
 
 export {

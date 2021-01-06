@@ -1,6 +1,6 @@
 import Web3 from 'web3';
-import { gateway, keys, whisper } from '../settings.json';
-import references from '../latest.json';
+import { gateway, keys, whisper } from '../resources/settings.json';
+import references from '../resources/latest.json';
 
 // PARSE SC & WEB3
 async function init(state) {
@@ -8,7 +8,7 @@ async function init(state) {
    // ESTABLISH WEB3 CONNECTION
    const web3 = new Web3('ws://' + gateway.host + ':' + gateway.port);
 
-   // GENERATE WHISPER ID
+   // GENERATE FRESH WHISPER ID
    const identification = await web3.shh.newKeyPair();
 
    // GENERATE NEW WHISPER TOPIC SYMKEY

@@ -1,46 +1,40 @@
 import React, { useContext } from 'react';
-import { Context } from '../assets/context';
-import Item from './menu/item';
+import { Context } from "../assets/context";
 import '../interface/css/menu.scss';
 
-function Menu() {
+import MenuItem from './menu/item';
 
-   // GLOBAL STATE
-   const { state } = useContext(Context);
+export default() => {
 
-   return (
-      <div id={ 'menu' }>
-         <div id={ 'inner' }>
-            <Item
-               name={ 'Tasks' }
-               to={ '/' }
-               current={ state.header }
-            />
-            <Item
-               name={ 'Services' }
-               to={ '/services' }
-               current={ state.header }
-            />
-            <Item
-               name={ 'Tokens' }
-               to={ '/tokens' }
-               current={ state.header }
-            />
-            {
-               state.verified ? <Item
-                  name={ 'Profile' }
-                  to={ '/users/' + state.keys.public }
-                  current={ state.header }
-               /> : null
-            }
-            <Item
-               name={ 'Whisper' }
-               to={ '/whisper' }
-               current={ state.header }
-            />
-         </div>
-      </div>
-   )
+    // GLOBAL STATE
+    const { state } = useContext(Context);
+    
+    return (
+        <div id="menu">
+            <div>
+                <MenuItem
+                    header={ 'Tasks' }
+                    link={ '/' }
+                />
+                <MenuItem
+                    header={ 'Services' }
+                    link={ '/services' }
+                />
+                <MenuItem
+                    header={ 'Tokens' }
+                    link={ '/tokens' }
+                />
+                {
+                    state.verified ? <MenuItem
+                        header={ 'Profile' }
+                        link={ '/users/' + state.keys.public }
+                    /> : null
+                }
+                <MenuItem
+                    header={ 'Whisper' }
+                    link={ '/whisper' }
+                />
+            </div>
+        </div>
+    )
 }
-
-export default Menu;

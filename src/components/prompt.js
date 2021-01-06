@@ -1,121 +1,67 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context } from "../assets/context";
-import { sleep } from "../funcs/misc";
 import '../interface/css/prompt.scss';
-import EventListener from 'react-event-listener';
 
-import Device from './prompt/device';
-import Task from './prompt/task';
-import Token from './prompt/token';
-import Service from './prompt/service';
-import Config from './prompt/config';
-import Status from './prompt/status';
-import AddService from './prompt/add_service';
-import RemoveService from './prompt/remove_service';
+import Import from './prompt/import';
 
-// PROMPT CONTAINER
-function Prompt() {
+export default ({ set_wrapper }) => {
    
-   // GLOBAL STATE
-   const { state, dispatch } = useContext(Context);
+    // GLOBAL STATE
+    const { state, dispatch } = useContext(Context);
 
-   // TOGGLE VISIBILITY BASED ON STATE
-   useEffect(() => {
-      if (state.prompt.visible) {
-         document.getElementById('prompt').style.display = 'flex';
-         sleep(100).then(() => {
-            document.getElementById('wrapper').style.filter = 'blur(6px)';
-            document.getElementById('prompt').style.opacity = 1;
-         })
-      } else {
-         document.getElementById('prompt').style.opacity = 0;
-         document.getElementById('wrapper').style.filter = 'none';
-         sleep(100).then(() => {
-            document.getElementById('prompt').style.display = 'none';
-         })
-      }
-   }, [state.prompt.visible]);
+    // LOCAL STYLE STATE -- DEFAULT TO INACTIVE
+    const [local, set_local] = useState('inactive');
 
-   // CLOSE PROMPT ON ESC KEY
-   function key_event(event) {
-      if (state.prompt.visible && event.code === 'Escape') {
-         dispatch({ type: 'hide-prompt' })
-      }
-   }
+    // TOGGLE VISIBILITY
+    useEffect(() => {
 
-   return (
-      <div id={ 'prompt' }>
-         <div id={ 'inner' }>
-            <Content
-               type={ state.prompt.type }
-            />
-            <EventListener
-               target={ document }
-               onKeyDown={ key_event }
-            />
-            <span
-               id="close"
-               onClick={() => { dispatch({ type: 'hide-prompt' }) }}
-            />
-         </div>
-      </div>
-   )
+        // WRAPPER & PROMPT STATUSES
+        const wrapper_status = state.prompt.visible ? 'inactive' : 'active'
+        const prompt_status = state.prompt.visible ? 'active' : 'inactive'
+
+        // CHANGE SELECTOR CLASSES
+        set_local(prompt_status)
+        set_wrapper(wrapper_status)
+
+    // eslint-disable-next-line
+    }, [state.prompt.visible])
+
+    // CLOSE PROMPT WHEN ESC IS PRESSED
+    useEffect(() => {
+        if (state.key_event !== undefined && state.prompt.visible && state.key_event.key === 'Escape') {
+            dispatch({ type: 'hide-prompt' })
+        }
+
+    // eslint-disable-next-line
+    }, [state.key_event])
+
+    return (
+        <div id={ 'prompt' } className={ local }>
+            <div id={ 'inner' }>
+                <Content  type={ state.prompt.type } />
+                <span id="close" onClick={() => { dispatch({ type: 'hide-prompt' }) }} />
+            </div>
+        </div>
+    )
 }
 
 // PROMPT CONTENT
 function Content({ type }) {
-   switch(type) {
+    switch(type) {
 
-      // LOADING
-      case 'loading': {
-         return <div className="lds-dual-ring" />
-      }
+        // LOADING
+        case 'loading': {
+            return <div className="lds-dual-ring" />
+        }
 
-      // CREATE TASK
-      case 'task': {
-         return <Task />
-      }
+        // IMPORT PROMPT
+        case 'import': {
+            return <Import />
+        }
 
-      // REGISTER DEVICE
-      case 'device': {
-         return <Device />
-      }
-
-      // UPDATE DEVICE DISCOVERY CONFIG
-      case 'tag-config': {
-         return <Config />
-      }
-
-      // TOGGLE DEVICE STATUS
-      case 'status': {
-         return <Status />
-      }
-
-      // ADD SERVICE TO DEVICE
-      case 'add-service': {
-         return <AddService />
-      }
-
-      // UPDATE SERVICE FROM DEVICE
-      case 'remove-service': {
-         return <RemoveService />
-      }
-
-      // PURCHASE TOKEN
-      case 'token': {
-         return <Token />
-      }
-
-      // ADD TAG
-      case 'create-service': {
-         return <Service />
-      }
-
-      // FALLBACK
-      default: {
-         return <div>Prompt type error</div>
-      }
-   }
+        // FALLBACK
+        default: {
+            return <div>PROMPT TYPE ERROR</div>
+        }
+    }
 }
-
-export default Prompt;

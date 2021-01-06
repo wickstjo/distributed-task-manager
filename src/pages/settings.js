@@ -1,28 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import { Context } from '../assets/context';
+import React, { Fragment } from 'react';
 
-function Settings() {
-   
-   // GLOBAL STATE
-   const { dispatch } = useContext(Context)
-
-   // ON LOAD
-   useEffect(() => {
-      dispatch({
-         type: 'header',
-         payload: 'settings'
-      })
-
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [])
-   
-   return (
-      <div id={ 'settings' }>
-         <div id={ 'inner' }>
-            <div id={ 'fallback' }>Settings page</div>
-         </div>
+export default () => { return (
+   <Fragment>
+      <div id={ 'header' }>Settings</div>
+      <div id={ 'container' }>
+         <div id={ 'fallback' }>Foo</div>
       </div>
-   )
-}
-
-export default Settings;
+   </Fragment>
+)}
