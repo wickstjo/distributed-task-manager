@@ -1,17 +1,14 @@
 {
-   "gateway": {
-      "host": "192.168.88.128",
-      "port": "8080"
-   },
-   "keys": {
-      "public": "0x83f3ab84E3641c9198C0a514643113EF164c7E33",
-      "private": "0xec9b51e5bf44b690fece1bfa5a1a9c255d2af9a2838a5711e95ab5a09a39a337"
-   },
-   "whisper": {
-      "topic": {
-         "key": "79e64607a3cbb86de217474db07a9396d77418fd5bc06a4e3579034b0fad163f",
-         "name": "arca"
-      },
-      "id": ""
-   }
- }
+    "gateway": {
+        "host": "127.0.0.1",
+        "port": "8080"
+    },
+    "keys": {
+        "public": "0x83f3ab84E3641c9198C0a514643113EF164c7E33",
+        "private": "0xec9b51e5bf44b690fece1bfa5a1a9c255d2af9a2838a5711e95ab5a09a39a337"
+    },
+    "whisper": {
+        "topic": "arca",
+        "symkey": "79e64607a3cbb86de217474db07a9396d77418fd5bc06a4e3579034b0fad163f"
+    }
+}

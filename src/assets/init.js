@@ -24,7 +24,7 @@ export default () => {
                 type: 'init',
                 payload: data
             })
-         })
+        })
 
         // HIDE METAMASK GARBAGE
         if (window.ethereum !== undefined) {
@@ -85,7 +85,7 @@ export default () => {
 
                         // ALERT WITH MESSAGE
                         dispatch({
-                            type: 'add-message',
+                            type: 'toast-message',
                             payload: {
                                 type: 'good',
                                 msg: 'you have been autologged in'
@@ -99,7 +99,7 @@ export default () => {
             })
         }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     }, [state.web3])
 
     // CREATE WHISPER MESSAGE FEED
@@ -121,7 +121,7 @@ export default () => {
             }, state, dispatch)
         }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     }, [state.whisper.topic])
 
     // COLLECT DEVICE QUERY RESPONSES
@@ -145,7 +145,7 @@ export default () => {
 
                 // ALERT WITH MESSAGE
                 dispatch({
-                    type: 'alert',
+                    type: 'toast-message',
                     payload: {
                         type: 'good',
                         text: 'a device has responded'
@@ -154,7 +154,7 @@ export default () => {
             }
         }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     }, [state.whisper.messages])
 
     return null;

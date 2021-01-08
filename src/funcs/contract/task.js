@@ -8,11 +8,6 @@ function refs(state) {
     }
 }
 
-// FETCH ALL OPEN TASKS
-function fetch_open(state) {
-    return refs(state).manager.fetch_open().call();
-}
-
 // FETCH TASK FEE
 function fee(state) {
     const { manager } = refs(state);
@@ -29,11 +24,6 @@ function add(callback, service, device, encryption, timelimit, state, dispatch) 
     }, state)
 
     animate(func, callback, dispatch)
-}
-
-// CHANGE IN OPEN TASKS EVENT
-function change(state) {
-    return state.contracts.managers['task'].events.change();
 }
 
 // FETCH TASK AUT
@@ -88,9 +78,7 @@ function result(task, state) {
 
 export {
     fee,
-    fetch_open,
     add,
-    change,
     details,
     retire,
     result

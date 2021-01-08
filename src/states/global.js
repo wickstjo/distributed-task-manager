@@ -36,11 +36,9 @@ const values = {
     // WHISPER PARAMS
     shh: null,
     whisper: {
-        topic: {
-            id: '',
-            name: ''
-        },
-        id: '',
+        topic: null,
+        symkey: null,
+        id: null,
         feed: null,
         messages: []
     },
@@ -101,7 +99,7 @@ function reducer(state, { type, payload }) {
         }}
 
         // ADD TOAST MESSAGE
-        case 'add-message': { return {
+        case 'toast-message': { return {
             ...state,
             messages: [
                 ...state.messages, {

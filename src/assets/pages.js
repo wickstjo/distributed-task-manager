@@ -7,10 +7,10 @@ import Tasks from '../pages/tasks';
 import Task from '../pages/task';
 import Result from '../pages/result';
 
-import Services from '../pages/services';
-import Service from '../pages/service';
+import Oracles from '../pages/oracles';
+import Oracle from '../pages/oracle';
 
-import Device from '../pages/device';
+import Users from '../pages/users';
 import User from '../pages/user';
 
 import Tokens from '../pages/tokens';
@@ -34,10 +34,10 @@ export default () => {
                 <Route path={ '/tasks/:address' } component={ Task } />
                 <Route path={ '/results/:address' } component={ Result } />
 
-                <Route exact path={ '/services' } component={ Services } />
-                <Route path={ '/services/:name' } component={ Service } />
+                <Route exact path={ '/oracles' } component={ Oracles } />
+                <Route path={ '/oracles/:hash' } component={ Oracle } />
 
-                <Route path={ '/devices/:address' } component={ Device } />
+                <Route path={ '/users' } component={ Users } />
                 <Route path={ '/users/:address' } component={ User } />
 
                 <Route exact path={ '/tokens' } component={ Tokens } />

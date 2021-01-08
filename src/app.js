@@ -11,7 +11,7 @@ import Messages from './components/messages';
 
 export default () => {
 
-    // WRAPPER STYLE STATE -  -- DEFAULT TO ACTIVE
+    // WRAPPER STYLE STATE -- DEFAULT TO ACTIVE
     const [local, set_local] = useState('active');
 
     return (

@@ -39,3 +39,17 @@ a:hover {
 #wrapper.inactive {
     filter: blur(6px);
 }
+
+.split {
+    display: flex;
+    width: 100%;
+
+    div {
+        flex: 1;
+        text-align: left;
+    }
+
+    div:nth-child(2) {
+        text-align: right;
+    }
+}

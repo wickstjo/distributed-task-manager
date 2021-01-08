@@ -7,17 +7,17 @@ const Context = createContext();
 // CONTEXT PROVIDER
 function Provider({ children }) {
 
-   // ATTACH THE REDUCER
-   const [state, dispatch] = useReducer(reducer, values)
+    // ATTACH THE REDUCER
+    const [state, dispatch] = useReducer(reducer, values)
 
-   return (
-      <Context.Provider value={{ state, dispatch }}>
-         { children }
-      </Context.Provider>
-   )
+    return (
+        <Context.Provider value={{ state, dispatch }}>
+        { children }
+        </Context.Provider>
+    )
 }
 
 export {
-   Context,
-   Provider
+    Context,
+    Provider
 }

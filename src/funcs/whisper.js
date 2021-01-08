@@ -6,8 +6,8 @@ function create_feed(callback, state, dispatch) {
 
     // CREATE & RETURN A NEW FEED
     const feed = state.shh.subscribe('messages', {
-        symKeyID: state.whisper.topic.key,
-        topics: [state.utils.to_hex(state.whisper.topic.name)]
+        symKeyID: state.whisper.symkey,
+        topics: [state.utils.to_hex(state.whisper.topic)]
 
     // ON MESSAGE, RUN CALLBACK FUNCTION
     }).on('data', response => {
@@ -55,10 +55,10 @@ function add_message(input, set_input, state, dispatch, event) {
         // OTHERWISE, SEND MESSAGE PAYLOAD
         } else {
             state.shh.post({
-                symKeyID: state.whisper.topic.key,
+                symKeyID: state.whisper.symkey,
                 sig: state.whisper.id,
                 ttl: 10,
-                topic: state.utils.to_hex(state.whisper.topic.name),
+                topic: state.utils.to_hex(state.whisper.topic),
                 payload: state.utils.to_hex(input),
                 powTime: 3,
                 powTarget: 0.5
