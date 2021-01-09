@@ -8,10 +8,19 @@ function refs(state) {
     }
 }
 
-// FETCH TASK FEE
-function fee(state) {
-    const { manager } = refs(state);
-    return manager.fee().call()
+// FETCH INIT STATUS & TASK FEE
+function overview(state) {
+
+    // LIST OF PROMISES
+    const promises = [
+        refs(state).manager.initialized().call(),
+        refs(state).manager.fee().call()
+    ]
+
+    // WAIT FOR PROMISES TO RESOLVE, THEN RETURN THEM
+    return Promise.all(promises).then(values => {
+        return values
+    })
 }
 
 // ADD TASK
@@ -77,7 +86,7 @@ function result(task, state) {
 }
 
 export {
-    fee,
+    overview,
     add,
     details,
     retire,

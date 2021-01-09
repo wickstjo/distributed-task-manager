@@ -11,6 +11,11 @@ function refs(state) {
 }
 
 // FETCH USER DEVICE COLLECTION
+function initialized(state) {
+    return state.contracts.managers.oracle.methods.initialized().call();
+}
+
+// FETCH USER DEVICE COLLECTION
 function fetch(hash, state) {
     return refs(state).manager.fetch_device(hash).call();
 }
@@ -244,6 +249,7 @@ function toggle_discovery(callback, hash, state, dispatch) {
 
 
 export {
+    initialized,
     fetch,
     collection,
     register,

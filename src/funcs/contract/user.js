@@ -8,6 +8,11 @@ function refs(state) {
     }
 }
 
+// FETCH USER DEVICE COLLECTION
+function initialized(state) {
+    return state.contracts.managers.oracle.methods.initialized().call();
+}
+
 // FETCH USER SMART CONTRACT
 function fetch(wallet, state) {
     const { manager } = refs(state);
@@ -78,6 +83,7 @@ function register(callback, state, dispatch) {
 }
 
 export {
+    initialized,
     fetch,
     details,
     changes,

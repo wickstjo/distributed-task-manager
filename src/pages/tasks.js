@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from '../assets/context';
-import { fee as get_fee } from '../funcs/contract/task';
+import { overview } from '../funcs/contract/task';
 
 import Info from '../components/shared/info';
+import Actions from '../components/actions';
 
 export default () => {
 
@@ -10,14 +11,20 @@ export default () => {
     const { state } = useContext(Context)
 
     // LOCAL STATES
-    const [fee, set_fee] = useState('')
+    const [local, set_local] = useState({
+        initialized: false,
+        fee: 0
+    })
 
     // ON LOAD
     useEffect(() => {
 
-        // FETCH & SET TASK FEE
-        get_fee(state).then(amount => {
-            set_fee(amount)
+        // FETCH & SET CONTRACT DETAILS
+        overview(state).then(response => {
+            set_local({
+                initialized: response[0],
+                fee: response[1],
+            })
         })
 
     // eslint-disable-next-line
@@ -29,7 +36,21 @@ export default () => {
                 header={ 'Task Manager' }
                 data={{
                     'Contract': state.contracts.managers.task._address,
-                    'Token Fee': fee
+                    'Initialized': local.initialized ? 'True' : 'False',
+                    'Token Fee': local.fee
+                }}
+            />
+            <Actions
+                options={{
+                    'create task': () => {
+                        console.log('foo')
+                    },
+                    'view task': () => {
+                        console.log('foo')
+                    },
+                    'view task result': () => {
+                        console.log('foo')
+                    }
                 }}
             />
         </Fragment>
