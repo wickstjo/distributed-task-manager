@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState, Fragment } from 'react';
+import React, { useContext, useEffect, useReducer, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { overview } from '../funcs/contract/task';
+import reducer from '../states/local';
 
 import Info from '../components/shared/info';
 import Actions from '../components/actions';
@@ -11,7 +12,7 @@ export default () => {
     const { state } = useContext(Context)
 
     // LOCAL STATES
-    const [local, set_local] = useState({
+    const [local, set_local] = useReducer(reducer, {
         initialized: false,
         fee: 0
     })
@@ -22,8 +23,11 @@ export default () => {
         // FETCH & SET CONTRACT DETAILS
         overview(state).then(response => {
             set_local({
-                initialized: response[0],
-                fee: response[1],
+                type: 'all',
+                payload: {
+                    initialized: response[0],
+                    fee: response[1]
+                }
             })
         })
 

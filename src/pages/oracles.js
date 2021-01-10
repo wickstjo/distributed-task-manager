@@ -1,6 +1,7 @@
-import React, { useContext, useState, Fragment, useEffect } from 'react';
+import React, { useContext, useReducer, Fragment, useEffect } from 'react';
 import { Context } from '../assets/context';
-import { initialized } from '../funcs/contract/device';
+import { details, added, collection } from '../funcs/contract/oracle';
+import reducer from '../states/local';
 
 import Info from '../components/shared/info';
 import List from '../components/shared/list';
@@ -12,15 +13,41 @@ export default () => {
     const { state } = useContext(Context)
 
     // LOCAL STATE
-    const [status, set_status] = useState()
+    const [local, set_local] = useReducer(reducer, {
+        initialized: false,
+        collection: []
+    })
     
     // ON LOAD
     useEffect(() => {
 
         // FETCH & SET CONTRACT INIT STATUS
-        initialized(state).then(response => {
-            set_status(response)
+        details(state).then(response => {
+            set_local({
+                type: 'all',
+                payload: {
+                    initialized: response[0],
+                    collection: response[1]
+                }
+            })
         })
+
+        // SUBSCRIBE TO CHANGES IN THE CONTRACT ON MOUNT
+        const feed = added(state).on('data', () => {
+
+            // FETCH & SET USER DEVICE COLLECTION
+            collection(state).then(response => {
+                set_local({
+                    type: 'partial',
+                    payload: {
+                        collection: response
+                    }
+                })
+            })
+        })
+
+        // UNSUBSCRIBE ON UNMOUNT
+        return () => { feed.unsubscribe(); }
 
     // eslint-disable-next-line
     }, [])
@@ -31,12 +58,12 @@ export default () => {
                 header={ 'Oracle Manager' }
                 data={{
                     'Contract': state.contracts.managers.oracle._address,
-                    'Initialized': status ? 'True' : 'False'
+                    'Initialized': local.initialized ? 'True' : 'False'
                 }}
             />
             <List
                 header={ 'Your Oracles' }
-                data={[]}
+                data={ local.collection }
                 fallback={ 'No oracles found.' }
             />
             <Actions

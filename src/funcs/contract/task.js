@@ -8,19 +8,12 @@ function refs(state) {
     }
 }
 
-// FETCH INIT STATUS & TASK FEE
-function overview(state) {
-
-    // LIST OF PROMISES
-    const promises = [
-        refs(state).manager.initialized().call(),
-        refs(state).manager.fee().call()
+// FETCH TASK MANAGER INIT STATUS & TOKEN FEE
+async function overview(state) {
+    return [
+        await refs(state).manager.initialized().call(),
+        await refs(state).manager.fee().call()
     ]
-
-    // WAIT FOR PROMISES TO RESOLVE, THEN RETURN THEM
-    return Promise.all(promises).then(values => {
-        return values
-    })
 }
 
 // ADD TASK

@@ -27,6 +27,4 @@ function reducer(state, { type, payload }) {
     }
 }
 
-export {
-    reducer
-}
+export default reducer;

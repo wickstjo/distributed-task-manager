@@ -11,17 +11,17 @@ export default ({ item }) => {
 
     // ON LOAD...
     useEffect(() => {
-        sleep(100).then(() => {
+        sleep(0.1).then(() => {
 
             // ACTIVATE
             set_local('active')
 
             // WAIT 3 SECONDS, THEN DEACTIVATE
-            sleep(3000).then(() => {
+            sleep(3).then(() => {
                 set_local('inactive')
 
-                // WAIT ANOTHER 2 SECONDS, THEN DELETE
-                sleep(10000).then(() => {
+                // WAIT ANOTHER 10 SECONDS, THEN DELETE
+                sleep(10).then(() => {
                     set_style({ display: 'none' })
                 })
             })

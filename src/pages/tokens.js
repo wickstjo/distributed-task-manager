@@ -2,7 +2,7 @@ import React, { useContext, useReducer, useEffect, Fragment } from 'react';
 import { Context } from '../assets/context';
 import { details, changes, balance } from '../funcs/contract/token';
 import { separator } from '../funcs/format';
-import { reducer } from '../states/local';
+import reducer from '../states/local';
 
 import Info from '../components/shared/info';
 import Actions from '../components/actions';
@@ -84,13 +84,13 @@ export default () => {
             <Info
                 header={ 'Your Balance' }
                 data={{
-                    'User': state.keys.public,
+                    'Account': state.keys.public,
                     'Balance': separator(local.balance)
                 }}
             />
             <Actions
                 options={{
-                    'purchase': () => {
+                    'purchase tokens': () => {
                         console.log('foo')
                     }
                 }}

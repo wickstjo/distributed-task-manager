@@ -7,8 +7,8 @@ async function generate_keys(shh) {
 }
 
 // WAIT FOR GIVEN MILLISECONDS
-function sleep (time) {
-    return new Promise((resolve) => setTimeout(resolve, time))
+function sleep (seconds) {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 }
 
 export {

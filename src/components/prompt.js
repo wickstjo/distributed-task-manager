@@ -3,6 +3,7 @@ import { Context } from "../assets/context";
 import '../interface/css/prompt.scss';
 
 import Import from './prompt/import';
+import Find from './prompt/find';
 
 export default ({ set_wrapper }) => {
    
@@ -38,7 +39,10 @@ export default ({ set_wrapper }) => {
     return (
         <div id={ 'prompt' } className={ local }>
             <div id={ 'inner' }>
-                <Content  type={ state.prompt.type } />
+                <Content
+                    type={ state.prompt.type }
+                    param={ state.prompt.param }
+                />
                 <span id="close" onClick={() => { dispatch({ type: 'hide-prompt' }) }} />
             </div>
         </div>
@@ -46,7 +50,7 @@ export default ({ set_wrapper }) => {
 }
 
 // PROMPT CONTENT
-function Content({ type }) {
+function Content({ type, param }) {
     switch(type) {
 
         // LOADING
@@ -57,6 +61,11 @@ function Content({ type }) {
         // IMPORT PROMPT
         case 'import': {
             return <Import />
+        }
+
+        // FIND USER/ORACLE/TASK
+        case 'find': {
+            return <Find param={ param } />
         }
 
         // FALLBACK

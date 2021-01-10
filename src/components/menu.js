@@ -28,10 +28,6 @@ export default() => {
                         header={ 'Tokens' }
                         link={ '/tokens' }
                     />
-                    <MenuItem
-                        header={ 'Whisper' }
-                        link={ '/whisper' }
-                    />
                 </div>
                 <div>
                     {
@@ -40,6 +36,10 @@ export default() => {
                             link={ '/users/' + state.keys.public }
                         /> : null
                     }
+                    <MenuItem
+                        header={ 'Whisper' }
+                        link={ '/whisper' }
+                    />
                     <MenuItem
                         header={ 'Settings' }
                         link={ '/settings' }

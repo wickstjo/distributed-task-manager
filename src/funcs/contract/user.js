@@ -10,7 +10,17 @@ function refs(state) {
 
 // FETCH USER DEVICE COLLECTION
 function initialized(state) {
-    return state.contracts.managers.oracle.methods.initialized().call();
+    return refs(state).manager.initialized().call();
+}
+
+function create_user(state) {
+
+    const { manager, address } = refs(state);
+
+    return transaction({
+        query: manager.create(),
+        contract: address
+    }, state)
 }
 
 // FETCH USER SMART CONTRACT
@@ -83,6 +93,7 @@ function register(callback, state, dispatch) {
 }
 
 export {
+    create_user,
     initialized,
     fetch,
     details,

@@ -9,22 +9,15 @@ function refs(state) {
 }
 
 // FETCH TOKEN DETAILS
-function details(state) {
-
-    // LIST OF PROMISES
-    const promises = [
-        refs(state).manager.initialized().call(),
-        refs(state).manager.symbol().call(),
-        refs(state).manager.price().call(),
-        refs(state).manager.capacity().call(),
-        refs(state).manager.sold().call(),
-        balance(state)
+async function details(state) {
+    return [
+        await refs(state).manager.initialized().call(),
+        await refs(state).manager.symbol().call(),
+        await refs(state).manager.price().call(),
+        await refs(state).manager.capacity().call(),
+        await refs(state).manager.sold().call(),
+        await balance(state)
     ]
-
-    // WAIT FOR PROMISES TO RESOLVE, THEN RETURN THEM
-    return Promise.all(promises).then(values => {
-        return values
-    })
 }
 
 // FETCH USERS TOKEN BALANCE
@@ -39,31 +32,31 @@ function changes(state) {
 
 // BUY TOKEN
 function purchase(callback, amount, state, dispatch) {
-const { manager, address } = refs(state);
+    const { manager, address } = refs(state);
 
-// FETCH THE TOKEN PRICE
-const func = manager.price().call().then(price => {
+    // FETCH THE TOKEN PRICE
+    const func = manager.price().call().then(price => {
 
-// EXECUTE THE TRANSACTION
-return transaction({
-query: manager.purchase(amount),
-contract: address,
-payable: amount * price
-}, state)
-})
+        // EXECUTE THE TRANSACTION
+        return transaction({
+            query: manager.purchase(amount),
+            contract: address,
+            payable: amount * price
+        }, state)
+    })
 
-// ANIMATE EXECUTION
-animate(func, callback, dispatch)
+    // ANIMATE EXECUTION
+    animate(func, callback, dispatch)
 }
 
 // TRANSFER TOKENS
 function transfer(amount, recipient, state) {
-const { manager, address } = refs(state);
+    const { manager, address } = refs(state);
 
-return transaction({
-query: manager.transfer_token(amount, recipient),
-contract: address
-}, state)
+    return transaction({
+        query: manager.transfer_token(amount, recipient),
+        contract: address
+    }, state)
 }
 
 export {
