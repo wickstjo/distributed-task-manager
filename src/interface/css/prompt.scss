@@ -21,13 +21,14 @@
             text-transform: uppercase;
             padding: 5px;
             padding-bottom: 10px;
+            text-shadow: 1px 1px #202020;
         }
 
         #container {
-            background: rgba(0, 0, 0, 0.397);
-            min-height: 80px;
+            background: rgba(0, 0, 0, 0.178);
             color: #CECECE;
             transition: 0.2s;
+            padding: 1px;
         }
     
         // LOADING SCREEN -- https://loading.io/css/
@@ -59,7 +60,7 @@
     #close {
        background: url('../images/close.png') center center no-repeat;
        position: absolute;
-       top: 0px;
+       bottom: 0px;
        right: 0px;
        height: 80px;
        width: 80px;

@@ -16,11 +16,18 @@ const values = {
     // PROMPT WINDOW
     prompt: {
         visible: false,
+        params: {},
         type: null
     },
 
     // TOAST MESSAGES
     messages: [],
+
+    // REDIRECT PARAMS
+    redirect: {
+        status: false,
+        location: ''
+    },
 
     // INIT STATUS
     initialized: false,
@@ -107,6 +114,24 @@ function reducer(state, { type, payload, param }) {
                     type: payload.type
                 }
             ]
+        }}
+
+        // REDIRECT TO PAGE
+        case 'redirect': { return {
+            ...state,
+            redirect: {
+                status: true,
+                location: payload
+            }
+        }}
+
+        // RESET REDIRECT LOGIC
+        case 'reset-redirect': { return {
+            ...state,
+            redirect: {
+                status: false,
+                location: ''
+            }
         }}
 
         // INITIALIZE APIS & DATA

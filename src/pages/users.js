@@ -88,12 +88,17 @@ export default () => {
             <Actions
                 options={{
                     'create account': create_account,
-                    'view account': () => {
+                    'inspect user': () => {
                         dispatch({
                             type: 'show-prompt',
                             payload: {
-                                type: 'find',
-                                param: 'user'
+                                type: 'inspect',
+                                params: {
+                                    type: 'address',
+                                    header: 'user',
+                                    placeholder: "Provide the user contract's address",
+                                    redirect: '/users/{}'
+                                }
                             }
                         })
                     }

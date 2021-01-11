@@ -1,16 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import { Context } from '../../assets/context';
+import React, { useEffect } from 'react';
 
-export default ({ data, placeholder, update, id }) => {
+export default ({ data, placeholder, length, update, id }) => {
 
-    // GLOBAL STATE
-    const { state } = useContext(Context);
-
-    // ON LOAD..
+    // VALIDATE ON INITIAL LOAD
     useEffect(() => {
-
-        // VALIDATE DATA
-        validate(data.value);
+        validate(data.value)
 
     // eslint-disable-next-line
     }, [])
@@ -18,8 +12,8 @@ export default ({ data, placeholder, update, id }) => {
     // VALIDATE USER INPUT
     function validate(input) {
 
-        // PERFORM CHECK
-        const result = state.web3.utils.isAddress(input);
+        // CHECK FOR VALID LENGTH
+        const result = input.length === length
 
         // UPDATE PARENT STATE
         update({

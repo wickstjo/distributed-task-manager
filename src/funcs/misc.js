@@ -11,7 +11,16 @@ function sleep (seconds) {
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 }
 
+// REPLACE BRACKETS IN STRING WITH ARGUMENTS
+function replace(string, args) {
+    let i = 0
+    return string.replace(/{}/g, () => {
+        return typeof args[i] != 'undefined' ? args[i++] : '';
+    })
+}
+
 export {
     generate_keys,
-    sleep
+    sleep,
+    replace
 }

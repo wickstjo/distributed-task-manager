@@ -10,7 +10,7 @@ import Actions from '../components/actions';
 export default () => {
 
     // GLOBAL STATE
-    const { state } = useContext(Context)
+    const { state, dispatch } = useContext(Context)
 
     // LOCAL STATE
     const [local, set_local] = useReducer(reducer, {
@@ -71,8 +71,19 @@ export default () => {
                     'create oracle': () => {
                         console.log('foo')
                     },
-                    'view oracle': () => {
-                        console.log('foo')
+                    'inspect oracle': () => {
+                        dispatch({
+                            type: 'show-prompt',
+                            payload: {
+                                type: 'inspect',
+                                params: {
+                                    type: 'hash',
+                                    header: 'oracle',
+                                    placeholder: "Provide the oracle's hash identifier",
+                                    redirect: '/oracles/{}'
+                                }
+                            }
+                        })
                     }
                 }}
             />

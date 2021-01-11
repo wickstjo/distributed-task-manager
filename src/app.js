@@ -4,6 +4,7 @@ import { Provider } from "./assets/context";
 import './interface/css/general.scss';
 
 import Init from './assets/init';
+import Redirect from './components/redirect';
 import Menu from './components/menu';
 import Pages from './assets/pages';
 import Prompt from './components/prompt';
@@ -18,6 +19,7 @@ export default () => {
         <BrowserRouter>
             <Provider>
                 <Init />
+                <Redirect />
                 <div id={ 'wrapper' } className={ local }>
                     <Menu />
                     <Pages />

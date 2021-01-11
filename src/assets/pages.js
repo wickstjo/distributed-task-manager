@@ -37,7 +37,7 @@ export default () => {
                 <Route exact path={ '/oracles' } component={ Oracles } />
                 <Route path={ '/oracles/:hash' } component={ Oracle } />
 
-                <Route path={ '/users' } component={ Users } />
+                <Route exact path={ '/users' } component={ Users } />
                 <Route path={ '/users/:address' } component={ User } />
 
                 <Route exact path={ '/tokens' } component={ Tokens } />

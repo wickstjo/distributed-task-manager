@@ -9,7 +9,7 @@ import Actions from '../components/actions';
 export default () => {
 
     // GLOBAL STATE
-    const { state } = useContext(Context)
+    const { state, dispatch } = useContext(Context)
 
     // LOCAL STATES
     const [local, set_local] = useReducer(reducer, {
@@ -49,11 +49,19 @@ export default () => {
                     'create task': () => {
                         console.log('foo')
                     },
-                    'view task': () => {
-                        console.log('foo')
-                    },
-                    'view task result': () => {
-                        console.log('foo')
+                    'inspect task': () => {
+                        dispatch({
+                            type: 'show-prompt',
+                            payload: {
+                                type: 'inspect',
+                                params: {
+                                    type: 'address',
+                                    header: 'task',
+                                    placeholder: "Provide the task contract's address",
+                                    redirect: '/tasks/{}'
+                                }
+                            }
+                        })
                     }
                 }}
             />
