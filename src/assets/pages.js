@@ -5,7 +5,6 @@ import '../interface/css/innerbody.scss';
 
 import Tasks from '../pages/tasks';
 import Task from '../pages/task';
-import Result from '../pages/result';
 
 import Oracles from '../pages/oracles';
 import Oracle from '../pages/oracle';
@@ -32,7 +31,6 @@ export default () => {
 
                 <Route exact path={ '/tasks' } component={ Tasks } />
                 <Route path={ '/tasks/:address' } component={ Task } />
-                <Route path={ '/results/:address' } component={ Result } />
 
                 <Route exact path={ '/oracles' } component={ Oracles } />
                 <Route path={ '/oracles/:hash' } component={ Oracle } />

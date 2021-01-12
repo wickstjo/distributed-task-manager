@@ -2,12 +2,12 @@
     position: absolute;
     right: 0px;
     bottom: 0px;
-    z-index: 98;
+    z-index: 95;
     display: flex;
     margin-bottom: 20px;
     flex-direction: column-reverse;
     align-items: flex-end;
-    width: 250px;
+    max-width: 40vh;
     overflow: hidden;
     pointer-events: none;
 
@@ -30,7 +30,7 @@
         }
 
         #icon {
-            width: 34px;
+            width: 40px;
             display: flex;
             justify-content: center;
             align-items: center;

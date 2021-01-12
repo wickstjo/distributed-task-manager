@@ -47,20 +47,15 @@ export default () => {
             <Actions
                 options={{
                     'create task': () => {
-                        console.log('foo')
+                        dispatch({
+                            type: 'show-prompt',
+                            payload: 'import-task'
+                        })
                     },
                     'inspect task': () => {
                         dispatch({
                             type: 'show-prompt',
-                            payload: {
-                                type: 'inspect',
-                                params: {
-                                    type: 'address',
-                                    header: 'task',
-                                    placeholder: "Provide the task contract's address",
-                                    redirect: '/tasks/{}'
-                                }
-                            }
+                            payload: 'inspect-task'
                         })
                     }
                 }}

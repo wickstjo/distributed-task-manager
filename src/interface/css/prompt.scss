@@ -13,6 +13,7 @@
  
     #inner {
         width: 80vw;
+        transition: transform 0.2s;
     
         #header {
             text-align: center;
@@ -25,10 +26,33 @@
         }
 
         #container {
-            background: rgba(0, 0, 0, 0.178);
-            color: #CECECE;
             transition: 0.2s;
             padding: 1px;
+            position: relative;
+
+            #import {
+                width: 100%;
+                height: 120px;
+                opacity: 0;
+                z-index: 2;
+                cursor: pointer;
+            }
+    
+            #import-label {
+                background: rgba(91, 146, 197, 0.144);
+                color: white;
+                position: absolute;
+                top: 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                width: 100%;
+                z-index: -1;
+                font-size: 16px;
+                text-transform: uppercase;
+                border: 1px dashed rgba(255, 255, 255, 0.349);
+            }
         }
     
         // LOADING SCREEN -- https://loading.io/css/
@@ -56,12 +80,20 @@
             100% { transform: rotate(360deg); }
         }
     }
+
+    #inner.active {
+        transform: translate(0px, 0px)
+    }
+
+    #inner.inactive {
+        transform: translate(0px, 50px)
+    }
  
     #close {
        background: url('../images/close.png') center center no-repeat;
        position: absolute;
        bottom: 0px;
-       right: 0px;
+       left: 0px;
        height: 80px;
        width: 80px;
        opacity: 0.6;

@@ -69,20 +69,15 @@ export default () => {
             <Actions
                 options={{
                     'create oracle': () => {
-                        console.log('foo')
+                        dispatch({
+                            type: 'show-prompt',
+                            payload: 'import-oracle'
+                        })
                     },
                     'inspect oracle': () => {
                         dispatch({
                             type: 'show-prompt',
-                            payload: {
-                                type: 'inspect',
-                                params: {
-                                    type: 'hash',
-                                    header: 'oracle',
-                                    placeholder: "Provide the oracle's hash identifier",
-                                    redirect: '/oracles/{}'
-                                }
-                            }
+                            payload: 'inspect-oracle'
                         })
                     }
                 }}

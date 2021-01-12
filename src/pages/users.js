@@ -36,9 +36,7 @@ export default () => {
         // SHOW LOADING SCREEN
         dispatch({
             type: 'show-prompt',
-            payload: {
-                type: 'loading'
-            }
+            payload: 'loading'
         })
 
         // CREATE THE USER
@@ -91,15 +89,7 @@ export default () => {
                     'inspect user': () => {
                         dispatch({
                             type: 'show-prompt',
-                            payload: {
-                                type: 'inspect',
-                                params: {
-                                    type: 'address',
-                                    header: 'user',
-                                    placeholder: "Provide the user contract's address",
-                                    redirect: '/users/{}'
-                                }
-                            }
+                            payload: 'inspect-user'
                         })
                     }
                 }}

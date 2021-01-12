@@ -90,7 +90,7 @@ function reducer(state, { type, payload, param }) {
         case 'show-prompt': { return {
             ...state,
             prompt: {
-                ...payload,
+                type: payload,
                 visible: true,
             }
         }}

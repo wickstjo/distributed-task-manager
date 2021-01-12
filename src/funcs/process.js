@@ -29,16 +29,13 @@ function decode(string) {
 }
 
 // SHA256 HASH A OBJECT
-function hash(string) {
+function sha_hash(object) {
 
-    // PARSE AS OBJECT
-    const parsed_id = JSON.parse(string)
-
-    // MINIBY TO STRING, SETTINGS MIMIC PYTHON MIDDLEWARE
-    const stringified_id = JSON.stringify(parsed_id, null, 2)
+    // STRINGIFY OBJECT THE SAME WAS AS THE PYTHON MIDDLEWARE
+    const stringified = JSON.stringify(object, null, 2)
 
     // HASH & RETURN
-    return hashing(stringified_id)
+    return hashing(stringified)
 }
 
 function exists(string) {
@@ -52,6 +49,6 @@ function exists(string) {
 export {
     encode,
     decode,
-    hash,
+    sha_hash,
     exists
 }

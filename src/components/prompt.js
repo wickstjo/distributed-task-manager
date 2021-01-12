@@ -2,8 +2,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Context } from "../assets/context";
 import '../interface/css/prompt.scss';
 
-import Import from './prompt/import';
-import Inspect from './prompt/inspect';
+import ImportTask from './prompt/import-task';
+import InspectTask from './prompt/inspect-task';
+
+import ImportOracle from './prompt/import-oracle';
+import InspectOracle from './prompt/inspect-oracle';
+
+import InspectUser from './prompt/inspect-user';
+import PurchaseTokens from './prompt/purchase-tokens';
 
 export default ({ set_wrapper }) => {
    
@@ -38,10 +44,10 @@ export default ({ set_wrapper }) => {
 
     return (
         <div id={ 'prompt' } className={ local }>
-            <div id={ 'inner' }>
+            <div id={ 'inner' } className={ local }>
                 <Content type={ state.prompt.type } />
-                <span id="close" onClick={() => { dispatch({ type: 'hide-prompt' }) }} />
             </div>
+            <span id="close" onClick={() => { dispatch({ type: 'hide-prompt' }) }} />
         </div>
     )
 }
@@ -55,14 +61,34 @@ function Content({ type }) {
             return <div className="lds-dual-ring" />
         }
 
-        // IMPORT PROMPT
-        case 'import': {
-            return <Import />
+        // IMPORT TASK
+        case 'import-task': {
+            return <ImportTask />
         }
 
-        // FIND USER/ORACLE/TASK
-        case 'inspect': {
-            return <Inspect />
+        // IMPORT ORACLE
+        case 'import-oracle': {
+            return <ImportOracle />
+        }
+
+        // INSPECT TASK
+        case 'inspect-task': {
+            return <InspectTask />
+        }
+
+        // INSPECT ORACLE
+        case 'inspect-oracle': {
+            return <InspectOracle />
+        }
+
+        // INSPECT USER
+        case 'inspect-user': {
+            return <InspectUser />
+        }
+
+        // PURCHASE TOKENS
+        case 'purchase-tokens': {
+            return <PurchaseTokens />
         }
 
         // FALLBACK

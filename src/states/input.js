@@ -9,10 +9,19 @@ function reducer(state, { type, payload }) {
             }
         }
 
-        // FALLBACK
-        default: {
+        // RESET EACH INPUT STATE
+        case 'reset': {
+            Object.keys(state).forEach(key => {
+                state[key] = {
+                    value: '',
+                    status: false
+                }
+            })
             return state;
         }
+
+        // FALLBACK
+        default: { return state; }
     }
 }
 

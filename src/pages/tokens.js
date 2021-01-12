@@ -10,11 +10,11 @@ import Actions from '../components/actions';
 export default () => {
 
     // GLOBAL STATE
-    const { state } = useContext(Context)
+    const { state, dispatch } = useContext(Context)
 
     // LOCAL STATE
     const [local, set_local] = useReducer(reducer, {
-        status: '',
+        status: false,
         symbol: '',
         price: 0,
         capacity: 0,
@@ -91,7 +91,10 @@ export default () => {
             <Actions
                 options={{
                     'purchase tokens': () => {
-                        console.log('foo')
+                        dispatch({
+                            type: 'show-prompt',
+                            payload: 'purchase-tokens'
+                        })
                     }
                 }}
             />
