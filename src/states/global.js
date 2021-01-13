@@ -1,6 +1,3 @@
-import { exists } from '../funcs/blockchain';
-
-// DEFALT STATE
 const values = {
 
     // WINDOW SIZE
@@ -144,7 +141,7 @@ function reducer(state, { type, payload, param }) {
         // VERIFY USER REGISTRATION
         case 'verify': { return {
             ...state,
-            verified: exists(payload)
+            verified: payload
         }}
 
         // SET WHISPER FEED

@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, Fragment, useEffect } from 'react';
 import { Context } from '../assets/context';
-import { details, added, collection } from '../funcs/contract/oracle';
+import { read, event } from '../funcs/blockchain';
 import reducer from '../states/local';
 
 import Info from '../components/shared/info';
@@ -20,29 +20,54 @@ export default () => {
     
     // ON LOAD
     useEffect(() => {
+        const run = async() => {
 
-        // FETCH & SET CONTRACT INIT STATUS
-        details(state).then(response => {
+            // FETCH DATA & SET IN STATE
             set_local({
                 type: 'all',
                 payload: {
-                    initialized: response[0],
-                    collection: response[1]
+                    
+                    // INIT VALUE
+                    initialized: await read({
+                        contract: 'oracle',
+                        func: 'initialized'
+                    }, state),
+
+                    // USER ORACLE COLLECTION
+                    collection: await read({
+                        contract: 'oracle',
+                        func: 'fetch_collection',
+                        args: [state.keys.public]
+                    }, state)
                 }
             })
-        })
+        }
 
-        // SUBSCRIBE TO CHANGES IN THE CONTRACT ON MOUNT
-        const feed = added(state).on('data', () => {
+        // RUN THE ABOVE
+        run()
 
-            // FETCH & SET USER DEVICE COLLECTION
-            collection(state).then(response => {
-                set_local({
-                    type: 'partial',
-                    payload: {
-                        collection: response
-                    }
-                })
+        // SUBSCRIBE TO EVENTS IN THE CONTRACT
+        const feed = event({
+            type: 'oracle',
+            name: 'added'
+        }, state)
+        
+        // WHEN EVENT DATA IS INTERCEPTED
+        feed.on('data', async() => {
+
+            // FETCH USER DEVICE COLLECTION
+            const device_collection = await read({
+                type: 'oracle',
+                func: 'fetch_collection',
+                args: [state.keys.public]
+            }, state)
+
+            // REFRESH STATE
+            set_local({
+                type: 'partial',
+                payload: {
+                    collection: device_collection
+                }
             })
         })
 

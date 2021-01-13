@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { Context } from '../assets/context';
-import { initialized, create_user } from '../funcs/contract/user';
+import { read, write } from '../funcs/blockchain';
 import { sleep } from '../funcs/misc';
 
 import Info from '../components/shared/info';
@@ -18,13 +18,21 @@ export default () => {
 
     // ON LOAD
     useEffect(() => {
+        const run = async() => {
 
-        // FETCH & SET CONTRACT INIT STATUS
-        initialized(state).then(response => {
+            // FETCH DATA & SET IN STATE
             set_local({
-                initialized: response
+
+                // INIT VALUE
+                initialized: await read({
+                    contract: 'user',
+                    func: 'initialized'
+                }, state)
             })
-        })
+        }
+
+        // RUN THE ABOVE
+        run()
 
     // eslint-disable-next-line
     }, [])
@@ -40,7 +48,10 @@ export default () => {
         })
 
         // CREATE THE USER
-        const result = await create_user(state)
+        const result = await write({
+            type: 'user',
+            func: 'create'
+        }, state)
 
         // SLEEP FOR A SECOND TO SMOOTHEN THE PROCESS
         await sleep(1)

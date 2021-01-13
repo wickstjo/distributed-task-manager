@@ -2,9 +2,8 @@ import { useContext, useEffect } from 'react';
 import { Context } from './context';
 
 import { sleep } from '../funcs/misc';
-import { init } from '../funcs/blockchain';
+import { init, read } from '../funcs/blockchain';
 import { create_feed } from '../funcs/whisper';
-import { fetch } from '../funcs/contract/user';
 import { shorten, to_date } from '../funcs/chat';
 import { decode, exists } from '../funcs/process';
 
@@ -64,39 +63,43 @@ export default () => {
     // AUTOLOGIN USER -- IF THEY ARE REGISTERED
     useEffect(() => {
         if (state.web3 !== null) {
+            const run = async() => {
 
-            // FETCH USER SMART CONTRACT
-            fetch(state.keys.public, state).then(result => {
+                // CHECK IF THE USER IS REGISTERED
+                const result = await read({
+                    contract: 'user',
+                    func: 'fetch',
+                    args: [state.keys.public]
+                }, state)
 
-                // SLEEP FOR 2 SECONDS
-                sleep(2000).then(() => {
+                // SLEEP FOR A SECONDS
+                await sleep(1)
 
-                    // CHECK THE RESULT VALIDITY
-                    const check = exists(result);
+                // CHECK THE RESULT VALIDITY
+                const check = exists(result);
 
-                    // IF EVERYTHING CHECKS OUT
-                    if (check) {
+                // IF EVERYTHING CHECKS OUT
+                if (check) {
 
-                        // SET LOGIN IN STATE
-                        dispatch({
-                            type: 'verify',
-                            payload: result
-                        })
+                    // SET LOGIN IN STATE
+                    dispatch({
+                        type: 'verify',
+                        payload: result
+                    })
 
-                        // ALERT WITH MESSAGE
-                        dispatch({
-                            type: 'toast-message',
-                            payload: {
-                                type: 'good',
-                                msg: 'you have been autologged in'
-                            }
-                        })
-                    }
+                    // ALERT WITH MESSAGE
+                    dispatch({
+                        type: 'toast-message',
+                        payload: {
+                            type: 'good',
+                            msg: 'you have been autologged in'
+                        }
+                    })
+                }
+            }
 
-                    // FINALLY, HIDE THE LOADING SCREEN
-                    dispatch({ type: 'hide-prompt' })
-                })
-            })
+            // RUN THE ABOVE
+            run()
         }
 
     // eslint-disable-next-line

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, Fragment } from 'react';
 import { Context } from '../assets/context';
-import { overview } from '../funcs/contract/task';
+import { read } from '../funcs/blockchain';
 import reducer from '../states/local';
 
 import Info from '../components/shared/info';
@@ -19,17 +19,30 @@ export default () => {
 
     // ON LOAD
     useEffect(() => {
+        const run = async() => {
 
-        // FETCH & SET CONTRACT DETAILS
-        overview(state).then(response => {
+            // FETCH DATA & SET IN STATE
             set_local({
                 type: 'all',
                 payload: {
-                    initialized: response[0],
-                    fee: response[1]
+
+                    // INIT VALUE
+                    initialized: await read({
+                        contract: 'task',
+                        func: 'initialized'
+                    }, state),
+
+                    // TOKEN FEE FOR TASKS
+                    fee: await read({
+                        contract: 'task',
+                        func: 'fee'
+                    }, state)
                 }
             })
-        })
+        }
+
+        // RUN THE ABOVE
+        run()
 
     // eslint-disable-next-line
     }, [])

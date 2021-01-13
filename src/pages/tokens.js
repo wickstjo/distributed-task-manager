@@ -1,6 +1,6 @@
 import React, { useContext, useReducer, useEffect, Fragment } from 'react';
 import { Context } from '../assets/context';
-import { details, changes, balance } from '../funcs/contract/token';
+import { read, event } from '../funcs/blockchain';
 import { separator } from '../funcs/format';
 import reducer from '../states/local';
 
@@ -24,41 +24,84 @@ export default () => {
 
     // ON LOAD
     useEffect(() => {
+        const run = async() => {
 
-        // FETCH TOKEN PRICE
-        details(state).then(response => {
+            // FETCH THE CAPACITY
+            const capacity = await read({
+                contract: 'token',
+                func: 'capacity'
+            }, state)
+
+            // FETCH THE AVAILABILITY
+            const sold = await read({
+                contract: 'token',
+                func: 'sold'
+            }, state)
+
+            // FETCH DATA & SET IN STATE
             set_local({
                 type: 'all',
                 payload: {
-                    status: response[0],
-                    symbol: response[1],
-                    price: response[2],
-                    capacity: response[3],
-                    available: response[3] - response[4],
-                    balance: response[5]
+
+                    // INIT VALUE
+                    status: await read({
+                        contract: 'token',
+                        func: 'initialized'
+                    }, state),
+
+                    // TOKEN SYMBOL
+                    symbol: await read({
+                        contract: 'token',
+                        func: 'symbol'
+                    }, state),
+
+                    // TOKEN PRICE
+                    price: await read({
+                        contract: 'token',
+                        func: 'price'
+                    }, state),
+
+                    // TOKEN CAPACITY & AVAILABILITY
+                    capacity: capacity,
+                    available: capacity - sold,
+
+                    // USER TOKEN BALANCE
+                    balance: await read({
+                        contract: 'token',
+                        func: 'balance',
+                        args: [state.keys.public]
+                    }, state)
                 }
             })
-        })
+        }
 
-        // SUBSCRIBE TO CHANGES IN THE CONTRACT ON MOUNT
-        const feed = changes(state).on('data', response => {
+        // RUN THE ABOVE
+        run()
 
-            // SET AVAILABILITY 
+        // SUBSCRIBE TO EVENT CHANGES
+        const feed = event({
+            type: 'token',
+            name: 'changes'
+        }, state)
+        
+        // WHEN EVENT DATA IS INTERCEPTED
+        feed.on('data', async(response) => {
+
+            // REFRESH STATE 
             set_local({
                 type: 'partial',
                 payload: {
-                    available: response.returnValues.capacity - response.returnValues.sold
-                }
-            })
 
-            // REFRESH PERSONAL BALANCE
-            balance(state).then(amount => {
-                set_local({
-                    type: 'partial',
-                    payload: {
-                        balance: amount
-                    }
-                })
+                    // REFRESH AVAILABILITY
+                    available: response.returnValues.capacity - response.returnValues.sold,
+
+                    // REFRESH USER BALANCE
+                    balance: await read({
+                        contract: 'token',
+                        func: 'balance',
+                        args: [state.keys.public]
+                    }, state)
+                }
             })
         })
 

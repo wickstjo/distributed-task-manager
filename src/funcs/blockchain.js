@@ -76,13 +76,66 @@ function interfaces(names) {
     return response;
 }
 
+// SELECT THE APPROPRIATE CONTRACT
+function select_contract(contract, address, state) {
+    switch (address) {
+
+        // MANAGER CONTRACT
+        case undefined: {
+            return state.contracts.managers[contract]
+        }
+
+        // CHILD CONTRACT
+        default: {
+            return assemble({
+                contract: contract,
+                address: address
+            }, state)
+        }
+    }
+}
+
+// READ SMART CONTRACT VARIABLE VALUE
+function read({ contract, address, func, args=[] }, state) {
+
+    // SELECT THE CORRECT CONTRACT
+    const contr = select_contract(contract, address, state)
+
+    // EXECUTE THE QUERY
+    return contr.methods[func](...args).call();
+}
+
+// WRITE DATA TO THE BLOCKCHAIN
+function write({ contract, address, func, args=[], payable }, state) {
+
+    // SELECT THE CORRECT CONTRACT
+    const contr = select_contract(contract, address, state)
+
+    // EXECUTE THE TRANSACTION
+    return transaction({
+        query: contr.methods[func](...args),
+        address: contract._address,
+        payable: payable
+    }, state)
+}
+
+// SMART CONTRACT EVENT
+function event({ type, address, name }, state) {
+
+    // SELECT THE CORRECT CONTRACT
+    const contract = select_contract(type, address, state)
+
+    // RETURN THE EVENT FEED
+    return contract.events[name]()
+}
+
 // SIGN SC TRANSACTION
-function transaction({ query, contract, payable }, state) {
+function transaction({ query, address, payable }, state) {
 
     // TRANSACTION OUTLINE
     const tx = {
         from: state.keys.public,
-        to: contract,
+        to: address,
         data: query.encodeABI()
     }
 
@@ -126,117 +179,6 @@ function prune(error) {
     return error;
 }
 
-// ANIMATE PROMPT
-function animate(func, callback, dispatch) {
-
-    // SHOW LOADING SCREEN
-    dispatch({
-        type: 'show-prompt',
-        payload: 'loading'
-    })
-
-    // EXECUTE THE PRIMARY FUNCTION
-    func.then(result => {
-
-        // IF THE TRANSACTION WENT THROUGH
-        if (result.success) {
-
-            // IF THE CALLBACK IS ASYNC
-            if (callback.constructor.name === 'AsyncFunction') {
-
-                // AFTERWARDS, 
-                callback().then(response => {
-
-                    // ALERT WITH SUCCESS
-                    dispatch({
-                        type: 'alert',
-                        payload: {
-                            text: response,
-                            type: 'good'
-                        }
-                    })
-
-                    // FINALLY HIDE THE LOADING SCREEN
-                    dispatch({
-                        type: 'hide-prompt'
-                    })
-                })
-
-            // OTHERWISE..
-            } else {
-
-                // EXECUTE CALLBACK & GET RESPONSE TEXT
-                const response = callback()
-
-                // ALERT WITH SUCCESS
-                dispatch({
-                    type: 'alert',
-                    payload: {
-                        text: response,
-                        type: 'good'
-                    }
-                })
-
-                // FINALLY HIDE THE LOADING SCREEN
-                dispatch({
-                    type: 'hide-prompt'
-                })
-            }
-
-        // OTHERWISE...
-        } else {
-
-            // ALERT WITH ERROR
-            dispatch({
-                type: 'alert',
-                payload: {
-                    text: result.reason,
-                    type: 'bad'
-                }
-            })
-
-            // FINALLY HIDE THE LOADING SCREEN
-            dispatch({
-                type: 'hide-prompt'
-            })
-        }
-    })
-}
-
-// CALL SC METHOD
-function call({ query, modify }) {
-    return query.call().then(response => {
-        switch(modify) {
-
-            // UNMODIFIED
-            case undefined: { return {
-                success: true,
-                data: response
-            }}
-
-            // MODIFIED
-            default: { return {
-                success: true,
-                data: modify(response)
-            }}
-        }
-
-    }).catch(error => {
-        return {
-            reason: error
-        }
-    })
-}
-
-// CHECK ADDRESS INDEXATION
-function exists(query) {
-    if (query === '0x0000000000000000000000000000000000000000') {
-        return false;
-    } else {
-        return true;
-    }
-}
-
 // ASSEMBLE SINGLE CONTRACT REFERENCE
 function assemble({ address, contract }, state) {
     return new state.web3.eth.Contract(
@@ -247,9 +189,9 @@ function assemble({ address, contract }, state) {
 
 export {
     init,
+    read,
+    write,
+    event,
     transaction,
-    call,
-    assemble,
-    exists,
-    animate
+    assemble
 }
