@@ -2,13 +2,10 @@ import { Base64 as compression } from 'js-base64';
 import hashing from 'sha256';
 
 // BASE64 ENCODE STRING
-function encode(string) {
+function encode(object) {
 
-    // PARSE AS OBJECT
-    const parsed = JSON.parse(string)
-
-    // MINIFY TO STRING
-    const stringified = JSON.stringify(parsed)
+    // STRINGIFY THE OBJECT
+    const stringified = JSON.stringify(object)
 
     // COMPRESS & RETURN
     return compression.encode(stringified)

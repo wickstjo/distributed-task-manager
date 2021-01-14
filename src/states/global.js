@@ -62,7 +62,7 @@ const values = {
 }
 
 // STATE REDUCER
-function reducer(state, { type, payload, param }) {
+function reducer(state, { type, payload, params }) {
     switch (type) {
         
         // WINDOW RESIZE EVENT
@@ -88,6 +88,7 @@ function reducer(state, { type, payload, param }) {
             ...state,
             prompt: {
                 type: payload,
+                params: params,
                 visible: true,
             }
         }}

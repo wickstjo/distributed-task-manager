@@ -4,8 +4,8 @@
         "port": "8080"
     },
     "keys": {
-        "public": "0x83f3ab84E3641c9198C0a514643113EF164c7E33",
-        "private": "0xec9b51e5bf44b690fece1bfa5a1a9c255d2af9a2838a5711e95ab5a09a39a337"
+        "public": "0x1ecC18DC2c41B6A5cC760dEdeBb0D857223A5721",
+        "private": "0x6593a2cb7d09054c12be41dc9854c4b93e006f29fb6f6abf30de48342436025c"
     },
     "whisper": {
         "topic": "arca",

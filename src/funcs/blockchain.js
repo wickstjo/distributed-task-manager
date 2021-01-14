@@ -87,10 +87,10 @@ function select_contract(contract, address, state) {
 
         // CHILD CONTRACT
         default: {
-            return assemble({
-                contract: contract,
-                address: address
-            }, state)
+            return new state.web3.eth.Contract(
+                state.contracts.interfaces[contract],
+                address
+            )
         }
     }
 }
@@ -120,13 +120,13 @@ function write({ contract, address, func, args=[], payable }, state) {
 }
 
 // SMART CONTRACT EVENT
-function event({ type, address, name }, state) {
+function event({ contract, address, name }, state) {
 
     // SELECT THE CORRECT CONTRACT
-    const contract = select_contract(type, address, state)
+    const contr = select_contract(contract, address, state)
 
     // RETURN THE EVENT FEED
-    return contract.events[name]()
+    return contr.events[name]()
 }
 
 // SIGN SC TRANSACTION
@@ -179,19 +179,10 @@ function prune(error) {
     return error;
 }
 
-// ASSEMBLE SINGLE CONTRACT REFERENCE
-function assemble({ address, contract }, state) {
-    return new state.web3.eth.Contract(
-        state.contracts.interfaces[contract],
-        address
-    )
-}
-
 export {
     init,
     read,
     write,
     event,
-    transaction,
-    assemble
+    transaction
 }

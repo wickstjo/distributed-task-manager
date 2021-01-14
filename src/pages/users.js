@@ -49,7 +49,7 @@ export default () => {
 
         // CREATE THE USER
         const result = await write({
-            type: 'user',
+            contract: 'user',
             func: 'create'
         }, state)
 
@@ -61,6 +61,18 @@ export default () => {
 
         // EVERYTHING WENT FINE
         if (result.success) {
+
+            // REDIRECT TO THE USER PAGE
+            dispatch({
+                type: 'redirect',
+                payload: '/users/' + state.keys.public
+            })
+
+            // SET LOGIN IN STATE
+            dispatch({
+                type: 'verify',
+                payload: true
+            })
 
             // CREATE TOAST MESSAGE
             dispatch({

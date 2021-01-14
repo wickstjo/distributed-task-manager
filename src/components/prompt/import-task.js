@@ -1,11 +1,13 @@
 import React, { useContext, Fragment } from 'react';
 import { Context } from '../../assets/context';
 import { load_yaml, sleep } from '../../funcs/misc';
+import { write } from '../../funcs/blockchain';
+import { encode } from '../../funcs/process';
 
 export default () => {
 
     // GLOBAL STATE
-    const { dispatch } = useContext(Context);
+    const { state, dispatch } = useContext(Context);
 
     // PARSE YAML FILE
     async function parse(event) {
@@ -15,30 +17,68 @@ export default () => {
         if (event.target.value !== null) {
 
             // ATTEMPT TO LOAD THE UPLOADED YAML FILE
-            const result = await load_yaml(event)
+            const yaml = await load_yaml(event)
 
             // SHOW LOADING SCREEN
             dispatch({
                 type: 'show-prompt',
-                payload: {
-                    type: 'loading'
-                }
+                payload: 'loading'
             })
 
             // SLEEP FOR TWO SECOND TO SMOOTHEN TRANSITION
             await sleep(2)
             
             // EVEYRTHING WENT FINE
-            if (result.success) {
-                dispatch({
-                    type: 'toast-message',
-                    payload: {
-                        type: 'good',
-                        msg: 'yaml file parsed'
-                    }
-                })
+            if (yaml.success) {
 
-            // OTHERWISE..
+                // DECONSTRUCT TASK PARAMS
+                const { oracle, reward, timelimit, params } = yaml.data
+
+                // ENCODE THE TASK PARAMS TO BASE64
+                const morphed = encode(params)
+                
+                // CREATE THE ORACLE
+                const result = await write({
+                    contract: 'task',
+                    func: 'create',
+                    args: [
+                        oracle,
+                        reward,
+                        timelimit,
+                        morphed,
+                    ]
+                }, state)
+
+                // EVERYTHING WENT FINE
+                if (result.success) {
+
+                    // REDIRECT TO THE ORACLES PAGE
+                    dispatch({
+                        type: 'redirect',
+                        payload: '/oracles/' + oracle
+                    })
+
+                    // CREATE TOAST MESSAGE
+                    dispatch({
+                        type: 'toast-message',
+                        payload: {
+                            type: 'good',
+                            msg: 'task assigned to oracle'
+                        }
+                    })
+
+                // OTHERWISE, SHOW ERROR
+                } else {
+                    dispatch({
+                        type: 'toast-message',
+                        payload: {
+                            type: 'bad',
+                            msg: result.reason
+                        }
+                    })
+                }
+
+            // OTHERWISE, SHOW ERROR
             } else {
                 dispatch({
                     type: 'toast-message',

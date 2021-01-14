@@ -1,15 +1,15 @@
 import React, { useContext, Fragment } from 'react';
 import { Context } from '../../assets/context';
 import { load_yaml, sleep } from '../../funcs/misc';
-import { sha_hash } from '../../funcs/process';
 import { write } from '../../funcs/blockchain';
+import { encode } from '../../funcs/process';
 
 export default () => {
 
     // GLOBAL STATE
     const { state, dispatch } = useContext(Context);
 
-    // PARSE A YAML FILE
+    // PARSE YAML FILE
     async function parse(event) {
         event.persist();
 
@@ -31,31 +31,26 @@ export default () => {
             // EVEYRTHING WENT FINE
             if (yaml.success) {
 
-                // HASH THE PARSED YAML FILE (JSON)
-                const hash = sha_hash(yaml.data)
+                // ENCODE THE OBJECT TO BASE64
+                const morphed = encode(yaml.data)
                 
                 // CREATE THE ORACLE
                 const result = await write({
                     contract: 'oracle',
-                    func: 'create',
-                    args: [hash, yaml.data.service_cost]
+                    address: state.prompt.params.oracle,
+                    func: 'update_config',
+                    args: [morphed]
                 }, state)
 
                 // EVERYTHING WENT FINE
                 if (result.success) {
-
-                    // REDIRECT TO THE ORACLE PAGE
-                    dispatch({
-                        type: 'redirect',
-                        payload: '/oracles/' + hash
-                    })
 
                     // CREATE TOAST MESSAGE
                     dispatch({
                         type: 'toast-message',
                         payload: {
                             type: 'good',
-                            msg: 'oracle created'
+                            msg: 'dicovery config modified'
                         }
                     })
 
@@ -88,7 +83,7 @@ export default () => {
     
     return (
         <Fragment>
-            <div id={ 'header' }>create a new oracle</div>
+            <div id={ 'header' }>modify oracle discovery config</div>
             <div id={ 'container' }>
                 <input
                     id={ 'import' }

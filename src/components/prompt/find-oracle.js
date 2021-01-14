@@ -12,7 +12,7 @@ export default () => {
 
     // INPUT STATE
     const [input, set_input] = useReducer(reducer, {
-        hash: {
+        query: {
             value: '',
             status: false
         }
@@ -20,13 +20,7 @@ export default () => {
 
     // WHEN A VALID ADDRESS IS INPUT & ENTER IS PRESSED
     useEffect(() => {
-        if (state.prompt.visible && input.hash.status && state.key_event.key === 'Enter') {
-
-            // REDIRECT TO THE PAGE
-            dispatch({
-                type: 'redirect',
-                payload: '/oracles/' + input.hash.value
-            })
+        if (state.prompt.visible && input.query.status && state.key_event.key === 'Enter') {
 
             // RESET INPUT FIELDS
             set_input({ type: 'reset' })
@@ -40,14 +34,14 @@ export default () => {
     
     return (
         <Fragment>
-            <div id={ 'header' }>inspect oracle</div>
+            <div id={ 'header' }>find available oracle</div>
             <div id={ 'container' }>
                 <Text
-                    data={ input.hash }
-                    placeholder={ "Provide the oracle's hash identifier" }
-                    range={[ 64, 64 ]}
+                    data={ input.query }
+                    placeholder={ 'Write your query' }
+                    range={[ 3, 50 ]}
                     update={ set_input }
-                    id={ 'hash' }
+                    id={ 'query' }
                 />
             </div>
         </Fragment>

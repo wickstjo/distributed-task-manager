@@ -40,10 +40,6 @@ export default() => {
                         header={ 'Whisper' }
                         link={ '/whisper' }
                     />
-                    <MenuItem
-                        header={ 'Settings' }
-                        link={ '/settings' }
-                    />
                 </div>
             </div>
         </div>

@@ -48,25 +48,22 @@ export default () => {
 
         // SUBSCRIBE TO EVENTS IN THE CONTRACT
         const feed = event({
-            type: 'oracle',
+            contract: 'oracle',
             name: 'added'
         }, state)
         
         // WHEN EVENT DATA IS INTERCEPTED
         feed.on('data', async() => {
 
-            // FETCH USER DEVICE COLLECTION
-            const device_collection = await read({
-                type: 'oracle',
-                func: 'fetch_collection',
-                args: [state.keys.public]
-            }, state)
-
-            // REFRESH STATE
+            // REFRESH DEVICE COLLECTION
             set_local({
                 type: 'partial',
                 payload: {
-                    collection: device_collection
+                    collection: await read({
+                        contract: 'oracle',
+                        func: 'fetch_collection',
+                        args: [state.keys.public]
+                    }, state)
                 }
             })
         })
@@ -90,6 +87,7 @@ export default () => {
                 header={ 'Your Oracles' }
                 data={ local.collection }
                 fallback={ 'No oracles found.' }
+                category={ '/oracles' }
             />
             <Actions
                 options={{

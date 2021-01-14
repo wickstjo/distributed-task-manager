@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export default ({ data, placeholder, length, update, id }) => {
+export default ({ data, placeholder, range, update, id }) => {
 
     // VALIDATE ON INITIAL LOAD
     useEffect(() => {
@@ -12,8 +12,8 @@ export default ({ data, placeholder, length, update, id }) => {
     // VALIDATE USER INPUT
     function validate(input) {
 
-        // CHECK FOR VALID LENGTH
-        const result = input.length === length
+        // CHECK IF THE STRING LENGTH IS WITHIN RANGE
+        const result = isNaN(input) && input.length >= range[0] && input.length <= range[1]
 
         // UPDATE PARENT STATE
         update({

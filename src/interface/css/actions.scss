@@ -30,23 +30,23 @@
         transform: translate(0px, 5px)
     }
 
-    #action.check {
-        background-image: url('../icons/checkmark.png');
+    #action.modify {
+        background-image: url('../icons/wrench.png');
+    }
+
+    #action.update {
+        background-image: url('../icons/warning.png');
     }
 
     #action.purchase {
         background-image: url('../icons/money.png');
     }
 
-    #action.keys {
-        background-image: url('../icons/key.png');
-    }
-
-    #action.inspect {
+    #action.inspect, #action.find {
         background-image: url('../icons/search.png');
     }
 
-    #action.bin {
+    #action.retire {
         background-image: url('../icons/bin.png');
     }
 }

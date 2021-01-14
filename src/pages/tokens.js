@@ -80,7 +80,7 @@ export default () => {
 
         // SUBSCRIBE TO EVENT CHANGES
         const feed = event({
-            type: 'token',
+            contract: 'token',
             name: 'changes'
         }, state)
         

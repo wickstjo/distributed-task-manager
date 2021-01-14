@@ -14,7 +14,6 @@ import User from '../pages/user';
 
 import Tokens from '../pages/tokens';
 import Whisper from '../pages/whisper';
-import Settings from '../pages/settings';
 import Error from '../pages/error';
 
 export default () => {
@@ -40,7 +39,6 @@ export default () => {
 
                 <Route exact path={ '/tokens' } component={ Tokens } />
                 <Route exact path={ '/whisper' } component={ Whisper } />
-                <Route exact path={ '/settings' } component={ Settings } />
                 <Route component={ Error } />
             </Switch>
         </div>
