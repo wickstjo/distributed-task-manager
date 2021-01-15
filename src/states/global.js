@@ -188,6 +188,16 @@ function reducer(state, { type, payload, params }) {
             }
         }}
 
+        // RESET QUERY
+        case 'reset-query': { return {
+            ...state,
+            query: {
+                active: false,
+                id: '',
+                results: []
+            }
+        }}
+
         // FALLBACK
         default: {
             console.log('GLOBAL REDUCER TYPE NOT FOUND');

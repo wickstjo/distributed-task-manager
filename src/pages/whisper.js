@@ -1,10 +1,18 @@
-import React, { Fragment } from 'react';
+import React, { useContext, Fragment } from 'react';
+import { Context } from '../assets/context';
+import Chat from '../components/chat';
 
-export default () => { return (
-    <Fragment>
-        <div id={ 'header' }>Whisper</div>
-        <div id={ 'container' }>
-            <div id={ 'fallback' }>Foo</div>
-        </div>
-    </Fragment>
-)}
+export default () => {
+
+    // GLOBAL STATE
+    const { state } = useContext(Context)
+    
+    return (
+        <Fragment>
+            <div id={ 'header' }>whisper feed</div>
+            <div id={ 'container' }>
+                <Chat data={ state.whisper.messages } />
+            </div>
+        </Fragment>
+    )
+}

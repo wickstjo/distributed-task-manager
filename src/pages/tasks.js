@@ -65,12 +65,6 @@ export default () => {
                             payload: 'import-task'
                         })
                     },
-                    'find oracles': () => {
-                        dispatch({
-                            type: 'show-prompt',
-                            payload: 'find-oracle'
-                        })
-                    },
                     'inspect task': () => {
                         dispatch({
                             type: 'show-prompt',

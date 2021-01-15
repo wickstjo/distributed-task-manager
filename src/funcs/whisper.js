@@ -94,7 +94,7 @@ function query(response, state, dispatch) {
         symKeyID: state.whisper.topic.key,
         sig: state.whisper.id,
         ttl: 10,
-        topic: state.utils.to_hex(state.whisper.topic.name),
+        topic: state.utils.to_hex(state.whisper.topic),
         payload: state.utils.to_hex(encoded),
         powTime: 3,
         powTarget: 0.5

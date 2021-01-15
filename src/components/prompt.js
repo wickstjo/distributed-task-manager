@@ -11,7 +11,7 @@ import InspectOracle from './prompt/inspect-oracle';
 import InspectUser from './prompt/inspect-user';
 import PurchaseTokens from './prompt/purchase-tokens';
 import ModifyConfig from './prompt/modify-config';
-import FindOracle from './prompt/find-oracle';
+import DiscoverOracle from './prompt/discover-oracle';
 
 export default ({ set_wrapper }) => {
    
@@ -99,8 +99,8 @@ function Content({ type }) {
         }
 
         // PURCHASE TOKENS
-        case 'find-oracle': {
-            return <FindOracle />
+        case 'discover-oracle': {
+            return <DiscoverOracle />
         }
 
         // FALLBACK

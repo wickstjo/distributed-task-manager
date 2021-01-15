@@ -143,7 +143,7 @@ export default () => {
                 // ADD QUERY RESPONSE
                 dispatch({
                     type: 'query-response',
-                    payload: decoded.device
+                    payload: decoded.oracle
                 })
 
                 // ALERT WITH MESSAGE
@@ -151,7 +151,7 @@ export default () => {
                     type: 'toast-message',
                     payload: {
                         type: 'good',
-                        text: 'a device has responded'
+                        msg: 'a device has responded'
                     }
                 })
             }

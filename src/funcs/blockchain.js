@@ -12,8 +12,8 @@ async function init(state) {
     const identification = await web3.shh.newKeyPair();
 
     // GENERATE NEW WHISPER TOPIC SYMKEY
-    //const foo = await web3.shh.newSymKey()
-    //console.log(foo)
+    // const foo = await web3.shh.newSymKey()
+    // console.log(foo)
 
     // RETURN WITH REFERENCES
     return {

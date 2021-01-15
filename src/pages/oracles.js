@@ -97,6 +97,12 @@ export default () => {
                             payload: 'import-oracle'
                         })
                     },
+                    'discover oracle': () => {
+                        dispatch({
+                            type: 'show-prompt',
+                            payload: 'discover-oracle'
+                        })
+                    },
                     'inspect oracle': () => {
                         dispatch({
                             type: 'show-prompt',

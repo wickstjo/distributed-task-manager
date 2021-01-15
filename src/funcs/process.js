@@ -28,8 +28,8 @@ function decode(string) {
 // SHA256 HASH A OBJECT
 function sha_hash(object) {
 
-    // STRINGIFY OBJECT THE SAME WAS AS THE PYTHON MIDDLEWARE
-    const stringified = JSON.stringify(object, null, 2)
+    // STRINGIFY THE OBJECT
+    const stringified = JSON.stringify(object)
 
     // HASH & RETURN
     return hashing(stringified)
