@@ -52,18 +52,12 @@ export default () => {
                 // EVERYTHING WENT FINE
                 if (result.success) {
 
-                    // REDIRECT TO THE ORACLES PAGE
-                    dispatch({
-                        type: 'redirect',
-                        payload: '/oracles/' + oracle
-                    })
-
                     // CREATE TOAST MESSAGE
                     dispatch({
                         type: 'toast-message',
                         payload: {
                             type: 'good',
-                            msg: 'task assigned to oracle'
+                            msg: 'task created'
                         }
                     })
 

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { filter_zeros } from '../../funcs/format';
 
-export default ({ data, header, fallback, category }) => {
+export default ({ data, header, fallback, category, trigger }) => {
 
     // FILTER AWAY NULLIFIED VALUES
     const filtered = filter_zeros(data)
@@ -29,6 +29,7 @@ export default ({ data, header, fallback, category }) => {
                             value={ value }
                             category={ category }
                             key={ index }
+                            callback={ trigger }
                         />
                     )}
                 </div>
@@ -38,8 +39,19 @@ export default ({ data, header, fallback, category }) => {
 }
 
 // CONTAINER ROW
-function Row({ value, category }) { return (
-    <Link to={ category + '/' + value }>
-        <div id={ 'row' }>{ value }</div>
-    </Link>
-)}
+function Row({ value, category, callback }) {
+    switch(category) {
+
+        // TRIGGER LINK
+        case undefined: { return (
+            <div id={ 'row' } onClick={() => callback(value) }>{ value[0] }</div>
+        )}
+
+        // BASIC LINK
+        default: { return (
+            <Link to={ category + '/' + value }>
+                <div id={ 'row' }>{ value }</div>
+            </Link>
+        )}
+    }
+}

@@ -12,6 +12,7 @@ import InspectUser from './prompt/inspect-user';
 import PurchaseTokens from './prompt/purchase-tokens';
 import ModifyConfig from './prompt/modify-config';
 import DiscoverOracle from './prompt/discover-oracle';
+import ViewResult from './prompt/view-result';
 
 export default ({ set_wrapper }) => {
    
@@ -101,6 +102,11 @@ function Content({ type }) {
         // PURCHASE TOKENS
         case 'discover-oracle': {
             return <DiscoverOracle />
+        }
+        
+        // PURCHASE TOKENS
+        case 'view-result': {
+            return <ViewResult />
         }
 
         // FALLBACK

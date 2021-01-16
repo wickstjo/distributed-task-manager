@@ -19,6 +19,7 @@ export default () => {
         price: 0,
         capacity: 0,
         available: 0,
+        seized: 0,
         balance: 0
     })
 
@@ -65,6 +66,13 @@ export default () => {
                     capacity: capacity,
                     available: capacity - sold,
 
+                    // SEIZED TOKENS
+                    seized: await read({
+                        contract: 'token',
+                        func: 'balance',
+                        args: [state.contracts.managers.task._address]
+                    }, state),
+
                     // USER TOKEN BALANCE
                     balance: await read({
                         contract: 'token',
@@ -95,6 +103,13 @@ export default () => {
                     // REFRESH AVAILABILITY
                     available: response.returnValues.capacity - response.returnValues.sold,
 
+                    // REFRESH SEIZED TOKENS
+                    seized: await read({
+                        contract: 'token',
+                        func: 'balance',
+                        args: [state.contracts.managers.task._address]
+                    }, state),
+
                     // REFRESH USER BALANCE
                     balance: await read({
                         contract: 'token',
@@ -117,18 +132,24 @@ export default () => {
                 header={ 'Token Manager' }
                 data={{
                     'Contract': state.contracts.managers.token._address,
-                    'Initialized': local.status ? 'True' : 'False',
+                    'Initialized': local.status ? 'True' : 'False'
+                }}
+            />
+            <Info
+                header={ 'Token Details' }
+                data={{
                     'Symbol': local.symbol,
                     'Price': separator(local.price) + ' WEI',
                     'Capacity': separator(local.capacity),
-                    'Available': separator(local.available)
+                    'Available': separator(local.available),
+                    'Seized for Tasks': separator(local.seized)
                 }}
             />
             <Info
                 header={ 'Your Balance' }
                 data={{
-                    'Account': state.keys.public,
-                    'Balance': separator(local.balance)
+                    'Ethereum Wallet': state.keys.public,
+                    'Token Balance': separator(local.balance)
                 }}
             />
             <Actions
